@@ -23,6 +23,12 @@
     },
     "api-interfaces": {
       "tags": []
+    },
+    "database": {
+      "tags": []
+    },
+    "shared-client-auth": {
+      "tags": []
     }
   }
 }

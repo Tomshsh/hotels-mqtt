@@ -16,7 +16,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@my-tray/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@my-tray/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@my-tray/database": ["libs/database/src/index.ts"],
+      "@env/client/*": ["apps/client/src/environments/*"],
+      "@env/backend/*": ["apps/api/src/environments/*"],
+      "@my-tray/shared/client/auth": ["libs/shared/client/auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
