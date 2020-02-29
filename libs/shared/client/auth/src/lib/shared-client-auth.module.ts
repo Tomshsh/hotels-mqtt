@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
-import { LoginPageComponent } from "./containers/login-page/login-page.component";
-
-import { NbAuthComponent, NbAuthModule, NbAuthService, NbTokenService, } from "@nebular/auth";
-import { NbIconModule, NbLayoutModule, NbThemeModule } from "@nebular/theme";
+import { FormsModule } from '@angular/forms';
+import { NbAuthComponent, NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService, } from "@nebular/auth";
+import {
+  NbAlertModule,
+  NbButtonModule,
+  NbCheckboxModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbThemeModule
+} from "@nebular/theme";
 import { HttpClientModule } from "@angular/common/http";
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { LoginFormComponent } from "./components/login/login-form.component";
+import { LoginPageComponent } from "./containers/login/login-page.component";
 
 
 export const sharedClientAuthRoutes: Route[] = [
@@ -29,11 +35,23 @@ export const sharedClientAuthRoutes: Route[] = [
     NbLayoutModule,
     RouterModule.forRoot(sharedClientAuthRoutes),
     NbThemeModule.forRoot(),
-    NbAuthModule.forRoot(),
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
+        }),
+      ],
+      forms: {},
+    }),
+
     NbEvaIconsModule,
-    NbIconModule
+    NbAlertModule,
+    NbInputModule,
+    NbButtonModule,
+    NbCheckboxModule,
+    FormsModule
   ],
-  declarations: [LoginPageComponent, LoginFormComponent],
+  declarations: [LoginPageComponent],
   exports: [RouterModule],
   providers: [NbAuthService, NbTokenService]
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/client/environment';
-import * as Parse from 'parse';
+import * as Parse from 'parse/node';
 
 @Injectable({
   providedIn: 'root'

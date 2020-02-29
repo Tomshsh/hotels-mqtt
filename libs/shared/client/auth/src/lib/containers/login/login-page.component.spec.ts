@@ -1,15 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { LoginPageComponent } from "./login-page.component";
 
-import { LoginPageComponent } from './login-page.component';
 
-/*describe('LoginPageComponent', () => {
+describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoginPageComponent]
-    }).compileComponents();
+    })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,6 +20,6 @@ import { LoginPageComponent } from './login-page.component';
   });
 
   it('should create', () => {
-    //  expect(component).toBeTruthy();
+    expect(component).toBeTruthy();
   });
-});*/
+});

@@ -3,7 +3,7 @@ import { NB_AUTH_OPTIONS, NbAuthService, NbLoginComponent } from "@nebular/auth"
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'auth-tray-login-page',
+  selector: 'auth-login',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
@@ -19,4 +19,8 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  login(): void {
+    console.log(this.user)
+  }
 }
