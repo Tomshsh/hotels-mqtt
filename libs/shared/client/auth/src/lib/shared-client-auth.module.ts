@@ -14,6 +14,7 @@ import {
 import { HttpClientModule } from "@angular/common/http";
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { LoginPageComponent } from "./containers/login/login-page.component";
+import { ContainersModule } from './containers/containers.module';
 
 
 export const sharedClientAuthRoutes: Route[] = [
@@ -24,36 +25,19 @@ export const sharedClientAuthRoutes: Route[] = [
       { path: 'login', component: LoginPageComponent },
     ]
   },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', redirectTo: '/' },
+
 ];
 
 @NgModule({
   imports: [
     HttpClientModule,
     CommonModule,
-    NbLayoutModule,
     RouterModule.forRoot(sharedClientAuthRoutes),
     NbThemeModule.forRoot(),
-    NbAuthModule.forRoot({
-      strategies: [
-        NbPasswordAuthStrategy.setup({
-          name: 'email',
-        }),
-      ],
-      forms: {},
-    }),
-
-    NbEvaIconsModule,
-    NbAlertModule,
-    NbInputModule,
-    NbButtonModule,
-    NbCheckboxModule,
-    FormsModule
+    ContainersModule
   ],
-  declarations: [LoginPageComponent],
-  exports: [RouterModule],
-  providers: [NbAuthService, NbTokenService]
+  declarations: [],
+  exports: [RouterModule]
 })
 export class SharedClientAuthModule {
 }
