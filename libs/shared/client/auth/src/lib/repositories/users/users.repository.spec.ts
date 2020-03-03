@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { UsersRepository } from './users.repository';
 
-import { UsersRepository } from './users-repository.service';
 
 describe('UsersRepository', () => {
   let service: UsersRepository;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: []
+    });
     service = TestBed.inject(UsersRepository);
   });
 

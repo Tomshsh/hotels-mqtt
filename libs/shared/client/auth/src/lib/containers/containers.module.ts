@@ -1,6 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule, NbLayoutModule } from "@nebular/theme";
+import {
+  NbAlertModule,
+  NbButtonModule,
+  NbCheckboxModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbThemeModule
+} from "@nebular/theme";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { FormsModule } from "@angular/forms";
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from "@nebular/auth";
@@ -17,6 +24,7 @@ import { LoginPageComponent } from "./login/login-page.component";
     NbAlertModule,
     NbInputModule,
     NbButtonModule,
+    NbThemeModule.forRoot(),
     NbCheckboxModule,
     FormsModule,
     NbAuthModule.forRoot({

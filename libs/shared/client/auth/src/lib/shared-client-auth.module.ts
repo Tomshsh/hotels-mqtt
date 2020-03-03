@@ -1,43 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Route, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NbAuthComponent, NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService, } from "@nebular/auth";
-import {
-  NbAlertModule,
-  NbButtonModule,
-  NbCheckboxModule,
-  NbInputModule,
-  NbLayoutModule,
-  NbThemeModule
-} from "@nebular/theme";
-import { HttpClientModule } from "@angular/common/http";
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { LoginPageComponent } from "./containers/login/login-page.component";
+import { HttpClientModule } from '@angular/common/http';
+
 import { ContainersModule } from './containers/containers.module';
+import { AuthClientRoutingModule } from './routes/auth-client-routing.module';
+import { AuthClientServicesModule } from './services/auth-client-services.module';
 
-
-export const sharedClientAuthRoutes: Route[] = [
-  {
-    path: 'auth', component: NbAuthComponent,
-    children: [
-      { path: '', component: LoginPageComponent },
-      { path: 'login', component: LoginPageComponent },
-    ]
-  },
-
-];
+import { AuthGuard } from './guards';
 
 @NgModule({
   imports: [
     HttpClientModule,
     CommonModule,
-    RouterModule.forRoot(sharedClientAuthRoutes),
-    NbThemeModule.forRoot(),
-    ContainersModule
+    AuthClientRoutingModule,
+    ContainersModule,
+    AuthClientServicesModule,
   ],
   declarations: [],
-  exports: [RouterModule]
+  exports: [],
+  providers: [AuthGuard]
 })
 export class SharedClientAuthModule {
 }

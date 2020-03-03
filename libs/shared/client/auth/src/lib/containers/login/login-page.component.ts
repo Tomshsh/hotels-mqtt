@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { NB_AUTH_OPTIONS, NbAuthService, NbLoginComponent } from "@nebular/auth";
 import { Router } from "@angular/router";
+import { UsersService } from "../../services";
+
 
 @Component({
   selector: 'auth-login',
@@ -10,9 +12,10 @@ import { Router } from "@angular/router";
 export class LoginPageComponent extends NbLoginComponent implements OnInit {
 
   constructor(protected service: NbAuthService,
-              @Inject(NB_AUTH_OPTIONS) protected options = {},
               protected cd: ChangeDetectorRef,
-              protected router: Router) {
+              protected router: Router,
+              @Inject(NB_AUTH_OPTIONS) protected options = {},
+              private readonly usersService: UsersService) {
     super(service, options, cd, router);
   }
 
@@ -21,6 +24,6 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
 
 
   login(): void {
-    console.log(this.user)
+    this.usersService.logIn(this.user);
   }
 }

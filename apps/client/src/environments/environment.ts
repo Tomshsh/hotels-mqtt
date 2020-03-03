@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   parse:  {
-    serverURL: "http://localhost:1337/api", // Self-hosted Parse Server
+    serverURL: "http://localhost:1337/parse", // Self-hosted Parse Server
     appId: "APPLICATION_ID",
     masterKey: "MASTER_KEY",
     appName: "Tray Manager"
