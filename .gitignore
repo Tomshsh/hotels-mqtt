@@ -40,5 +40,5 @@ Thumbs.db
 
 
 # Devops
-/devops/*
-/devops/data-db/*
+/devops
+/devops/data-db/

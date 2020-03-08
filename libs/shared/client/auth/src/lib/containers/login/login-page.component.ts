@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { NB_AUTH_OPTIONS, NbAuthService, NbLoginComponent } from "@nebular/auth";
-import { Router } from "@angular/router";
-import { UsersService } from "../../services";
-
+import { NB_AUTH_OPTIONS, NbAuthService, NbLoginComponent } from '@nebular/auth';
+import { Router } from '@angular/router';
+import { AuthSessionService } from '../../state/services/auth-user-state-service';
+import { UserDto } from '@my-tray/api-interfaces';
 
 @Component({
   selector: 'auth-login',
@@ -15,7 +15,8 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
               protected cd: ChangeDetectorRef,
               protected router: Router,
               @Inject(NB_AUTH_OPTIONS) protected options = {},
-              private readonly usersService: UsersService) {
+              private readonly authService: AuthSessionService
+  ) {
     super(service, options, cd, router);
   }
 
@@ -24,6 +25,18 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
 
 
   login(): void {
-    this.usersService.logIn(this.user);
+    this.submitted = true;
+    this.authService.logIn(this.user).subscribe((user: UserDto) => {
+      this.submitted = false;
+      if (user === null) {
+        this.errors = [`Username or Password aren't correct please try again.`];
+      } else {
+        this.messages = ['Welcome to the Tray System'];
+      }
+      setTimeout(() => {
+        this.router.navigate(['dashboard']);
+      }, 1000);
+      this.cd.detectChanges();
+    });
   }
 }

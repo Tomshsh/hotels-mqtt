@@ -1,26 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { NbAuthComponent, } from "@nebular/auth";
-import { LoginPageComponent } from "../containers/login/login-page.component";
+import { NbAuthComponent, } from '@nebular/auth';
+import { LoginPageComponent } from '../containers/login/login-page.component';
 
-
-export const AuthClientRoutes: Route[] = [
-  {
-    path: 'auth', component: NbAuthComponent,
-    children: [
-      { path: '', component: LoginPageComponent },
-      { path: 'login', component: LoginPageComponent },
-    ]
-  },
-
-];
+export const AuthClientRoutes: Route[] = [{
+  path: 'auth', component: NbAuthComponent,
+  children: [
+    { path: '', component: LoginPageComponent },
+    { path: 'login', component: LoginPageComponent },
+  ]
+}];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(AuthClientRoutes)
-  ],
+  imports: [RouterModule.forRoot(AuthClientRoutes)],
   declarations: [],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: []
 })
 export class AuthClientRoutingModule {
 }

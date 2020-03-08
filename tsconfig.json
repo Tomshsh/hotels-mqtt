@@ -20,7 +20,10 @@
       "@my-tray/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@my-tray/shared/client/auth": ["libs/shared/client/auth/src/index.ts"],
       "@my-tray/env/client/*": ["apps/client/src/environments/*"],
-      "@my-tray/env/backend": ["apps/api/src/environments/*"]
+      "@my-tray/env/backend": ["apps/api/src/environments/*"],
+      "@my-tray/shared/layout": [
+        "libs/shared/client/layout/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

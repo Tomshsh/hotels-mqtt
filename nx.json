@@ -26,6 +26,9 @@
     },
     "shared-client-auth": {
       "tags": []
+    },
+    "shared-client-layout": {
+      "tags": []
     }
   }
 }

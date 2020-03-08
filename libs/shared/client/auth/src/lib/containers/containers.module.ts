@@ -1,42 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbAlertModule,
-  NbButtonModule,
-  NbCheckboxModule,
-  NbInputModule,
-  NbLayoutModule,
-  NbThemeModule
-} from "@nebular/theme";
-import { NbEvaIconsModule } from "@nebular/eva-icons";
-import { FormsModule } from "@angular/forms";
-import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from "@nebular/auth";
-import { LoginPageComponent } from "./login/login-page.component";
-
+import { FormsModule } from '@angular/forms';
+import { LoginPageComponent } from './login/login-page.component';
+import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule } from '@nebular/theme';
 
 
 @NgModule({
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent,],
   imports: [
     CommonModule,
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbAlertModule,
+    FormsModule,
     NbInputModule,
     NbButtonModule,
-    NbThemeModule.forRoot(),
     NbCheckboxModule,
-    FormsModule,
-    NbAuthModule.forRoot({
-      strategies: [
-        NbPasswordAuthStrategy.setup({
-          name: 'email',
-        }),
-      ],
-      forms: {},
-    }),
+    NbAlertModule
   ],
-  providers: [NbAuthService, NbTokenService],
-  exports: []
 })
 export class ContainersModule { }
