@@ -23,7 +23,8 @@ export class SidebarContainerComponent implements OnInit {
       title: 'Logout',
       icon: 'unlock-outline',
       link: 'logout'
-    }
+    },
+
   ];
 
   constructor() {

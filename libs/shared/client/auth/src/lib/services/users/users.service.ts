@@ -16,9 +16,9 @@ export class UsersService {
     const { email, password } = credentials;
     return fromPromise(this.usersRepository.logIn(email, password).then(async (user: User) => {
       const loggedInUser: UserDto = {
-        roles: await this.usersRepository.getUserRoles().then((roles: string[]) => {
-          return roles.map(role => Role[role])
-        }),
+        roles: await this.usersRepository.getUserRoles().then((roles: string[]) => roles.map(role => {
+          return Role[role.toLocaleUpperCase()];
+        })),
         email: user.getEmail(),
         username: user.getUsername(),
         token: user.getSessionToken(),

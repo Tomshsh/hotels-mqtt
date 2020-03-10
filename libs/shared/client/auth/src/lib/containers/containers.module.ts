@@ -6,7 +6,7 @@ import { NbAlertModule, NbButtonModule, NbCheckboxModule, NbInputModule } from '
 
 
 @NgModule({
-  declarations: [LoginPageComponent,],
+  declarations: [LoginPageComponent],
   imports: [
     CommonModule,
     FormsModule,

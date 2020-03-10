@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { NB_AUTH_OPTIONS, NbAuthService, NbLoginComponent } from '@nebular/auth';
 import { Router } from '@angular/router';
-import { AuthSessionService } from '../../state/services/auth-user-state-service';
 import { UserDto } from '@my-tray/api-interfaces';
+import { AuthSessionService} from '../../state/services/auth-user-state-service';
 
 @Component({
   selector: 'auth-login',
@@ -37,6 +37,9 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
         this.router.navigate(['dashboard']);
       }, 1000);
       this.cd.detectChanges();
-    });
+    },(error => {
+      this.errors = [`Username or Password aren't correct please try again.`];
+      this.submitted = false;
+    }));
   }
 }
