@@ -21,8 +21,13 @@
       "@my-tray/shared/client/auth": ["libs/shared/client/auth/src/index.ts"],
       "@my-tray/env/client/*": ["apps/client/src/environments/*"],
       "@my-tray/env/backend": ["apps/api/src/environments/*"],
-      "@my-tray/shared/layout": [
-        "libs/shared/client/layout/src/index.ts"
+      "@my-tray/shared/layout": ["libs/shared/client/layout/src/index.ts"],
+      "@my-tray/data-layers/mytray/repositories": [
+        "libs/data-layers/mytray/repositories/src/index.ts"
+      ],
+      "@my-tray/shared/utilities": ["libs/shared/utilities/src/index.ts"],
+      "@my-tray/data-services/mytray/services": [
+        "libs/data-services/mytray/services/src/index.ts"
       ]
     }
   },

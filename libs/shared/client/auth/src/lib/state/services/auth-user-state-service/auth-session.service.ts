@@ -21,6 +21,8 @@ export class AuthSessionService {
 
 
   logOut() {
-    this.authStore.logOut();
+    this.usersDataService.logOut().then(() => {
+      this.authStore.logOut();
+    });
   }
 }

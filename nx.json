@@ -29,6 +29,15 @@
     },
     "shared-client-layout": {
       "tags": []
+    },
+    "data-layers-mytray-repositories": {
+      "tags": []
+    },
+    "shared-utilities": {
+      "tags": []
+    },
+    "data-services-mytray-services": {
+      "tags": []
     }
   }
 }

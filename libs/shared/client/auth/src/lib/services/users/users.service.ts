@@ -28,7 +28,6 @@ export class UsersService {
     }));
   }
 
-
   async logOut() {
     await this.usersRepository.logOut();
   }

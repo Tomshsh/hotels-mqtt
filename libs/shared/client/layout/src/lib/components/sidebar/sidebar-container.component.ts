@@ -8,25 +8,47 @@ import { NbMenuItem } from '@nebular/theme';
 })
 export class SidebarContainerComponent implements OnInit {
   @Input()
-  items: NbMenuItem[] = [
+  items = [
     {
-      title: 'Dashboard',
+      title: 'Users',
       icon: 'keypad-outline',
-      link: 'dashboard'
+      link: 'users'
+    },
+    {
+      title: 'Operations',
+      icon: 'person-outline',
+      link: 'operation'
+    },
+    {
+      title: 'Reception View',
+      icon: 'unlock-outline',
+      link: 'reception'
+    },
+    {
+      title: 'Devices',
+      icon: 'keypad-outline',
+      link: 'devices'
     },
     {
       title: 'Profile',
-      icon: 'person-outline',
-      link: '/'
+      expanded: false,
+      icon: 'keypad-outline',
+      children: [
+        {
+          title: 'Change Password',
+          link: [], // goes into angular `routerLink`
+        },
+        {
+          title: 'Privacy Policy',
+          url: '#', // goes directly into `href` attribute
+        },
+        {
+          title: 'Logout',
+          link: [],
+        },
+      ],
     },
-    {
-      title: 'Logout',
-      icon: 'unlock-outline',
-      link: 'logout'
-    },
-
   ];
-
   constructor() {
   }
 
