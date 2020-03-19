@@ -1,8 +1,8 @@
-<nb-card >
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="danger">
   <nb-card-body>
     <ng2-smart-table
       [source]="source"
-      [settings]="setting">
+      [settings]="settings">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

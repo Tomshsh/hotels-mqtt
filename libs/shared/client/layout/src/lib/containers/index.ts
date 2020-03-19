@@ -1,1 +1,1 @@
-export * from './dashboard/dashboard-container.component';
+export * from './dashboard-container/dashboard-container.component';

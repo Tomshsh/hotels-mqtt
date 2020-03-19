@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NbSidebarService } from '@nebular/theme';
 import { AuthSessionService } from '@my-tray/shared/client/auth';
 import { Router } from '@angular/router';
+import { RoutingComponent } from '@my-tray/shared/utilities';
 
 @Component({
   selector: 'ui-dashboard-container',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard-container.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+@RoutingComponent()
 export class DashboardContainerComponent implements OnInit {
   constructor(private readonly sidebarService: NbSidebarService,
               private readonly authService: AuthSessionService,

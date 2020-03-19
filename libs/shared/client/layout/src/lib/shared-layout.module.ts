@@ -30,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     NbLayoutModule,
     NbEvaIconsModule,
+    NbIconModule,
     NbAlertModule,
     NbInputModule,
     NbButtonModule,
@@ -39,7 +40,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NbSpinnerModule,
     NbCardModule,
     NbSidebarModule,
-    NbThemeModule.forRoot(),
+    NbThemeModule.forRoot({
+      name: 'corporate'
+    }),
     NbMenuModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
@@ -50,7 +53,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       forms: {},
     }),
     RouterModule,
-    NbIconModule,
     Ng2SmartTableModule,
     BrowserAnimationsModule,
     NbSpinnerModule,

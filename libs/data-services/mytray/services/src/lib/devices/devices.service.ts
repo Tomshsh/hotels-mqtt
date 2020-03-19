@@ -4,12 +4,10 @@ import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { DeviceDto } from '@my-tray/api-interfaces';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class DevicesService {
-
   constructor(private readonly devicesDataRepository: DevicesDataRepository) {
   }
 
@@ -24,5 +22,9 @@ export class DevicesService {
         return deviceResult;
       });
     }));
+  }
+
+  getLiveQuery() {
+    return this.devicesDataRepository.liveQuery();
   }
 }

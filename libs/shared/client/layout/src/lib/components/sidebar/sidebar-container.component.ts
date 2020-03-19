@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NbMenuItem } from '@nebular/theme';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { RoutesService } from '@my-tray/data-services/mytray/services';
+import { AppNavItem } from '@my-tray/api-interfaces';
 
 @Component({
   selector: 'ui-sidebar-content',
@@ -8,7 +9,9 @@ import { NbMenuItem } from '@nebular/theme';
 })
 export class SidebarContainerComponent implements OnInit {
   @Input()
-  items = [
+  items: any[] = [];
+
+  /*items = [
     {
       title: 'Users',
       icon: 'keypad-outline',
@@ -48,11 +51,25 @@ export class SidebarContainerComponent implements OnInit {
         },
       ],
     },
-  ];
-  constructor() {
+  ];*/
+  constructor(private readonly routesService: RoutesService,
+              private readonly cd: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
+    this.routesService.getRoutesForLayout().subscribe((routes: AppNavItem[]) => {
+      routes.map((route: AppNavItem) => {
+        this.items.push({
+          title: route.title,
+          icon: route.icon,
+          link: route.link,
+          expanded: route.expanded,
+        });
+      });
+      setTimeout(() => {
+        this.cd.detectChanges();
+      });
+    });
   }
 
 }

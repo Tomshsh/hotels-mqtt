@@ -12,7 +12,7 @@ export class ConfigurationService {
   }
 
   initializeConfiguration(environment) {
-    Parse.initialize(environment.parse.appId, environment.parse.masterKey);
+    Parse.initialize(environment.parse.appId);
     (Parse as any).serverURL = environment.parse.serverURL;
   }
 }

@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  parse:  {
-    serverURL: "http://localhost:1337/parse", // Self-hosted Parse Server
-    appId: "yourappid",
-    masterKey: "yourmasterkey",
-    appName: "MyApp"
+  parse: {
+    serverURL: 'http://localhost:1337/parse', // Self-hosted Parse Server
+    appId: 'yourappid',
+    appName: 'MyApp'
   }
 };
 
