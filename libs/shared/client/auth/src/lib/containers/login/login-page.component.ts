@@ -28,6 +28,8 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
     this.submitted = true;
     this.authService.logIn(this.user).subscribe((user: UserDto) => {
       this.submitted = false;
+      this.errors = [];
+      this.messages = [];
       if (user === null) {
         this.errors = [`Username or Password aren't correct please try again.`];
       } else {
@@ -41,5 +43,9 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
       this.errors = [`Username or Password aren't correct please try again.`];
       this.submitted = false;
     }));
+  }
+
+  logout() {
+    this.authService.logOut();
   }
 }

@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   parse: {
-    serverURL: 'http://localhost:1337/parse', // Self-hosted Parse Server
-    appId: 'yourappid',
+    serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
+    appId: 'hotel2AppId',
     appName: 'MyApp'
   }
 };

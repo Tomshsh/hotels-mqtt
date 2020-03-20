@@ -8,6 +8,7 @@ export const AuthClientRoutes: Route[] = [{
   children: [
     { path: '', component: LoginPageComponent },
     { path: 'login', component: LoginPageComponent },
+    { path: 'logout', component: LoginPageComponent },
   ]
 }];
 

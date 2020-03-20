@@ -59,12 +59,21 @@ export class SidebarContainerComponent implements OnInit {
   ngOnInit(): void {
     this.routesService.getRoutesForLayout().subscribe((routes: AppNavItem[]) => {
       routes.map((route: AppNavItem) => {
-        this.items.push({
-          title: route.title,
-          icon: route.icon,
-          link: route.link,
-          expanded: route.expanded,
-        });
+        if (route) {
+          this.items.push({
+            title: route.title,
+            icon: route.icon,
+            link: route.link,
+            expanded: route.expanded,
+            children: route.children
+          });
+        }
+      });
+
+      this.items.push({
+        title: 'Logout',
+        icon: 'log-out-outline',
+        link: ['/auth/logout'],
       });
       setTimeout(() => {
         this.cd.detectChanges();
