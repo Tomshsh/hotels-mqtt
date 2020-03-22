@@ -1,6 +1,6 @@
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -8,7 +8,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { NbIconLibraries } from '@nebular/theme';
 
 
 @Component({
@@ -28,10 +27,7 @@ export class DatagridComponent implements OnInit, OnChanges {
   @Input()
   loading: boolean;
 
-  constructor(private readonly cd: ChangeDetectorRef, private iconLibraries: NbIconLibraries) {
-    this.iconLibraries.registerFontPack('font-awesome', { packClass: 'fa', iconClassPrefix: 'fa' });
-    this.iconLibraries.registerFontPack('regular', { packClass: 'far', iconClassPrefix: 'fa' });
-    this.iconLibraries.registerFontPack('solid', { packClass: 'fas', iconClassPrefix: 'fa' });
+  constructor(private readonly cd: ChangeDetectorRef) {
   }
 
   settings = {

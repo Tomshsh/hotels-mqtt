@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-tray',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  template: `
+    <router-outlet></router-outlet>
+  `
 })
 export class DashboardComponent {
 

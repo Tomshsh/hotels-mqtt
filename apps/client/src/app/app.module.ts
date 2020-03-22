@@ -5,12 +5,14 @@ import { Route, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { DevicesComponent } from './components/devices/devices.component';
-import { UsersComponent } from './components/users/users.component';
+import { ButtonViewComponent, UsersComponent } from './components/users/users.component';
 
 import { environment } from '@my-tray/env/client/environment';
 import { AuthGuard, SharedClientAuthModule } from '@my-tray/shared/client/auth';
 import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared/layout';
 import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
+import { CheckInComponent } from './components/reception/check-in/check-in.component';
+import { CheckOutComponent } from './components/reception/check-out/check-out.component';
 
 export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
@@ -56,9 +58,12 @@ const appRoutes: Route[] = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'users', component: UsersComponent },
       { path: 'devices', component: DevicesComponent },
+      { path: 'checkin', component: CheckInComponent },
+      { path: 'checkout', component: CheckOutComponent },
     ],
     canActivate: [AuthGuard],
   },
+
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
@@ -78,7 +83,7 @@ const appRoutes: Route[] = [
     deps: [ConfigurationService],
     multi: true
   }],
-  declarations: [DashboardComponent, DevicesComponent, UsersComponent],
+  declarations: [DashboardComponent, DevicesComponent, UsersComponent, ButtonViewComponent, CheckInComponent, CheckOutComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {

@@ -1,49 +1,16 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  EventEmitter,
-  Input
-} from '@angular/core';
-import { UsersServices } from '@my-tray/data-services/mytray/services';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { UserDto } from '@my-tray/api-interfaces';
-import { RoutingComponent } from '@my-tray/shared/utilities';
-import { LocalDataSource, ViewCell } from 'ng2-smart-table';
+import { LocalDataSource } from 'ng2-smart-table';
+import { ButtonViewComponent } from '../../users/users.component';
+import { UsersServices } from '@my-tray/data-services/mytray/services';
 import { tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'button-view',
-  template: `
-    <i class="fa fa-clone" (click)="onClick()">{{ renderValue }}</i>
-  `,
+  selector: 'my-tray-check-out',
+  templateUrl: './check-out.component.html',
+  styleUrls: ['./check-out.component.scss']
 })
-export class ButtonViewComponent implements ViewCell, OnInit {
-  renderValue: string;
-
-  @Input() value: string | number;
-  @Input() rowData: any;
-
-  @Output() save: EventEmitter<any> = new EventEmitter();
-
-  ngOnInit() {
-    this.renderValue = this.value.toString().toUpperCase();
-  }
-
-  onClick() {
-    this.save.emit(this.rowData);
-  }
-}
-
-@Component({
-  selector: 'my-tray-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
-})
-@RoutingComponent()
-export class UsersComponent implements OnInit, OnChanges {
+export class CheckOutComponent implements OnInit, OnChanges {
   dataSource: UserDto[] | LocalDataSource;
   loading: boolean;
   columns = {
