@@ -58,21 +58,7 @@ export class UsersComponent implements OnInit, OnChanges {
     email: {
       title: 'Email',
       type: 'string'
-    },
-    button: {
-      title: '',
-      type: 'custom',
-      filter: false,
-      attr: {
-        style: 'display: flex; justify-content: center;'
-      },
-      renderComponent: ButtonViewComponent,
-      onComponentInitFunction(instance) {
-        instance.save.subscribe(row => {
-          alert(`${row.name} saved!`)
-        });
-      }
-    },
+    }
   };
 
   constructor(private readonly usersService: UsersServices,

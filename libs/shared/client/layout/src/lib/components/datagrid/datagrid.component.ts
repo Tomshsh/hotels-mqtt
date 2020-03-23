@@ -34,7 +34,7 @@ export class DatagridComponent implements OnInit, OnChanges {
     noDataMessage: 'No data loaded.',
     columns: [],
     hideSubHeader: false,
-    add: {
+    /*add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
@@ -47,9 +47,27 @@ export class DatagridComponent implements OnInit, OnChanges {
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
-    },
+    },*/
     actions: {
-      add: true, update: true, delete: true
+      add: false, edit: false, update: false, delete: false,
+      custom: [
+        {
+          name: 'addAction',
+          title: '<i class="fa fa-plus" title="Add"></i>'
+        },
+        {
+          name: 'updateAction',
+          title: '<i class="fa fa-edit" title="Update"></i>'
+        },
+        {
+          name: 'editAction',
+          title: '<i class="fa fa-edit" title="Edit"></i>'
+        },
+        {
+          name: 'duplicateAction',
+          title: '<i class="fa fa-copy" title="Duplicate"></i>'
+        }
+      ]
     }
   };
 
