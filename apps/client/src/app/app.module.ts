@@ -13,6 +13,7 @@ import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared
 import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
 import { CheckInComponent } from './components/reception/check-in/check-in.component';
 import { CheckOutComponent } from './components/reception/check-out/check-out.component';
+import { TagsComponent } from './components/tags/tags.component';
 
 export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
@@ -60,6 +61,7 @@ const appRoutes: Route[] = [
       { path: 'devices', component: DevicesComponent },
       { path: 'checkin', component: CheckInComponent },
       { path: 'checkout', component: CheckOutComponent },
+      { path: 'tags', component: TagsComponent },
     ],
     canActivate: [AuthGuard],
   },
@@ -83,7 +85,7 @@ const appRoutes: Route[] = [
     deps: [ConfigurationService],
     multi: true
   }],
-  declarations: [DashboardComponent, DevicesComponent, UsersComponent, ButtonViewComponent, CheckInComponent, CheckOutComponent],
+  declarations: [DashboardComponent, DevicesComponent, UsersComponent, ButtonViewComponent, CheckInComponent, CheckOutComponent, TagsComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {
