@@ -2,7 +2,8 @@
   <nb-card-body>
     <ng2-smart-table
       [source]="source"
-      [settings]="settings">
+      [settings]="settings"
+    (custom)="onCustom($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

@@ -49,7 +49,7 @@ export class DatagridComponent implements OnInit, OnChanges {
       confirmDelete: true,
     },*/
     actions: {
-      add: false, edit: false, update: false, delete: false,
+      add: false, edit: false, delete: false,
       custom: [
         {
           name: 'addAction',
@@ -60,8 +60,8 @@ export class DatagridComponent implements OnInit, OnChanges {
           title: '<i class="fa fa-edit" title="Update"></i>'
         },
         {
-          name: 'editAction',
-          title: '<i class="fa fa-edit" title="Edit"></i>'
+          name: 'deleteAction',
+          title: '<i class="fa fa-trash" title="Delete"></i>'
         },
         {
           name: 'duplicateAction',
@@ -79,5 +79,9 @@ export class DatagridComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.cd.detectChanges();
     }, 0);
+  }
+
+  onCustom($event) {
+    alert(`Custom event '${$event.action}' fired on row №: ${$event.data.id}`)
   }
 }

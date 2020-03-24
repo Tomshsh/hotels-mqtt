@@ -1,18 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { Route, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
-import { DevicesComponent } from './components/devices/devices.component';
-import { ButtonViewComponent, UsersComponent } from './components/users/users.component';
 
 import { environment } from '@my-tray/env/client/environment';
-import { AuthGuard, SharedClientAuthModule } from '@my-tray/shared/client/auth';
-import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared/layout';
+import { SharedClientAuthModule } from '@my-tray/shared/client/auth';
+import { SharedLayoutModule } from '@my-tray/shared/layout';
 import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
-import { CheckInComponent } from './components/reception/check-in/check-in.component';
-import { CheckOutComponent } from './components/reception/check-out/check-out.component';
+import { ComponentsModule } from './components/components.module';
 
 export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
@@ -49,24 +46,9 @@ export function initializer(configurationService: ConfigurationService) {
     });
   };
 }*/
-
-const appRoutes: Route[] = [
-  {
-    path: 'dashboard',
-    component: DashboardContainerComponent ,
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'users', component: UsersComponent },
-      { path: 'devices', component: DevicesComponent },
-      { path: 'checkin', component: CheckInComponent },
-      { path: 'checkout', component: CheckOutComponent },
-    ],
-    canActivate: [AuthGuard],
-  },
-
+const routes: Routes = [
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
-
 
 @NgModule({
   imports: [
@@ -74,7 +56,8 @@ const appRoutes: Route[] = [
     SharedClientAuthModule,
     SharedLayoutModule,
     SharedUtilitiesModule,
-    RouterModule.forRoot(appRoutes),
+    ComponentsModule,
+    RouterModule.forRoot(routes),
     environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
   providers: [{
@@ -83,7 +66,7 @@ const appRoutes: Route[] = [
     deps: [ConfigurationService],
     multi: true
   }],
-  declarations: [DashboardComponent, DevicesComponent, UsersComponent, ButtonViewComponent, CheckInComponent, CheckOutComponent],
+  declarations: [DashboardComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {

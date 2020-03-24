@@ -16,13 +16,14 @@ export class RoutesService {
       return routes.map(nav => {
         const navItem = nav.toJSON();
         let appNavItem: AppNavItem;
-        if (!navItem.link && navItem.children && navItem.children.length > 0) {
+        if (!navItem.link && navItem.children.length > 0) {
           appNavItem = {
             title: navItem.title,
             icon: navItem.icon,
             link: navItem.link,
             expanded: navItem.expanded,
-            children: this.traverseNavTree(navItem).sort((a, b) => a.order - b.order)
+            children: this.traverseNavTree(navItem)
+              .sort((a, b) => a.order - b.order)
           };
         }
         return appNavItem;
