@@ -6,6 +6,7 @@ import { DevicesComponent } from './devices/devices.component';
 import { CheckInComponent } from './reception/check-in/check-in.component';
 import { CheckOutComponent } from './reception/check-out/check-out.component';
 import { AuthGuard } from '@my-tray/shared/client/auth';
+import { TagsComponent } from './tags/tags.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'devices', component: DevicesComponent },
       { path: 'checkin', component: CheckInComponent },
       { path: 'checkout', component: CheckOutComponent },
+      { path: 'tags', component: TagsComponent }
     ],
     canActivate: [AuthGuard]
   },

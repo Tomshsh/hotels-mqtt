@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import * as Parse from 'parse';
 
 // ref: https://www.prestonlamb.com/blog/loading-app-config-in-app-initializer
@@ -8,7 +7,7 @@ import * as Parse from 'parse';
 // ref: https://nbe.io/load-a-configuration-at-runtime-with-angular/?_sm_au_=iHV7WtNDV1lNTHFVML8tvK34L00HF
 @Injectable()
 export class ConfigurationService {
-  constructor(private readonly httpClient: HttpClient) {
+  constructor() {
   }
 
   initializeConfiguration(environment) {

@@ -1,15 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
+import { RouterModule, Routes } from '@angular/router';
+import { SharedClientAuthModule } from '@my-tray/shared/client/auth';
+import { SharedLayoutModule } from '@my-tray/shared/layout';
+
+import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
+import { ComponentsModule } from './components/components.module';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 
 import { environment } from '@my-tray/env/client/environment';
-import { SharedClientAuthModule } from '@my-tray/shared/client/auth';
-import { SharedLayoutModule } from '@my-tray/shared/layout';
-import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
-import { ComponentsModule } from './components/components.module';
+
 
 export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
@@ -46,20 +48,23 @@ export function initializer(configurationService: ConfigurationService) {
     });
   };
 }*/
+
 const routes: Routes = [
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
+
 @NgModule({
   imports: [
-    BrowserModule,
-    SharedClientAuthModule,
+    HttpClientModule,
     SharedLayoutModule,
     SharedUtilitiesModule,
+    SharedClientAuthModule.forRoot(),
     ComponentsModule,
     RouterModule.forRoot(routes),
     environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
+  exports:[HttpClientModule],
   providers: [{
     provide: APP_INITIALIZER,
     useFactory: initializer,

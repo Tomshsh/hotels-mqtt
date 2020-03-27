@@ -14,9 +14,7 @@ export const AuthClientRoutes: Route[] = [{
 
 @NgModule({
   imports: [RouterModule.forRoot(AuthClientRoutes)],
-  declarations: [],
   exports: [RouterModule],
-  providers: []
 })
 export class AuthClientRoutingModule {
 }

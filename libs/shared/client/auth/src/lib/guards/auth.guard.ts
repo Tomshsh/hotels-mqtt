@@ -10,11 +10,13 @@ import { Observable, of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AuthSessionQuery } from '../state/queries/auth-user-state-query';
+import { AuthSessionService } from '../state/services/auth-user-state-service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
   constructor(private readonly router: Router,
-              private readonly authSessionQuery: AuthSessionQuery) {
+              private readonly authSessionQuery: AuthSessionQuery,
+              private readonly authService: AuthSessionService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot,
@@ -34,6 +36,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       take(1),
       switchMap((isLoggedIn: boolean) => {
         if (!isLoggedIn) {
+          this.authService.logOut();
           this.router.navigate(['auth/login'], { queryParams: { returnUrl: state.url } });
         }
         return of(isLoggedIn);

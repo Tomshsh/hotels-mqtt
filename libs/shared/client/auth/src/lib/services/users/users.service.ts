@@ -4,9 +4,7 @@ import { UsersRepository } from '../../repositories';
 import { User } from 'parse';
 import { fromPromise } from 'rxjs/internal-compatibility';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UsersService {
 
   constructor(private readonly usersRepository: UsersRepository) {
@@ -27,6 +25,9 @@ export class UsersService {
       return loggedInUser;
     }));
   }
+
+
+
 
   async logOut() {
     await this.usersRepository.logOut();
