@@ -12,21 +12,23 @@ import { TagsComponent } from './tags/tags.component';
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: DashboardContainerComponent ,
+    component: DashboardContainerComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'users', component: UsersComponent },
       { path: 'devices', component: DevicesComponent },
-      { path: 'checkin', component: CheckInComponent },
-      { path: 'checkout', component: CheckOutComponent },
-      { path: 'tags', component: TagsComponent }
+      { path: 'tags', component: TagsComponent },
+      { path: 'check-in', component: CheckInComponent },
+      { path: 'check-out', component: CheckOutComponent },
     ],
     canActivate: [AuthGuard]
-  },
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forChild(routes)
+  ],
   exports: [RouterModule]
 })
-export class ComponentsRoutingModule { }
+export class ComponentsRoutingModule {
+}

@@ -2,25 +2,26 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TagsRepository } from '@my-tray/data-layers/mytray/repositories';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { Tag } from '@my-tray/api-interfaces';
+import { Tag, TagDto } from '@my-tray/api-interfaces';
 import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagsService {
-  constructor(private readonly tagsRepository: TagsRepository) {}
+  constructor(private readonly tagsRepository: TagsRepository) {
+  }
 
-  getTags(): Observable<Tag[]> {
+  getTags(): Observable<TagDto[]> {
     return fromPromise(
-      this.tagsRepository.getTags().then((tags: any[]) => {
+      this.tagsRepository.getTags().then((tags: Tag[]): TagDto[] => {
         return tags.map(
-          (tag: any): Tag => {
-            const notResolvedTag = tag.toJSON();
+          (tag: Tag): TagDto => {
             return {
-              objectId: notResolvedTag.objectId,
-              product: notResolvedTag.product,
-              expDate: moment(notResolvedTag.expiration_date).format('DD-MMM-YYYY')
+              objectId: tag.objectId,
+              productPrice: tag?.product?.price,
+              productTitle: tag?.product?.title,
+              expDate: moment(tag.expDate).format('DD-MMM-YYYY')
             };
           }
         );

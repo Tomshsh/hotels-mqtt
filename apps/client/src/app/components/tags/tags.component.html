@@ -1,1 +1,6 @@
-<ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading"></ui-data-grid>
+<ui-data-grid
+  [source]="dataSource"
+  [columns]="columns"
+  [loading]="loading"
+  (createConfirm)="onCreateConfirm($event)"
+></ui-data-grid>

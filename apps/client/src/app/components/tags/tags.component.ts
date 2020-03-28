@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TagsService } from '@my-tray/data-services/mytray/services';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { Tag } from '@my-tray/api-interfaces';
+import { TagDto } from '@my-tray/api-interfaces';
+import { TAGS_COLUMNS } from './core/settings';
+import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 
 @Component({
   selector: 'my-tray-tags',
@@ -10,42 +12,19 @@ import { Tag } from '@my-tray/api-interfaces';
 })
 @RoutingComponent()
 export class TagsComponent implements OnInit {
-  dataSource: Tag[];
+  dataSource: TagDto[];
   loading: boolean;
-
-  columns = {
-    objectId: {
-      title: 'ID',
-      type: 'string'
-    },
-    expDate: {
-      title: 'Expiration Date',
-      type: 'string'
-    },
-    'product.title': {
-      title: 'Product Name',
-      type: 'string',
-      valuePrepareFunction: product => {
-        return product.title;
-      }
-    },
-    'product.price': {
-      title: 'Price',
-      type: 'Number',
-      valuePrepareFunction: product => {
-        return product.price;
-      }
-    }
-  };
+  columns = TAGS_COLUMNS;
 
   constructor(
     private readonly tagsService: TagsService,
     private readonly cd: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loading = true;
-    this.tagsService.getTags().subscribe((tags: Tag[]) => {
+    this.tagsService.getTags().subscribe((tags: TagDto[]) => {
       this.dataSource = tags;
       this.loading = false;
 
@@ -53,5 +32,29 @@ export class TagsComponent implements OnInit {
         this.cd.detectChanges();
       }, 0);
     });
+  }
+
+  onCreateConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    // todo: dismiss if you don't want to save event.confirm.reject();
+    // todo: send data to Parse
+    event.confirm.resolve(event.newData);
+  }
+
+  onEditConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    // todo: dismiss if you don't want to save event.confirm.reject();
+    // todo: send data to Parse
+    event.confirm.resolve(event.newData);
+  }
+
+  onDuplicateRow(event: { newData: TagDto, confirm: Deferred}) {
+    // todo: dismiss if you don't want to save event.confirm.reject();
+    // todo: send data to Parse
+    event.confirm.resolve(event.newData);
+  }
+
+  onDeleteConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    // todo: dismiss if you don't want to save event.confirm.reject();
+    // todo: send data to Parse
+    event.confirm.resolve(event.newData);
   }
 }

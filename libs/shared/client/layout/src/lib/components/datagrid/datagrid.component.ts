@@ -1,13 +1,16 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, EventEmitter,
   Input,
   OnChanges,
-  OnInit,
-  SimpleChanges
+  OnInit, Output,
+  SimpleChanges, ViewChild
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ɵbo as Ng2SmartTableComponent } from 'ng2-smart-table';
+import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 
 
 @Component({
@@ -16,7 +19,10 @@ import { LocalDataSource } from 'ng2-smart-table';
   styleUrls: ['./datagrid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatagridComponent implements OnInit, OnChanges {
+export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
+
+  @ViewChild('table', { static: false })
+  gridView: Ng2SmartTableComponent;
 
   @Input()
   source: any[] | LocalDataSource;
@@ -27,45 +33,55 @@ export class DatagridComponent implements OnInit, OnChanges {
   @Input()
   loading: boolean;
 
+  @Output()
+  createConfirm: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  editConfirm: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  updateConfirm: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  deleteConfirm: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  duplicateAction: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private readonly cd: ChangeDetectorRef) {
+
   }
 
   settings = {
     noDataMessage: 'No data loaded.',
     columns: [],
     hideSubHeader: false,
-    /*add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+    add: {
+      confirmCreate: true
     },
     edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },*/
+      confirmDelete: true
+    },
+
     actions: {
-      add: false, edit: false, delete: false,
+      add: true,
+      edit: false,
+      delete: false,
       custom: [
         {
-          name: 'addAction',
-          title: '<i class="fa fa-plus" title="Add"></i>'
-        },
-        {
-          name: 'updateAction',
+          name: 'edit',
           title: '<i class="fa fa-edit" title="Update"></i>'
         },
         {
-          name: 'deleteAction',
+          name: 'delete',
           title: '<i class="fa fa-trash" title="Delete"></i>'
         },
         {
-          name: 'duplicateAction',
-          title: '<i class="fa fa-copy" title="Duplicate"></i>'
+          name: 'duplicate',
+          title: '<i class="fa fa-copy" title="Duplicate"></i>',
         }
       ]
     }
@@ -75,6 +91,23 @@ export class DatagridComponent implements OnInit, OnChanges {
     this.settings.columns = this.columns;
   }
 
+  ngAfterViewInit() {
+    this.gridView.custom.subscribe(({ action, data, source }) => {
+      switch (action) {
+        case 'edit':
+          break;
+        case 'duplicate':
+          this.gridView.grid.createFormShown = true;
+          this.gridView.grid.dataSet.newRow.setData(data);
+          this.duplicateAction.emit(data);
+          break;
+        case 'delete':
+          break;
+      }
+    });
+  }
+
+
   ngOnChanges(changes: SimpleChanges): void {
     setTimeout(() => {
       this.cd.detectChanges();
@@ -82,6 +115,10 @@ export class DatagridComponent implements OnInit, OnChanges {
   }
 
   onCustom($event) {
-    alert(`Custom event '${$event.action}' fired on row №: ${$event.data.id}`)
+    console.log(`Custom event '${ $event.action }' fired on row №: ${ JSON.stringify($event.data) }`)
+  }
+
+  onCreate($event) {
+    this.createConfirm.emit($event);
   }
 }

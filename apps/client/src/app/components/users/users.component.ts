@@ -1,41 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  EventEmitter,
-  Input
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { UsersServices } from '@my-tray/data-services/mytray/services';
 import { UserDto } from '@my-tray/api-interfaces';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { LocalDataSource, ViewCell } from 'ng2-smart-table';
+import { LocalDataSource } from 'ng2-smart-table';
 import { tap } from 'rxjs/operators';
 
-@Component({
-  selector: 'button-view',
-  template: `
-    <i class="fa fa-clone" (click)="onClick()">{{ renderValue }}</i>
-  `,
-})
-export class ButtonViewComponent implements ViewCell, OnInit {
-  renderValue: string;
-
-  @Input() value: string | number;
-  @Input() rowData: any;
-
-  @Output() save: EventEmitter<any> = new EventEmitter();
-
-  ngOnInit() {
-    this.renderValue = this.value.toString().toUpperCase();
-  }
-
-  onClick() {
-    this.save.emit(this.rowData);
-  }
-}
 
 @Component({
   selector: 'my-tray-users',
@@ -43,7 +12,7 @@ export class ButtonViewComponent implements ViewCell, OnInit {
   styleUrls: ['./users.component.scss']
 })
 @RoutingComponent()
-export class UsersComponent implements OnInit, OnChanges {
+export class UsersComponent implements OnInit {
   dataSource: UserDto[] | LocalDataSource;
   loading: boolean;
   columns = {
@@ -80,12 +49,5 @@ export class UsersComponent implements OnInit, OnChanges {
       () => {
         this.loading = false;
       });
-  }
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    setTimeout(() => {
-      this.cd.detectChanges();
-    }, 0);
   }
 }

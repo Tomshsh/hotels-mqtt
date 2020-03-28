@@ -3,7 +3,9 @@
     <ng2-smart-table
       [source]="source"
       [settings]="settings"
-    (custom)="onCustom($event)">
+      (custom)="onCustom($event)"
+      (createConfirm)="onCreate($event)"
+      #table>
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
