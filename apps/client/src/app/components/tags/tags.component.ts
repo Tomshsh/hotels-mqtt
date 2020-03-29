@@ -34,27 +34,28 @@ export class TagsComponent implements OnInit {
     });
   }
 
-  onCreateConfirm(event: { newData: TagDto, confirm: Deferred}) {
+  onCreateRowConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    console.log('::Create row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    event.confirm.resolve(event.newData);
+    event.confirm.resolve();
   }
 
-  onEditConfirm(event: { newData: TagDto, confirm: Deferred}) {
+  onEditRowConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    console.log('::Update row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    event.confirm.resolve(event.newData);
   }
 
-  onDuplicateRow(event: { newData: TagDto, confirm: Deferred}) {
+  onDeleteRowConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    console.log('::Delete row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    event.confirm.resolve(event.newData);
   }
 
-  onDeleteConfirm(event: { newData: TagDto, confirm: Deferred}) {
+  onDuplicateRowConfirm(event: { newData: TagDto, confirm: Deferred}) {
+    console.log('::Delete row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    event.confirm.resolve(event.newData);
   }
 }

@@ -2,5 +2,8 @@
   [source]="dataSource"
   [columns]="columns"
   [loading]="loading"
-  (createConfirm)="onCreateConfirm($event)"
+  (createConfirm)="onCreateRowConfirm($event)"
+  (updateConfirm)="onEditRowConfirm($event)"
+  (deleteConfirm)="onDeleteRowConfirm($event)"
+  (duplicateConfirm)="onDuplicateRowConfirm($event)"
 ></ui-data-grid>

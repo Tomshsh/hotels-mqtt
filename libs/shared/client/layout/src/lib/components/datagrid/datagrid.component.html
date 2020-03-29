@@ -5,6 +5,8 @@
       [settings]="settings"
       (custom)="onCustom($event)"
       (createConfirm)="onCreate($event)"
+      (editConfirm)="onUpdate($event)"
+      (deleteConfirm)="onDelete($event)"
       #table>
     </ng2-smart-table>
   </nb-card-body>

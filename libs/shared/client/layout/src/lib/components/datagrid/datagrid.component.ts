@@ -37,7 +37,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   createConfirm: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
-  editConfirm: EventEmitter<any> = new EventEmitter<any>();
+  duplicateConfirm: EventEmitter<any> = new EventEmitter<any>();
 
   @Output()
   updateConfirm: EventEmitter<any> = new EventEmitter<any>();
@@ -45,8 +45,6 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   @Output()
   deleteConfirm: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output()
-  duplicateAction: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private readonly cd: ChangeDetectorRef) {
 
@@ -95,13 +93,19 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
     this.gridView.custom.subscribe(({ action, data, source }) => {
       switch (action) {
         case 'edit':
+          this.gridView.grid.createFormShown = true;
+          this.gridView.grid.dataSet.newRow.setData(data);
+          this.updateConfirm.emit(data);
           break;
         case 'duplicate':
           this.gridView.grid.createFormShown = true;
           this.gridView.grid.dataSet.newRow.setData(data);
-          this.duplicateAction.emit(data);
+          this.duplicateConfirm.emit(data);
           break;
         case 'delete':
+          this.gridView.delete.subscribe(() => {
+            this.deleteConfirm.emit(data);
+          });
           break;
       }
     });
@@ -116,9 +120,21 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 
   onCustom($event) {
     console.log(`Custom event '${ $event.action }' fired on row №: ${ JSON.stringify($event.data) }`)
+    if ($event.action === 'duplicate') {
+      this.duplicateConfirm.emit($event);
+    }
   }
 
   onCreate($event) {
     this.createConfirm.emit($event);
   }
+
+  onUpdate($event) {
+    this.updateConfirm.emit($event);
+  }
+
+  onDelete($event) {
+    this.deleteConfirm.emit($event);
+  }
+
 }
