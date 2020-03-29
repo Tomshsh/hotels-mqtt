@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { ɵbo as Ng2SmartTableComponent } from 'ng2-smart-table';
-import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 
 
 @Component({
@@ -55,20 +54,27 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
     columns: [],
     hideSubHeader: false,
     add: {
+      addButtonContent: '<i class="fa fa-plus" title="Create"></i>',
+      createButtonContent: '<i class="fa fa-check" ></i>',
+      cancelButtonContent: '<i class="fa fa-close"></i>',
       confirmCreate: true
     },
     edit: {
+      editButtonContent: '<i class="fa fa-edit" title="Update"></i>',
+      saveButtonContent: '<i class="fa fa-check"></i>',
+      cancelButtonContent: '<i class="fa fa-close"></i>',
       confirmSave: true
     },
     delete: {
+      deleteButtonContent: '<i class="fa fa-trash" title="Delete"></i>',
       confirmDelete: true
     },
 
     actions: {
       add: true,
-      edit: false,
-      delete: false,
-      custom: [
+      edit: true,
+      delete: true,
+      /*custom: [
         {
           name: 'edit',
           title: '<i class="fa fa-edit" title="Update"></i>'
@@ -81,7 +87,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
           name: 'duplicate',
           title: '<i class="fa fa-copy" title="Duplicate"></i>',
         }
-      ]
+      ]*/
     }
   };
 
@@ -91,26 +97,11 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
     this.gridView.custom.subscribe(({ action, data, source }) => {
-      switch (action) {
-        case 'edit':
-          this.gridView.grid.createFormShown = true;
-          this.gridView.grid.dataSet.newRow.setData(data);
-          this.updateConfirm.emit(data);
-          break;
-        case 'duplicate':
-          this.gridView.grid.createFormShown = true;
-          this.gridView.grid.dataSet.newRow.setData(data);
-          this.duplicateConfirm.emit(data);
-          break;
-        case 'delete':
-          this.gridView.delete.subscribe(() => {
-            this.deleteConfirm.emit(data);
-          });
-          break;
+      if (action === 'duplicate') {
+        this.gridView.grid.dataSet.newRow.setData(data);
       }
     });
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     setTimeout(() => {
@@ -136,5 +127,4 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   onDelete($event) {
     this.deleteConfirm.emit($event);
   }
-
 }

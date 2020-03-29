@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TagsRepository } from '@my-tray/data-layers/mytray/repositories';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { Tag, TagDto } from '@my-tray/api-interfaces';
@@ -27,5 +27,9 @@ export class TagsService {
         );
       })
     );
+  }
+
+  createTag(newTag: TagDto): Observable<boolean> {
+    return of(true);
   }
 }
