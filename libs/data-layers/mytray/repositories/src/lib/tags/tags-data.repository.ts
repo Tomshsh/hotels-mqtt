@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Parse from 'parse';
-import { Tag } from '@my-tray/api-interfaces';
+import { Tag, TagDto } from '@my-tray/api-interfaces';
 import moment from 'moment';
 
 @Injectable({
@@ -8,13 +8,13 @@ import moment from 'moment';
 })
 export class TagsRepository {
 
-  constructor() {
-  }
+  constructor() {}
 
   async getTags(): Promise<Tag[]> {
     return await new Parse.Query(Parse.Object.extend('Tag'))
       .include('product')
-      .find().then((tags: any[]) => {
+      .find()
+      .then((tags: any[]) => {
         return tags.map((tag): Tag => {
           const notResolvedTag = tag.toJSON();
           return {
@@ -24,5 +24,12 @@ export class TagsRepository {
           };
         });
       });
+  }
+
+  async createTag(tag: TagDto): Promise<Tag> {
+    const tagModel = Parse.Object.extend('Tag');
+    tagModel.set('expiration_date', tag.expDate);
+
+    return await tagModel.save();
   }
 }

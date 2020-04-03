@@ -74,46 +74,27 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
       add: true,
       edit: true,
       delete: true,
-      /*custom: [
-        {
-          name: 'edit',
-          title: '<i class="fa fa-edit" title="Update"></i>'
-        },
-        {
-          name: 'delete',
-          title: '<i class="fa fa-trash" title="Delete"></i>'
-        },
-        {
-          name: 'duplicate',
-          title: '<i class="fa fa-copy" title="Duplicate"></i>',
-        }
-      ]*/
     }
   };
 
   ngOnInit(): void {
-    this.settings.columns = this.columns;
   }
 
   ngAfterViewInit() {
-    this.gridView.custom.subscribe(({ action, data, source }) => {
-      if (action === 'duplicate') {
-        this.gridView.grid.dataSet.newRow.setData(data);
-      }
-    });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.columns) {
+      this.settings.columns = this.columns;
+    }
     setTimeout(() => {
       this.cd.detectChanges();
     }, 0);
   }
 
   onCustom($event) {
-    console.log(`Custom event '${ $event.action }' fired on row №: ${ JSON.stringify($event.data) }`)
-    if ($event.action === 'duplicate') {
-      this.duplicateConfirm.emit($event);
-    }
+    console.log(`Custom event '${ $event.action }' fired on row №: ${ JSON.stringify($event.data) }`);
   }
 
   onCreate($event) {

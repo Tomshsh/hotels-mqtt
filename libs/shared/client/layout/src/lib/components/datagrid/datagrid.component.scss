@@ -1,9 +1,16 @@
 :host ::ng-deep {
   .ng2-smart-actions {
-    height: auto!important;
+    height: auto !important;
   }
 
   tr .ng2-smart-actions {
+    text-align: center;
+    a {
+      &.ng2-smart-action {
+        font-size: 1.4rem !important;
+      }
+    }
+
     ng2-st-actions {
       a {
         &.ng2-smart-action {
@@ -15,9 +22,7 @@
 
   ng2-st-tbody-custom {
     display: flex;
-
   }
-
 
   ng2-st-tbody-edit-delete a.ng2-smart-action {
     display: inline-block !important;
@@ -25,7 +30,6 @@
 
   ng2-st-tbody-create-cancel a.ng2-smart-action {
     display: inline-block !important;
-
   }
 
   ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
@@ -34,5 +38,4 @@
     text-align: center;
     font-size: 1.4rem !important;
   }
-
 }

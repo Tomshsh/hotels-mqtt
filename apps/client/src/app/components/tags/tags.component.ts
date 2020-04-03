@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { TagsService } from '@my-tray/data-services/mytray/services';
+
+import { TagsService, ProductService } from '@my-tray/data-services/mytray/services';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { TagDto } from '@my-tray/api-interfaces';
+import { TagDto, Product } from '@my-tray/api-interfaces';
 import { TAGS_COLUMNS } from './core/settings';
+
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 
 @Component({
@@ -14,12 +16,14 @@ import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 export class TagsComponent implements OnInit {
   dataSource: TagDto[];
   loading: boolean;
-  columns = TAGS_COLUMNS;
+  columns: any = TAGS_COLUMNS;
 
   constructor(
     private readonly tagsService: TagsService,
+    private readonly productService: ProductService,
     private readonly cd: ChangeDetectorRef
   ) {
+
   }
 
   ngOnInit(): void {
@@ -27,10 +31,17 @@ export class TagsComponent implements OnInit {
     this.tagsService.getTags().subscribe((tags: TagDto[]) => {
       this.dataSource = tags;
       this.loading = false;
-
       setTimeout(() => {
         this.cd.detectChanges();
       }, 0);
+    });
+
+    this.productService.getProducts().subscribe((products: Product[]) => {
+      this.columns.productTitle.editor.config.list = [];
+      setTimeout(() => {
+        this.cd.detectChanges();
+      }, 0);
+      this.columns = Object.assign({}, this.columns);
     });
   }
 
@@ -62,11 +73,11 @@ export class TagsComponent implements OnInit {
     console.log('::Delete row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-   /* if (event.newData) {
-      this.tagsService.createTag(event.newData);
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }*/
+    /* if (event.newData) {
+       this.tagsService.createTag(event.newData);
+       event.confirm.resolve();
+     } else {
+       event.confirm.reject();
+     }*/
   }
 }

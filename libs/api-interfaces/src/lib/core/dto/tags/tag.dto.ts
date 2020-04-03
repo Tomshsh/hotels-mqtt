@@ -1,5 +1,4 @@
-import { BaseDtoInterface } from '@my-tray/api-interfaces';
-
+import { BaseDtoInterface } from '../base-dto.interface';
 
 export interface TagDto extends BaseDtoInterface {
   expDate: string;

@@ -18,7 +18,6 @@ import { TagsComponent } from './tags/tags.component';
     ComponentsRoutingModule
   ],
   providers: [
-
   ]
 })
 export class ComponentsModule {
