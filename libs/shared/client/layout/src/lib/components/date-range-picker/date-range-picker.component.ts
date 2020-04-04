@@ -19,6 +19,7 @@ import moment from 'moment';
   `,
   styleUrls: ['./date-range-picker.component.scss']
 })
+
 export class DateRangePickerComponent extends DefaultEditor implements OnInit {
   @Input() placeholder = 'Please choose date';
   @Input() format = 'dd-MMM-yyyy';
@@ -41,16 +42,4 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
 }
 
 
-@Component({
-  template: `{{value | date:'dd-MMM-yyyy' }}`,
-})
-export class DateRangePickerRenderComponent implements ViewCell, OnInit {
-  @Input() value: string;
-  @Input() rowData: any;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-}

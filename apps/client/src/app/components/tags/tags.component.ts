@@ -58,13 +58,25 @@ export class TagsComponent implements OnInit {
 
   onEditRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
     console.log('::Update row::', event);
-    // todo: dismiss if you don't want to save event.confirm.reject();
-    // todo: send data to Parse
+    this.tagsService.updateTag(event.newData).subscribe((updated: boolean) => {
+      if (updated) {
+        // todo: show toaster
+        event.confirm.resolve();
+      } else {
+        event.confirm.reject();
+      }
+    });
   }
 
   onDeleteRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
     console.log('::Delete row::', event);
-    // todo: dismiss if you don't want to save event.confirm.reject();
-    // todo: send data to Parse
+    this.tagsService.deleteTag(event.newData.objectId).subscribe((deleted: boolean) => {
+      if (deleted) {
+        // todo: show toaster
+        event.confirm.resolve();
+      } else {
+        event.confirm.reject();
+      }
+    });
   }
 }

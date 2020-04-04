@@ -5,7 +5,8 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule, NbDatepickerModule,
+  NbCheckboxModule,
+  NbDatepickerModule,
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
@@ -14,17 +15,17 @@ import {
   NbSidebarModule,
   NbSidebarService,
   NbSpinnerModule,
-  NbThemeModule, NbToastrModule,
+  NbThemeModule,
+  NbToastrModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
 import { DashboardContainerComponent } from './containers';
-import { DatagridComponent, DateRangePickerRenderComponent, SidebarContainerComponent } from './components';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DateRangePickerComponent } from './components';
 import { FormsModule } from '@angular/forms';
+import { DatagridComponent, DateRangePickerComponent, SidebarContainerComponent, DatepickerRendererComponent } from './components'; // todo: wrap-it in the coomponent.module
 
 
 @NgModule({
@@ -64,7 +65,7 @@ import { FormsModule } from '@angular/forms';
         FormsModule
     ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
-  declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DateRangePickerRenderComponent],
+  declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent]
 })
 

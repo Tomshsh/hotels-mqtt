@@ -1,4 +1,4 @@
-import { DateRangePickerComponent, DateRangePickerRenderComponent } from '@my-tray/shared/layout';
+import { DateRangePickerComponent, DatepickerRendererComponent } from '@my-tray/shared/layout';
 
 export const TAGS_COLUMNS = {
   objectId: {
@@ -11,7 +11,7 @@ export const TAGS_COLUMNS = {
     title: 'Expiration Date',
     type: 'custom',
     width: '250px',
-    renderComponent: DateRangePickerRenderComponent,
+    renderComponent: DatepickerRendererComponent,
     editor: {
       type: 'custom',
       component: DateRangePickerComponent,

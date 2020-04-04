@@ -37,4 +37,22 @@ export class TagsService {
       })
     );*/
   }
+
+  updateTag(updateTag: TagDto): Observable<boolean> {
+    return of(true);
+    /*return fromPromise(
+      this.tagsRepository.createTag(newTag).then((tag: Tag) => {
+        return null;
+      })
+    );*/
+  }
+
+  deleteTag(objectId: string): Observable<boolean> {
+    return of(true);
+    /*return fromPromise(
+      this.tagsRepository.createTag(newTag).then((tag: Tag) => {
+        return null;
+      })
+    );*/
+  }
 }
