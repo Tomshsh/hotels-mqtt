@@ -29,7 +29,6 @@ export class TagsRepository {
   async createTag(tag: TagDto): Promise<Tag> {
     const tagModel = Parse.Object.extend('Tag');
     tagModel.set('expiration_date', tag.expDate);
-
     return await tagModel.save();
   }
 }

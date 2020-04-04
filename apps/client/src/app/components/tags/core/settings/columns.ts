@@ -1,3 +1,5 @@
+import { DateRangePickerComponent, DateRangePickerRenderComponent } from '@my-tray/shared/layout';
+
 export const TAGS_COLUMNS = {
   objectId: {
     title: 'ID',
@@ -7,7 +9,16 @@ export const TAGS_COLUMNS = {
   },
   expDate: {
     title: 'Expiration Date',
-    type: 'string'
+    type: 'custom',
+    width: '250px',
+    renderComponent: DateRangePickerRenderComponent,
+    editor: {
+      type: 'custom',
+      component: DateRangePickerComponent,
+      config: {
+        format: 'DD-MMM-YYYY'
+      }
+    }
   },
   productTitle: {
     title: 'Product Name',
@@ -15,12 +26,7 @@ export const TAGS_COLUMNS = {
       type: 'list',
       config: {
         selectText: '- none -',
-        list: [
-          {value: '1', title:'admin'},
-          {value: '2', title:'restricted'},
-          {value: '3', title:'entry'},
-          {value: '4', title:'report'},
-        ]
+        list: []
       },
     }
   },

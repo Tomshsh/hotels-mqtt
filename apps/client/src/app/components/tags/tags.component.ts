@@ -23,25 +23,22 @@ export class TagsComponent implements OnInit {
     private readonly productService: ProductService,
     private readonly cd: ChangeDetectorRef
   ) {
-
   }
 
   ngOnInit(): void {
     this.loading = true;
     this.tagsService.getTags().subscribe((tags: TagDto[]) => {
       this.dataSource = tags;
-      this.loading = false;
-      setTimeout(() => {
-        this.cd.detectChanges();
-      }, 0);
-    });
-
-    this.productService.getProducts().subscribe((products: Product[]) => {
-      this.columns.productTitle.editor.config.list = [];
-      setTimeout(() => {
-        this.cd.detectChanges();
-      }, 0);
-      this.columns = Object.assign({}, this.columns);
+      this.productService.getProducts().subscribe((products: Product[]) => {
+        this.columns.productTitle.editor.config.list = products.map((prod, index: number) => {
+          return { value: prod.objectId, title: prod.title };
+        });
+        this.columns = Object.assign({}, this.columns);
+        this.loading = false;
+        setTimeout(() => {
+          this.cd.detectChanges();
+        }, 0);
+      });
     });
   }
 
@@ -49,12 +46,14 @@ export class TagsComponent implements OnInit {
     console.log('::Create row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    if (event.newData) {
-      this.tagsService.createTag(event.newData);
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
+    this.tagsService.createTag(event.newData).subscribe((created: boolean) => {
+      if (created) {
+        // todo: show toaster
+        event.confirm.resolve();
+      } else {
+        event.confirm.reject();
+      }
+    });
   }
 
   onEditRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
@@ -67,17 +66,5 @@ export class TagsComponent implements OnInit {
     console.log('::Delete row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-  }
-
-  onDuplicateRowConfirm(event) {
-    console.log('::Delete row::', event);
-    // todo: dismiss if you don't want to save event.confirm.reject();
-    // todo: send data to Parse
-    /* if (event.newData) {
-       this.tagsService.createTag(event.newData);
-       event.confirm.resolve();
-     } else {
-       event.confirm.reject();
-     }*/
   }
 }

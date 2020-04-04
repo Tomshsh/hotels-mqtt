@@ -78,6 +78,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   };
 
   ngOnInit(): void {
+    this.settings.columns = Object.assign({}, this.columns);
   }
 
   ngAfterViewInit() {
@@ -85,9 +86,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.columns) {
-      this.settings.columns = this.columns;
-    }
+    this.settings = Object.assign({}, this.settings);
     setTimeout(() => {
       this.cd.detectChanges();
     }, 0);

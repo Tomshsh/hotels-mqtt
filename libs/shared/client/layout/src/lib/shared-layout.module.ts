@@ -5,7 +5,7 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCardModule,
-  NbCheckboxModule,
+  NbCheckboxModule, NbDatepickerModule,
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
@@ -14,15 +14,16 @@ import {
   NbSidebarModule,
   NbSidebarService,
   NbSpinnerModule,
-  NbThemeModule,
+  NbThemeModule, NbToastrModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
 import { DashboardContainerComponent } from './containers';
-import { DatagridComponent, SidebarContainerComponent } from './components';
+import { DatagridComponent, DateRangePickerRenderComponent, SidebarContainerComponent } from './components';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateRangePickerComponent } from './components';
 
 
 @NgModule({
@@ -40,6 +41,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NbSpinnerModule,
     NbCardModule,
     NbSidebarModule,
+    NbDatepickerModule.forRoot(),
+    NbToastrModule,
     NbThemeModule.forRoot({
       name: 'corporate'
     }),
@@ -59,7 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
-  declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent],
+  declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DateRangePickerRenderComponent],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent]
 })
 
