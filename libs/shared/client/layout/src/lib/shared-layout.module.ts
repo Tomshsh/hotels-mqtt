@@ -24,43 +24,45 @@ import { DatagridComponent, DateRangePickerRenderComponent, SidebarContainerComp
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateRangePickerComponent } from './components';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbIconModule,
-    NbAlertModule,
-    NbInputModule,
-    NbButtonModule,
-    NbCheckboxModule,
-    NbLayoutModule,
-    NbActionsModule,
-    NbSpinnerModule,
-    NbCardModule,
-    NbSidebarModule,
-    NbDatepickerModule.forRoot(),
-    NbToastrModule,
-    NbThemeModule.forRoot({
-      name: 'corporate'
-    }),
-    NbMenuModule.forRoot(),
-    NbAuthModule.forRoot({
-      strategies: [
-        NbPasswordAuthStrategy.setup({
-          name: 'email',
+    imports: [
+        CommonModule,
+        NbLayoutModule,
+        NbEvaIconsModule,
+        NbIconModule,
+        NbAlertModule,
+        NbInputModule,
+        NbButtonModule,
+        NbCheckboxModule,
+        NbLayoutModule,
+        NbActionsModule,
+        NbSpinnerModule,
+        NbCardModule,
+        NbSidebarModule,
+        NbDatepickerModule.forRoot(),
+        NbToastrModule,
+        NbThemeModule.forRoot({
+            name: 'corporate'
         }),
-      ],
-      forms: {},
-    }),
-    RouterModule,
-    Ng2SmartTableModule,
-    BrowserAnimationsModule,
-    NbSpinnerModule,
-    RouterModule
-  ],
+        NbMenuModule.forRoot(),
+        NbAuthModule.forRoot({
+            strategies: [
+                NbPasswordAuthStrategy.setup({
+                    name: 'email',
+                }),
+            ],
+            forms: {},
+        }),
+        RouterModule,
+        Ng2SmartTableModule,
+        BrowserAnimationsModule,
+        NbSpinnerModule,
+        RouterModule,
+        FormsModule
+    ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
   declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DateRangePickerRenderComponent],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent]

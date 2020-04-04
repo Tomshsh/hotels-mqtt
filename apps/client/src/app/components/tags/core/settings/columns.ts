@@ -16,7 +16,7 @@ export const TAGS_COLUMNS = {
       type: 'custom',
       component: DateRangePickerComponent,
       config: {
-        format: 'DD-MMM-YYYY'
+        format: 'dd-MMM-yyyy'
       }
     }
   },
