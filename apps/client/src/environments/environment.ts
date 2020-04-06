@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
-  parse:  {
-    serverURL: "http://localhost:1337/api", // Self-hosted Parse Server
-    appId: "APPLICATION_ID",
-    masterKey: "MASTER_KEY",
-    appName: "Tray Manager"
+  parse: {
+    serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
+    appId: 'hotel2AppId',
+    appName: 'MyApp'
   }
 };
 

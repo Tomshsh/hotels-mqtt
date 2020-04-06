@@ -1,0 +1,8 @@
+<ui-data-grid
+  [source]="dataSource"
+  [columns]="columns"
+  [loading]="loading"
+  (createConfirm)="onCreateRowConfirm($event)"
+  (updateConfirm)="onEditRowConfirm($event)"
+  (deleteConfirm)="onDeleteRowConfirm($event)">
+</ui-data-grid>

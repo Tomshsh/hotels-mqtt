@@ -1,41 +1,39 @@
-import { NgModule } from '@angular/core';
+import { Injector, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Route, RouterModule } from '@angular/router';
-import { LoginPageComponent } from "./containers/login-page/login-page.component";
 
-import { NbAuthComponent, NbAuthModule, NbAuthService, NbTokenService, } from "@nebular/auth";
-import { NbIconModule, NbLayoutModule, NbThemeModule } from "@nebular/theme";
-import { HttpClientModule } from "@angular/common/http";
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { LoginFormComponent } from "./components/login/login-form.component";
+import { AuthGuard } from './guards';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-
-export const sharedClientAuthRoutes: Route[] = [
-  {
-    path: 'auth', component: NbAuthComponent,
-    children: [
-      { path: '', component: LoginPageComponent },
-      { path: 'login', component: LoginPageComponent },
-    ]
-  },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', redirectTo: '/' },
-];
+import { HttpAuthErrorInterceptor } from './interceptors';
+import { AuthClientServicesModule } from './services/auth-client-services.module';
+import { ContainersModule } from './containers/containers.module';
+import { AuthClientRoutingModule } from './routes/auth-client-routing.module';
 
 @NgModule({
   imports: [
-    HttpClientModule,
     CommonModule,
-    NbLayoutModule,
-    RouterModule.forRoot(sharedClientAuthRoutes),
-    NbThemeModule.forRoot(),
-    NbAuthModule.forRoot(),
-    NbEvaIconsModule,
-    NbIconModule
+    AuthClientRoutingModule,
+    AuthClientServicesModule,
+    ContainersModule,
   ],
-  declarations: [LoginPageComponent, LoginFormComponent],
-  exports: [RouterModule],
-  providers: [NbAuthService, NbTokenService]
+  providers: [
+    AuthGuard,
+  ]
 })
 export class SharedClientAuthModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedClientAuthModule,
+      providers: [
+        AuthGuard,
+        HttpAuthErrorInterceptor,
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: HttpAuthErrorInterceptor,
+          multi: true,
+          deps: [Injector]
+        }
+      ]
+    };
+  }
 }
