@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DefaultEditor, ViewCell } from 'ng2-smart-table';
+import { DefaultEditor } from 'ng2-smart-table';
 import moment from 'moment';
 
 @Component({

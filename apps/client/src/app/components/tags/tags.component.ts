@@ -30,7 +30,7 @@ export class TagsComponent implements OnInit {
     this.tagsService.getTags().subscribe((tags: TagDto[]) => {
       this.dataSource = tags;
       this.productService.getProducts().subscribe((products: Product[]) => {
-        this.columns.productTitle.editor.config.list = products.map((prod, index: number) => {
+        this.columns.productTitle.editor.config.list = products.map((prod) => {
           return { value: prod.objectId, title: prod.title };
         });
         this.columns = Object.assign({}, this.columns);
@@ -68,15 +68,12 @@ export class TagsComponent implements OnInit {
     });
   }
 
-  onDeleteRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
+  onDeleteRowConfirm(event: { data: TagDto, confirm: Deferred }) {
     console.log('::Delete row::', event);
-    this.tagsService.deleteTag(event.newData.objectId).subscribe((deleted: boolean) => {
-      if (deleted) {
-        // todo: show toaster
-        event.confirm.resolve();
-      } else {
-        event.confirm.reject();
-      }
+    this.tagsService.deleteTag(event.data.objectId).subscribe(() => {
+      event.confirm.resolve();
+    }, (err) => {
+      event.confirm.reject();
     });
   }
 }

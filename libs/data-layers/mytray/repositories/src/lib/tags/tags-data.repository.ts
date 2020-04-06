@@ -8,7 +8,8 @@ import moment from 'moment';
 })
 export class TagsRepository {
 
-  constructor() {}
+  constructor() {
+  }
 
   async getTags(): Promise<Tag[]> {
     return await new Parse.Query(Parse.Object.extend('Tag'))
@@ -26,9 +27,13 @@ export class TagsRepository {
       });
   }
 
-  async createTag(tag: TagDto): Promise<Tag> {
-    const tagModel = Parse.Object.extend('Tag');
-    tagModel.set('expiration_date', tag.expDate);
-    return await tagModel.save();
+  async deleteTag(objectId: string): Promise<void> {
+   await new Parse.Query(Parse.Object.extend('Tag'))
+      .get(objectId)
+      .then((toBeDeleted: Parse.Object) => {
+        toBeDeleted.destroy({});
+      }, (err) => {
+        throw new Error(err);
+      });
   }
 }

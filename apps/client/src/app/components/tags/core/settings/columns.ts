@@ -32,6 +32,7 @@ export const TAGS_COLUMNS = {
   },
   productPrice: {
     title: 'Price',
-    type: 'number'
+    type: 'number',
+    editable: false
   }
 };

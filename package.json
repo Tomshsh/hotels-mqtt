@@ -43,6 +43,7 @@
     "@nebular/auth": "^4.6.0",
     "@nebular/bootstrap": "^5.0.0",
     "@nebular/eva-icons": "^4.6.0",
+    "@nebular/moment": "^5.0.0",
     "@nebular/theme": "^4.6.0",
     "@nestjs/common": "^6.8.3",
     "@nestjs/core": "^6.8.3",

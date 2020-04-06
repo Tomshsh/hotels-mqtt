@@ -2,16 +2,16 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { Route, Router, RouterModule, Routes } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { AuthSessionQuery, AuthSessionService, SharedClientAuthModule } from '@my-tray/shared/client/auth';
 import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared/layout';
 
-import { ConfigurationService, SharedUtilitiesModule } from '@my-tray/shared/utilities';
+import { ConfigurationService, GlobalErrorHandler, SharedUtilitiesModule } from '@my-tray/shared/utilities';
 import { ComponentsModule } from './components/components.module';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 
 import { environment } from '@my-tray/env/client/environment';
-import { GlobalErrorHandler } from '@my-tray/shared/utilities';
+import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/services';
 
 
 export function initializer(configurationService: ConfigurationService) {
@@ -64,7 +64,8 @@ const routes: Route[] = [
     SharedClientAuthModule.forRoot(),
     ComponentsModule,
     RouterModule.forRoot(routes),
-    environment.production ? [] : AkitaNgDevtools.forRoot()
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
+    DataServicesMytrayServicesModule.forRoot(environment)
   ],
   exports: [HttpClientModule],
   providers: [{
