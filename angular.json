@@ -23,9 +23,12 @@
             "aot": true,
             "assets": ["apps/client/src/favicon.ico", "apps/client/src/assets"],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "apps/client/src/styles.scss",
-              "node_modules/@nebular/theme/styles/prebuilt/default.css"
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/nebular-icons/scss/nebular-icons.scss",
+              "./node_modules/font-awesome/css/font-awesome.css",
+              "apps/client/src/styles.scss"
             ],
             "scripts": []
           },
@@ -207,38 +210,6 @@
         }
       }
     },
-    "database": {
-      "projectType": "library",
-      "root": "libs/database",
-      "sourceRoot": "libs/database/src",
-      "prefix": "mt",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/database/tsconfig.lib.json",
-              "libs/database/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/database/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/database/jest.config.js",
-            "tsConfig": "libs/database/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/database/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      }
-    },
     "shared-client-auth": {
       "projectType": "library",
       "root": "libs/shared/client/auth",
@@ -270,10 +241,140 @@
           "styleext": "scss"
         }
       }
+    },
+    "shared-client-layout": {
+      "projectType": "library",
+      "root": "libs/shared/client/layout",
+      "sourceRoot": "libs/shared/client/layout/src",
+      "prefix": "ui",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/client/layout/tsconfig.lib.json",
+              "libs/shared/client/layout/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/client/layout/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/client/layout/jest.config.js",
+            "tsConfig": "libs/shared/client/layout/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared/client/layout/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "data-layers-mytray-repositories": {
+      "projectType": "library",
+      "root": "libs/data-layers/mytray/repositories",
+      "sourceRoot": "libs/data-layers/mytray/repositories/src",
+      "prefix": "my-tray",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/data-layers/mytray/repositories/tsconfig.lib.json",
+              "libs/data-layers/mytray/repositories/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/data-layers/mytray/repositories/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data-layers/mytray/repositories/jest.config.js",
+            "tsConfig": "libs/data-layers/mytray/repositories/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/data-layers/mytray/repositories/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "shared-utilities": {
+      "projectType": "library",
+      "root": "libs/shared/utilities",
+      "sourceRoot": "libs/shared/utilities/src",
+      "prefix": "my-tray",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/utilities/tsconfig.lib.json",
+              "libs/shared/utilities/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/utilities/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/utilities/jest.config.js",
+            "tsConfig": "libs/shared/utilities/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared/utilities/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
+    },
+    "data-services-mytray-services": {
+      "projectType": "library",
+      "root": "libs/data-services/mytray/services",
+      "sourceRoot": "libs/data-services/mytray/services/src",
+      "prefix": "my-tray",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/data-services/mytray/services/tsconfig.lib.json",
+              "libs/data-services/mytray/services/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/data-services/mytray/services/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data-services/mytray/services/jest.config.js",
+            "tsConfig": "libs/data-services/mytray/services/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/data-services/mytray/services/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular",
+    "defaultCollection": "@datorama/akita",
     "analytics": false
   },
   "schematics": {

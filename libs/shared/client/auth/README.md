@@ -1,6 +1,9 @@
-# shared-client-auth
-
-This library was generated with [Nx](https://nx.dev).
+# Client Auth Library
+* Login 
+* Auth Services
+* Auth Pipes
+* Roles Management
+* Parse
 
 ## Running unit tests
 

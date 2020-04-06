@@ -1,0 +1,21 @@
+<nb-layout>
+
+  <nb-layout-header>
+    <nb-actions>
+      <nb-action (click)="toggleMenu()">
+        <nb-icon icon="menu-outline"></nb-icon>
+      </nb-action>
+      <nb-action (click)="logOut()" icon="log-out-outline"></nb-action>
+    </nb-actions>
+  </nb-layout-header>
+
+  <nb-sidebar responsive="true">
+    <ui-sidebar-content [items]="items"></ui-sidebar-content>
+  </nb-sidebar>
+
+  <nb-layout-column>
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+
+
+</nb-layout>
