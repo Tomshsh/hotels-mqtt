@@ -11,19 +11,26 @@ export class RoutesService {
 
   constructor(private readonly routesDataRepository: RoutesDataRepository) {
   }
+
   getRoutesForLayout(): Observable<AppNavItem[]> {
     return fromPromise(this.routesDataRepository.getRoutes().then((routes: any[]) => {
-      return routes.map(nav => {
-        const navItem = nav.toJSON();
+      return this.sortBy(routes).map((navItem) => {
+        navItem = navItem.toJSON();
         let appNavItem: AppNavItem;
-        if (!navItem.link && navItem.children.length > 0) {
+        if (!navItem.link && (navItem.children && navItem.children.length > 0)) {
           appNavItem = {
             title: navItem.title,
             icon: navItem.icon,
             link: navItem.link,
             expanded: navItem.expanded,
-            children: this.traverseNavTree(navItem)
-              .sort((a, b) => a.order - b.order)
+            children: this.sortBy(this.traverseNavTree(navItem))
+          };
+        }
+        if(navItem.link && navItem.order <= 1000) {
+          appNavItem = {
+            title: navItem.title,
+            icon: navItem.icon,
+            link: navItem.link,
           };
         }
         return appNavItem;
@@ -36,7 +43,7 @@ export class RoutesService {
     if (treeNode.children) {
       const nodes = treeNode.children;
       for (const node of nodes) {
-        if(node.title) {
+        if (node.title) {
           nodeTree.push(node);
         }
         this.traverseNavTree(node);
@@ -45,5 +52,9 @@ export class RoutesService {
       nodeTree.push(treeNode);
     }
     return nodeTree;
+  }
+
+  private sortBy<T extends AppNavItem>(elements: T[]): T[] {
+    return elements.sort((a, b) => a.order - b.order)
   }
 }

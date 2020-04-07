@@ -2,7 +2,7 @@ export interface AppNavItem {
   title: string;
   icon: string;
   link: string;
-  expanded: boolean;
+  expanded?: boolean;
   children?: AppNavItem[];
   order?: number;
 }
