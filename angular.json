@@ -371,6 +371,130 @@
         }
       },
       "schematics": {}
+    },
+    "peer2park": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/peer2park",
+      "sourceRoot": "apps/peer2park/src",
+      "prefix": "p2p",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/peer2park",
+            "index": "apps/peer2park/src/index.html",
+            "main": "apps/peer2park/src/main.ts",
+            "polyfills": "apps/peer2park/src/polyfills.ts",
+            "tsConfig": "apps/peer2park/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/peer2park/src/favicon.ico",
+              "apps/peer2park/src/assets"
+            ],
+            "styles": ["apps/peer2park/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/peer2park/src/environments/environment.ts",
+                  "with": "apps/peer2park/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "peer2park:build",
+            "proxyConfig": "apps/peer2park/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "peer2park:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "peer2park:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/peer2park/tsconfig.app.json",
+              "apps/peer2park/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/peer2park/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/peer2park/jest.config.js",
+            "tsConfig": "apps/peer2park/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/peer2park/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "peer2park-e2e": {
+      "root": "apps/peer2park-e2e",
+      "sourceRoot": "apps/peer2park-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/peer2park-e2e/cypress.json",
+            "tsConfig": "apps/peer2park-e2e/tsconfig.e2e.json",
+            "devServerTarget": "peer2park:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "peer2park:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/peer2park-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/peer2park-e2e/**"]
+          }
+        }
+      }
     }
   },
   "cli": {

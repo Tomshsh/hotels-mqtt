@@ -1,6 +1,5 @@
-import { BaseDtoInterface } from '@my-tray/api-interfaces';
 
-export class DeviceDto implements BaseDtoInterface{
+export class DeviceDto {
   name: string;
   createdAt: Date;
   readonly objectId: string;

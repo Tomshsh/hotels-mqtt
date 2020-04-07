@@ -38,6 +38,13 @@
     },
     "data-services-mytray-services": {
       "tags": []
+    },
+    "peer2park": {
+      "tags": []
+    },
+    "peer2park-e2e": {
+      "tags": [],
+      "implicitDependencies": ["peer2park"]
     }
   }
 }
