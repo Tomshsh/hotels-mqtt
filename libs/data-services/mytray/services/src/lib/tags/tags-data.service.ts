@@ -4,17 +4,16 @@ import { fromPromise } from 'rxjs/internal-compatibility';
 import { Tag, TagDto } from '@my-tray/api-interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TagsRepository } from '@my-tray/data-layers/mytray/repositories';
-import * as Parse from 'parse';
+import { AuthSessionQuery } from '@my-tray/shared/client/auth';
 
 import moment from 'moment';
-import { AuthSessionQuery } from '@my-tray/shared/client/auth';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagsService {
-  private baseURL = `${this.env.parse.serverURL}/classes/`;
+  private baseURL = `${ this.env.parse.serverURL }/classes/`;
 
   constructor(private readonly tagsRepository: TagsRepository,
               private readonly httpClient: HttpClient,
@@ -33,8 +32,7 @@ export class TagsService {
               productTitle: tag.product?.title,
               expDate: moment(tag.expDate).format('DD-MMM-YYYY')
             };
-          }
-        );
+          });
       })
     );
   }
@@ -52,10 +50,7 @@ export class TagsService {
         'objectId': newTag.productTitle
       },
       'ACL': {
-        'role:hotel1': {
-          'read': true,
-          'write': true
-        }
+        'role': ''
       }
     }, {
       headers: new HttpHeaders()

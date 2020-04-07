@@ -17,7 +17,9 @@ export class UsersRepository {
 
   async getUserRoles() {
     return await new Parse.Query(Parse.Role).equalTo('users', Parse.User.current()).find().then((roles: Role[]) => {
-      return roles.map((role: Role<Attributes>) => role.getName());
+      return roles.map((role: Role<Attributes>) => {
+        return role.getName();
+      });
     });
   }
 

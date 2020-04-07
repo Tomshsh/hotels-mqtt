@@ -48,7 +48,7 @@ export class TagsComponent implements OnInit {
     // todo: send data to Parse
     this.tagsService.createTag(event.newData).subscribe((created: boolean) => {
       if (created) {
-        // todo: show toaster
+        // todo: show toaster after confirmation dialog
         event.confirm.resolve();
       } else {
         event.confirm.reject();
