@@ -22,10 +22,13 @@ export const TAGS_COLUMNS = {
   },
   productTitle: {
     title: 'Product Name',
+    type: 'html',
+    valuePrepareFunction: (cell, row) => {
+      return row.productTitle;
+    },
     editor: {
       type: 'list',
       config: {
-        selectText: '- none -',
         list: []
       },
     }
@@ -33,6 +36,10 @@ export const TAGS_COLUMNS = {
   productPrice: {
     title: 'Price',
     type: 'number',
-    editable: false
+    editable: false,
+    addable: false,
+    valuePrepareFunction: (cell, row) => {
+      return row.productPrice;
+    },
   }
 };

@@ -21,14 +21,14 @@ export class TagsRepository {
           return {
             objectId: notResolvedTag.objectId,
             product: notResolvedTag.product,
-            expDate: moment(notResolvedTag.expiration_date).format('DD-MMM-YYYY')
+            expDate: notResolvedTag.expiration_date.iso
           };
         });
       });
   }
 
   async deleteTag(objectId: string): Promise<void> {
-   await new Parse.Query(Parse.Object.extend('Tag'))
+    await new Parse.Query(Parse.Object.extend('Tag'))
       .get(objectId)
       .then((toBeDeleted: Parse.Object) => {
         toBeDeleted.destroy({});

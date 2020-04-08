@@ -33,6 +33,8 @@ export class TagsComponent implements OnInit {
         this.columns.productTitle.editor.config.list = products.map((prod) => {
           return { value: prod.objectId, title: prod.title };
         });
+
+        this.columns.productTitle.editor.config.list.push({ value: '', title: ' - SELECT PRODUCT - ' });
         this.columns = Object.assign({}, this.columns);
         this.loading = false;
         setTimeout(() => {

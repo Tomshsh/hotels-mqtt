@@ -1,7 +1,7 @@
 import { BaseDtoInterface } from '../base-dto.interface';
 
 export interface TagDto extends BaseDtoInterface {
-  expDate: string;
+  expDate: Date;
   readonly productPrice: number;
   readonly productTitle: string;
 }

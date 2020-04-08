@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DefaultEditor } from 'ng2-smart-table';
 import moment from 'moment';
+import { NbDateService } from '@nebular/theme';
 
 @Component({
   selector: 'ui-date-range-picker',
@@ -13,8 +14,7 @@ import moment from 'moment';
     />
     <nb-datepicker #datepicker
                    [hideOnSelect]="true"
-                   (dateChange)="onDateChange()"
-                   [format]="format">
+                   (dateChange)="onDateChange()">
     </nb-datepicker>
   `,
   styleUrls: ['./date-range-picker.component.scss']
@@ -22,21 +22,37 @@ import moment from 'moment';
 
 export class DateRangePickerComponent extends DefaultEditor implements OnInit {
   @Input() placeholder = 'Please choose date';
-  @Input() format = 'dd-MMM-yyyy';
+  @Input() format = 'DD-MMM-YYYY';
 
-  inputModel: string;
+  @Input() min: Date;
+  @Input() max: Date;
+  inputModel: Date;
 
-  constructor() {
+  constructor(private dateService: NbDateService<Date>) {
     super();
+
+    if(!this.min) {
+      this.min = new Date();
+      this.min.setMinutes(Math.floor(this.min.getMinutes() / 15) * 15 );
+    }
+
+    if(!this.max) {
+      this.max = new Date(this.min);
+      this.max.setFullYear(this.min.getFullYear() + 1);
+    }
   }
 
   ngOnInit(): void {
-    this.inputModel = moment(Date.now()).format(this.format);
+    if (!this.inputModel) {
+      this.inputModel = this.min;
+      this.cell.newValue = this.inputModel.toISOString();
+      // this.cell.newValue = this.inputModel.toISOString();// moment(this.inputModel).format(this.format);
+    }
   }
 
   onDateChange() {
     if (this.inputModel) {
-      this.cell.newValue = moment(this.inputModel).format(this.format);
+      // this.cell.newValue = moment(this.inputModel).format(this.format);
     }
   }
 }

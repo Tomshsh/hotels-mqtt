@@ -17,6 +17,7 @@ import {
   NbSpinnerModule,
   NbThemeModule,
   NbToastrModule,
+  NbDateService,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -25,48 +26,55 @@ import { DashboardContainerComponent } from './containers';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { DatagridComponent, DateRangePickerComponent, SidebarContainerComponent, DatepickerRendererComponent } from './components'; // todo: wrap-it in the coomponent.module
+import {
+  DatagridComponent,
+  DatepickerRendererComponent,
+  DateRangePickerComponent,
+  SidebarContainerComponent
+} from './components';
+import { NbMomentDateModule } from '@nebular/moment';
 
+const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        NbLayoutModule,
-        NbEvaIconsModule,
-        NbIconModule,
-        NbAlertModule,
-        NbInputModule,
-        NbButtonModule,
-        NbCheckboxModule,
-        NbLayoutModule,
-        NbActionsModule,
-        NbSpinnerModule,
-        NbCardModule,
-        NbSidebarModule,
-        NbDatepickerModule.forRoot(),
-        NbToastrModule,
-        NbThemeModule.forRoot({
-            name: 'corporate'
+  imports: [
+    CommonModule,
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbIconModule,
+    NbAlertModule,
+    NbInputModule,
+    NbButtonModule,
+    NbCheckboxModule,
+    NbLayoutModule,
+    NbActionsModule,
+    NbSpinnerModule,
+    NbCardModule,
+    NbSidebarModule,
+    NbToastrModule,
+    NbThemeModule.forRoot({
+      name: 'corporate'
+    }),
+    NbMenuModule.forRoot(),
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          name: 'email',
         }),
-        NbMenuModule.forRoot(),
-        NbAuthModule.forRoot({
-            strategies: [
-                NbPasswordAuthStrategy.setup({
-                    name: 'email',
-                }),
-            ],
-            forms: {},
-        }),
-        RouterModule,
-        Ng2SmartTableModule,
-        BrowserAnimationsModule,
-        NbSpinnerModule,
-        RouterModule,
-        FormsModule
-    ],
+      ],
+      forms: {},
+    }),
+    RouterModule,
+    Ng2SmartTableModule,
+    BrowserAnimationsModule,
+    NbSpinnerModule,
+    RouterModule,
+    FormsModule,
+    NbDatepickerModule.forRoot(),
+  ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
-  declarations: [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent]
+  declarations: [...components],
+  exports: [RouterModule]
 })
 
 export class SharedLayoutModule {

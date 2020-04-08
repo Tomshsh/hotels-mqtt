@@ -13,7 +13,7 @@ import moment from 'moment';
   providedIn: 'root'
 })
 export class TagsService {
-  private baseURL = `${ this.env.parse.serverURL }/classes/`;
+  private baseURL = `${ this.env.parse.serverURL }classes/`;
 
   constructor(private readonly tagsRepository: TagsRepository,
               private readonly httpClient: HttpClient,
@@ -26,12 +26,14 @@ export class TagsService {
       this.tagsRepository.getTags().then((tags: Tag[]): TagDto[] => {
         return tags.map(
           (tag: Tag): TagDto => {
-            return {
+            const thisTag = {
               objectId: tag.objectId,
               productPrice: tag.product?.price,
               productTitle: tag.product?.title,
-              expDate: moment(tag.expDate).format('DD-MMM-YYYY')
+              expDate: tag.expDate
             };
+            console.log(thisTag);
+            return thisTag;
           });
       })
     );
