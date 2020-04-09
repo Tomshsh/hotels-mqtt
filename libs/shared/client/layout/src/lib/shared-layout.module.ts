@@ -74,7 +74,7 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
   declarations: [...components],
-  exports: [RouterModule]
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent]
 })
 
 export class SharedLayoutModule {

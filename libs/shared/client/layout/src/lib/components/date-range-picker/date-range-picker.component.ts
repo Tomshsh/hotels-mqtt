@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DefaultEditor } from 'ng2-smart-table';
-import moment from 'moment';
 import { NbDateService } from '@nebular/theme';
 
 @Component({
@@ -46,7 +45,6 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
     if (!this.inputModel) {
       this.inputModel = this.min;
       this.cell.newValue = this.inputModel.toISOString();
-      // this.cell.newValue = this.inputModel.toISOString();// moment(this.inputModel).format(this.format);
     }
   }
 

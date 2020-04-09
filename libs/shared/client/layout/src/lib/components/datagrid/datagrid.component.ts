@@ -8,9 +8,7 @@ import {
   OnInit, Output,
   SimpleChanges, ViewChild
 } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { ɵbo as Ng2SmartTableComponent } from 'ng2-smart-table';
-
+import { ɵbo as Ng2SmartTableComponent, LocalDataSource } from 'ng2-smart-table';
 
 @Component({
   selector: 'ui-data-grid',
@@ -24,7 +22,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   gridView: Ng2SmartTableComponent;
 
   @Input()
-  source: any[] | LocalDataSource;
+  source: any[];
 
   @Input()
   columns: any;
@@ -45,9 +43,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   deleteConfirm: EventEmitter<any> = new EventEmitter<any>();
 
 
-  constructor(private readonly cd: ChangeDetectorRef) {
-
-  }
+  constructor(private readonly cd: ChangeDetectorRef) {}
 
   settings = {
     noDataMessage: 'No data loaded.',
