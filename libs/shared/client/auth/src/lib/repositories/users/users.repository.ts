@@ -6,9 +6,7 @@ import { Attributes, Role } from 'parse';
   providedIn: 'root'
 })
 export class UsersRepository {
-
   constructor() {
-
   }
 
   async logIn(username: string, password: string) {
@@ -16,11 +14,13 @@ export class UsersRepository {
   }
 
   async getUserRoles() {
-    return await new Parse.Query(Parse.Role).equalTo('users', Parse.User.current()).find().then((roles: Role[]) => {
-      return roles.map((role: Role<Attributes>) => {
-        return role.getName();
+    return await new Parse.Query(Parse.Role)
+      .equalTo('users', Parse.User.current())
+      .find().then((roles: Role[]) => {
+        return roles.map((role: Role<Attributes>) => {
+          return role.getName();
+        });
       });
-    });
   }
 
   async logOut() {

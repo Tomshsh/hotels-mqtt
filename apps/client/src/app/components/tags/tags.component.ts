@@ -6,6 +6,7 @@ import { TagDto, Product } from '@my-tray/api-interfaces';
 import { TAGS_COLUMNS } from './core/settings';
 
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
+import { SelectListComponent } from '@my-tray/shared/layout';
 
 @Component({
   selector: 'my-tray-tags',
@@ -15,8 +16,10 @@ import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 @RoutingComponent()
 export class TagsComponent implements OnInit {
   dataSource: TagDto[];
+
   loading: boolean;
   columns: any = TAGS_COLUMNS;
+
 
   constructor(
     private readonly tagsService: TagsService,
@@ -29,17 +32,10 @@ export class TagsComponent implements OnInit {
     this.loading = true;
     this.tagsService.getTags().subscribe((tags: TagDto[]) => {
       this.dataSource = tags;
-      this.productService.getProducts().subscribe((products: Product[]) => {
-        this.columns.productTitle.editor.config.list = products.map((prod) => {
-          return { value: prod.objectId, title: prod.title };
-        });
-        this.columns.productTitle.editor.config.list.push({ value: '', title: ' - SELECT PRODUCT - ' });
-        this.columns = Object.assign({}, this.columns);
-        this.loading = false;
-        setTimeout(() => {
-          this.cd.detectChanges();
-        }, 0);
-      });
+      this.loading = false;
+      setTimeout(() => {
+        this.cd.detectChanges();
+      }, 0);
     });
   }
 

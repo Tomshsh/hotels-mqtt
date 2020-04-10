@@ -11,13 +11,12 @@ import {
   NbInputModule,
   NbLayoutModule,
   NbMenuModule,
-  NbMenuService,
+  NbMenuService, NbSelectModule,
   NbSidebarModule,
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
   NbToastrModule,
-  NbDateService,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -30,11 +29,12 @@ import {
   DatagridComponent,
   DatepickerRendererComponent,
   DateRangePickerComponent,
-  SidebarContainerComponent
+  SidebarContainerComponent,
+  SelectListComponent,
+  SelectListRendererComponent
 } from './components';
-import { NbMomentDateModule } from '@nebular/moment';
 
-const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent];
+const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent];
 
 @NgModule({
   imports: [
@@ -70,11 +70,12 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     NbSpinnerModule,
     RouterModule,
     FormsModule,
+    NbSelectModule,
     NbDatepickerModule.forRoot(),
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
   declarations: [...components],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent]
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent]
 })
 
 export class SharedLayoutModule {
