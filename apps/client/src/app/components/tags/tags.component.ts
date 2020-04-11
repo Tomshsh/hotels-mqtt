@@ -6,7 +6,6 @@ import { TagDto, Product } from '@my-tray/api-interfaces';
 import { TAGS_COLUMNS } from './core/settings';
 
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
-import { SelectListComponent } from '@my-tray/shared/layout';
 
 @Component({
   selector: 'my-tray-tags',

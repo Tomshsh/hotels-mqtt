@@ -50,6 +50,7 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
 
   onDateChange() {
     if (this.inputModel) {
+      this.cell.newValue = this.inputModel.toISOString();
       // this.cell.newValue = moment(this.inputModel).format(this.format);
     }
   }

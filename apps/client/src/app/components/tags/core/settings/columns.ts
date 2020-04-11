@@ -1,11 +1,9 @@
 import {
-  DateRangePickerComponent,
   DatepickerRendererComponent,
-  SelectListRendererComponent,
-  SelectListComponent
+  DateRangePickerComponent,
+  SelectListRendererComponent
 } from '@my-tray/shared/layout';
-import { SelectListRendererContextComponent }
-from '../../components/select-list-renderer-context/select-list-renderer-context.component';
+import { SelectListRendererContextComponent } from '../../components/select-list-renderer-context/select-list-renderer-context.component';
 
 export const TAGS_COLUMNS = {
   objectId: {
@@ -38,12 +36,7 @@ export const TAGS_COLUMNS = {
     renderComponent: SelectListRendererComponent,
     editor: {
       type: 'custom',
-      component: SelectListRendererContextComponent,
-      onComponentInitFunction(instance: SelectListRendererContextComponent) {
-        instance.itemSelect.subscribe(() => {
-          console.log('Update product-price with this value');
-        });
-      }
+      component: SelectListRendererContextComponent
     }
   },
   productPrice: {

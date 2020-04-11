@@ -26,15 +26,14 @@ export class TagsService {
       this.tagsRepository.getTags().then((tags: Tag[]): TagDto[] => {
         return tags.map(
           (tag: Tag): TagDto => {
-            const thisTag = {
+            return {
               objectId: tag.objectId,
               productPrice: tag.product?.price,
               productTitle: tag.product?.title,
               expDate: tag.expDate
             };
-            console.log(thisTag);
-            return thisTag;
           });
+
       })
     );
   }
