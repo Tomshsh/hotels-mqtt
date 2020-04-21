@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { Tag, TagDto } from '@my-tray/api-interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { TagsRepository } from '@my-tray/data-layers/mytray/repositories';
 import { AuthSessionQuery } from '@my-tray/shared/client/auth';
-
-import moment from 'moment';
-
+import { Tag, TagDto } from '@my-tray/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +37,7 @@ export class TagsService {
   }
 
   createTag(newTag: TagDto) {
+    // todo:
     return this.httpClient.post(this.baseURL + 'Tag', {
       'objectId': newTag.objectId,
       'expiration_date': {

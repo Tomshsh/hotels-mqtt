@@ -6,4 +6,5 @@ export class UserDto {
   roles: string | string[] | Role | Role[];
   permissions: Permissions | Permissions[];
   token: string;
+  acl: string | string[];
 }

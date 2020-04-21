@@ -6,12 +6,13 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
-  NbDatepickerModule,
+  NbDatepickerModule, NbDialogModule, NbDialogService,
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbMenuModule,
-  NbMenuService, NbSelectModule,
+  NbMenuService,
+  NbSelectModule,
   NbSidebarModule,
   NbSidebarService,
   NbSpinnerModule,
@@ -21,20 +22,22 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
-import { DashboardContainerComponent } from './containers';
+import {DashboardContainerComponent } from './containers';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {
+  ConfirmPromptDialogComponent,
   DatagridComponent,
   DatepickerRendererComponent,
   DateRangePickerComponent,
-  SidebarContainerComponent,
+  NavigationComponent,
   SelectListComponent,
-  SelectListRendererComponent
+  SelectListRendererComponent,
+  SidebarContainerComponent
 } from './components';
 
-const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent];
+const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent, NavigationComponent, ConfirmPromptDialogComponent];
 
 @NgModule({
   imports: [
@@ -52,6 +55,7 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     NbCardModule,
     NbSidebarModule,
     NbToastrModule,
+    NbDialogModule.forRoot(),
     NbThemeModule.forRoot({
       name: 'corporate'
     }),
@@ -73,7 +77,7 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     NbSelectModule,
     NbDatepickerModule.forRoot(),
   ],
-  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
+  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService],
   declarations: [...components],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent]
 })

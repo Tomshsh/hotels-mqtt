@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { RoutesService } from '@my-tray/data-services/mytray/services';
 import { AppNavItem } from '@my-tray/api-interfaces';
-import { AuthSessionService } from '@my-tray/shared/client/auth';
+import { AuthSessionQuery, AuthSessionService } from '@my-tray/shared/client/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,9 +19,9 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   items: NbMenuItem[] = [];
-
   constructor(private readonly sidebarService: NbSidebarService,
               private readonly authService: AuthSessionService,
+              private readonly authQuery: AuthSessionQuery,
               private readonly menuService: NbMenuService,
               private readonly routesService: RoutesService,
               private readonly cd: ChangeDetectorRef,

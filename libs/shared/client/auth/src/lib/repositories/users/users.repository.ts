@@ -23,6 +23,11 @@ export class UsersRepository {
       });
   }
 
+  async getACL(from: string) {
+    return await new Parse.Query(from)
+      .find();
+  }
+
   async logOut() {
     return await Parse.User.logOut();
   }

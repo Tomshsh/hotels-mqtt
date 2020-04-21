@@ -10,6 +10,9 @@ export class AuthSessionQuery extends Query<AuthSessionState> {
   isLoggedIn$: Observable<boolean> =
     this.select((state: AuthSessionState) => toBoolean(state.token));
 
+
+  loggedInACL$: Observable<string> = this.select((state: AuthSessionState) => state.acl);
+
   constructor(protected readonly store: AuthSessionStore) {
     super(store);
   }

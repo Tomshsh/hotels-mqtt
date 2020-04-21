@@ -19,38 +19,6 @@ export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
 }
 
-/*export function routesFactory(routesService: RoutesService, injector: Injector) {
-  return () => {
-    const router = injector.get<Router>(Router);
-    routesService.getRoutesForLayout().subscribe((routes: RouteDto[]) => {
-      routes.map((route: RouteDto) => {
-        let component = routingComponents.get(route.component);
-        if (!component) {
-          component = null;
-        }
-        let addedRoute: Route;
-        if (route.children.length > 0) {
-          addedRoute = {
-            path: route.path,
-            component: component,
-            canActivate: [AuthGuard]
-          };
-          addedRoute.children = route.children.map(childRoute => {
-            const childRoutes: Route = {
-              path: childRoute.path,
-              component: routingComponents.get(childRoute.component) || null,
-              redirectTo: childRoute.redirectTo || null,
-              pathMatch: childRoute.pathMatch || null
-            };
-            return childRoutes;
-          })
-        }
-        router.config.push(addedRoute);
-      });
-    });
-  };
-}*/
-
 const routes: Route[] = [
   { path: 'dashboard', component: DashboardContainerComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }

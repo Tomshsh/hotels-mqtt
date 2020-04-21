@@ -1,16 +1,27 @@
 import { ErrorHandler } from '@angular/core';
-import { AuthSessionQuery, AuthSessionService } from '@my-tray/shared/client/auth';
+import { AuthSessionService } from '@my-tray/shared/client/auth';
+import { ParseError } from '@my-tray/api-interfaces';
 
 export class GlobalErrorHandler implements ErrorHandler {
-  constructor(private readonly authService: AuthSessionService,
-              private readonly authQuery: AuthSessionQuery) {
+  constructor(private readonly authService: AuthSessionService) {
   }
 
   handleError(error: any): void {
-    console.error(error);
-    if (error.code === 209 || error >= 400) {
-      this.authService.logOut();
-      location.href = 'auth/logout';
+    if (error.hasOwnProperty('message') && error.hasOwnProperty('code')) {
+      console.error('There was an Parse error.', (error as ParseError).message,
+        'Status code:', (error as ParseError).code);
+      switch (error.code) {
+        case 119:
+        case 209:
+        case 400:
+        case 401:
+        case 403:
+          this.authService.logOut();
+          location.reload();
+          break;
+      }
+    } else {
+      console.error(error);
     }
   }
 }

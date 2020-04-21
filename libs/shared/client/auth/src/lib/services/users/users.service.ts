@@ -20,7 +20,12 @@ export class UsersService {
         email: user.getEmail(),
         username: user.getUsername(),
         token: user.getSessionToken(),
-        permissions: [Permissions.WRITE]
+        permissions: [Permissions.WRITE],
+        acl: await this.usersRepository.getACL('Hotel').then((hotels) => {
+          return hotels.map(hotel => {
+            return hotel.toJSON().name;
+          });
+        })
       };
       return loggedInUser;
     }));

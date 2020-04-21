@@ -1,20 +1,13 @@
 <nb-layout>
-
-  <nb-layout-header>
-    <nb-actions>
-      <nb-action (click)="toggleMenu()">
-        <nb-icon icon="menu-outline"></nb-icon>
-        Alex Hotel
-      </nb-action>
-      <nb-action (click)="logOut()" icon="log-out-outline"></nb-action>
-    </nb-actions>
+  <nb-layout-header class="header-container"><!--Should be containerized -->
+    <ui-navigation [headerTitle]="authQuery.loggedInACL$ | async " (toggle)="toggleMenu()" (logout)="logOut()"></ui-navigation>
   </nb-layout-header>
 
-  <nb-sidebar responsive="true">
+  <nb-sidebar responsive="true"><!--Should be containerized -->
     <ui-sidebar-content [items]="items"></ui-sidebar-content>
   </nb-sidebar>
 
-  <nb-layout-column>
+  <nb-layout-column><!--Should be containerized -->
     <router-outlet></router-outlet>
   </nb-layout-column>
 
