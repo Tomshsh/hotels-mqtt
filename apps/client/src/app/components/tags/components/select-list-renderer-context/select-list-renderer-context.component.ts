@@ -29,11 +29,15 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
       });
       this.rowData.push(...options);
 
-      if(!this.selectedItem) {
+      if (!this.selectedItem) {
         this.selectedItem =
-          this.rowData.find(product =>
-            product.title === this.cell.getRow().getData().productTitle
-          );
+          this.rowData.find(product => {
+            if (product.title === this.cell.getRow().getData().productTitle) {
+              this.loadProductPriceOnItemChanged(product);
+              return true;
+            }
+            return false;
+          });
       }
       setTimeout(() => {
         this.cd.detectChanges();
@@ -43,7 +47,7 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
 
   loadProductPriceOnItemChanged($event) {
     this.selectedItem = $event;
-    this.cell.newValue = $event.title;
+    this.cell.newValue = $event;
     const priceCell = this.cell.getRow()
       .getCells()
       .find(x => x['column']['id'] === 'productPrice');

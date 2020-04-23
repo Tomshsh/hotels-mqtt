@@ -13,7 +13,7 @@ import { NbDateService } from '@nebular/theme';
     />
     <nb-datepicker #datepicker
                    [hideOnSelect]="true"
-                   (dateChange)="onDateChange()">
+                   (dateChange)="onDateChange($event)">
     </nb-datepicker>
   `,
   styleUrls: ['./date-range-picker.component.scss']
@@ -29,30 +29,17 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
 
   constructor(private dateService: NbDateService<Date>) {
     super();
-
-    if(!this.min) {
-      this.min = new Date();
-      this.min.setMinutes(Math.floor(this.min.getMinutes() / 15) * 15 );
-    }
-
-    if(!this.max) {
-      this.max = new Date(this.min);
-      this.max.setFullYear(this.min.getFullYear() + 1);
-    }
   }
 
   ngOnInit(): void {
     if (!this.inputModel) {
-      this.inputModel = this.min;
-      this.cell.newValue = this.inputModel.toISOString();
+      this.inputModel = this.cell.getValue();
+      this.cell.newValue = this.inputModel;
     }
   }
 
-  onDateChange() {
-    if (this.inputModel) {
-      this.cell.newValue = this.inputModel.toISOString();
-      // this.cell.newValue = moment(this.inputModel).format(this.format);
-    }
+  onDateChange($event) {
+    this.cell.newValue = new Date($event).toJSON();
   }
 }
 

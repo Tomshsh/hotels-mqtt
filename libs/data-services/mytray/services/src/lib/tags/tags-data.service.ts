@@ -31,7 +31,6 @@ export class TagsService {
               expDate: tag.expDate
             };
           });
-
       })
     );
   }
@@ -50,7 +49,7 @@ export class TagsService {
         'objectId': newTag.productTitle
       },
       'ACL': {
-        'role': ''
+        'role': this.authQuery.getAcl()
       }
     }, {
       headers: new HttpHeaders()
@@ -60,13 +59,18 @@ export class TagsService {
     });
   }
 
-  updateTag(updateTag: TagDto): Observable<boolean> {
-    return of(true);
-    /*return fromPromise(
-      this.tagsRepository.createTag(newTag).then((tag: Tag) => {
-        return null;
+  updateTag(updateTag: TagDto): Observable<TagDto> {
+    return fromPromise(
+      this.tagsRepository.updateTag(updateTag).then((tag: Tag) => {
+        return {
+          productObjectId: tag.product.objectId,
+          productPrice: tag.product.price,
+          expDate: tag.expDate,
+          objectId: tag.objectId,
+          productTitle: tag.product.title
+        } as TagDto;
       })
-    );*/
+    );
   }
 
   deleteTag(objectId: string): Observable<void> {

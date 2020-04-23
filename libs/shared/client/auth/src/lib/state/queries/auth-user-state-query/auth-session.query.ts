@@ -20,4 +20,8 @@ export class AuthSessionQuery extends Query<AuthSessionState> {
   isLoggedIn() {
     return toBoolean(this.getValue().token);
   }
+
+  getAcl() {
+    return this.getValue().acl;
+  }
 }

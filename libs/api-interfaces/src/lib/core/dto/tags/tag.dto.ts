@@ -4,4 +4,5 @@ export interface TagDto extends BaseDtoInterface {
   expDate: Date;
   readonly productPrice: number;
   readonly productTitle: string;
+  readonly productObjectId?: string;
 }

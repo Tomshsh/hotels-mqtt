@@ -6,7 +6,7 @@ import { TagDto } from '@my-tray/api-interfaces';
 import { TAGS_COLUMNS } from './core/settings';
 
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 
@@ -34,6 +34,7 @@ export class TagsComponent implements OnInit {
     private readonly tagsService: TagsService,
     private readonly productService: ProductService,
     private readonly dialogService: NbDialogService,
+    private readonly toastrService: NbToastrService,
     private readonly cd: ChangeDetectorRef
   ) {
   }
@@ -63,15 +64,28 @@ export class TagsComponent implements OnInit {
     });
   }
 
-  onEditRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
+  onEditRowConfirm(event: { newData: any, confirm: Deferred }) {
     console.log('::Update row::', event);
+
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
-      this.tagsService.updateTag(event.newData).subscribe((updated: boolean) => {
-        if (updated) {
+      this.tagsService.updateTag({
+        objectId: event.newData.objectId,
+        expDate: event.newData.expDate,
+        productTitle: event.newData.productTitle,
+        productPrice: event.newData.productPrice,
+        productObjectId: event.newData.productTitle.value,
+      }).subscribe((updatedTag: TagDto) => {
+        this.confirm.close();
+        setTimeout(() => {
           event.confirm.resolve();
-          this.confirm.close();
-        }
+          this.toastrService.success('Successfully update Tag', `Updating Tag`);
+          this.cd.detectChanges();
+        }, 0);
+      }, error => {
+        this.confirm.close();
+        // event.confirm.resolve();
+        this.toastrService.danger('Failed updating Tag', `Updating Tag`);
       });
     });
 

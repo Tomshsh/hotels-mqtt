@@ -25,10 +25,6 @@ export class SelectListComponent extends DefaultEditor implements OnInit {
   }
 
   ngOnInit(): void {
-   /* if (!this.selectedItem) {
-      this.rowData.push({ value: '', title: 'Select Product' });
-      this.selectedItem = this.rowData[0];
-    }*/
   }
 
   updateSelected($event) {

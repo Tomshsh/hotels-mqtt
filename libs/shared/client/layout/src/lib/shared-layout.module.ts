@@ -17,7 +17,7 @@ import {
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
-  NbToastrModule,
+  NbToastrModule, NbToastrService,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -76,8 +76,11 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     FormsModule,
     NbSelectModule,
     NbDatepickerModule.forRoot(),
+    NbToastrModule.forRoot({
+      preventDuplicates: true
+    })
   ],
-  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService],
+  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent]
 })
