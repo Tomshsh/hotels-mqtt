@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class DashboardContainerComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
+  loggedIn$ = this.authQuery.loggedInACL$;
   items: NbMenuItem[] = [];
   constructor(private readonly sidebarService: NbSidebarService,
               private readonly authService: AuthSessionService,

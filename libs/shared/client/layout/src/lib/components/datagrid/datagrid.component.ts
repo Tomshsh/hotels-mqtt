@@ -14,7 +14,7 @@ import { ɵbo as Ng2SmartTableComponent, LocalDataSource } from 'ng2-smart-table
   selector: 'ui-data-grid',
   templateUrl: './datagrid.component.html',
   styleUrls: ['./datagrid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 

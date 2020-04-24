@@ -17,7 +17,7 @@ import {
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
-  NbToastrModule, NbToastrService,
+  NbToastrModule, NbToastrService
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';

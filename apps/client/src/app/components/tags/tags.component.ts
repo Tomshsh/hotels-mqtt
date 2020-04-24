@@ -9,6 +9,7 @@ import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'my-tray-tags',
@@ -76,17 +77,16 @@ export class TagsComponent implements OnInit {
         productPrice: event.newData.productPrice,
         productObjectId: event.newData.productTitle.value,
       }).subscribe((updatedTag: TagDto) => {
+        event.confirm.resolve();
         this.confirm.close();
+        this.toastrService.success('Successfully update Tag', `Updating Tag`);
         setTimeout(() => {
-          event.confirm.resolve();
-          this.toastrService.success('Successfully update Tag', `Updating Tag`);
           this.cd.detectChanges();
-        }, 0);
+        }, 300);
       }, error => {
         this.confirm.close();
-        // event.confirm.resolve();
         this.toastrService.danger('Failed updating Tag', `Updating Tag`);
-      });
+      })
     });
 
     this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DefaultEditor } from 'ng2-smart-table';
-import { NbDateService } from '@nebular/theme';
+import moment from 'moment';
 
 @Component({
   selector: 'ui-date-range-picker',
@@ -27,21 +27,18 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
   @Input() max: Date;
   inputModel: Date;
 
-  constructor(private dateService: NbDateService<Date>) {
+  constructor() {
     super();
   }
 
   ngOnInit(): void {
     if (!this.inputModel) {
       this.inputModel = this.cell.getValue();
-      this.cell.newValue = this.inputModel;
+      this.cell.newValue = new Date(this.inputModel).toISOString();
     }
   }
 
   onDateChange($event) {
-    this.cell.newValue = new Date($event).toJSON();
+    this.cell.newValue = $event.toISOString();
   }
 }
-
-
-

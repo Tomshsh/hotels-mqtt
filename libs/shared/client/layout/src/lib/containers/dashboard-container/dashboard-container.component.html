@@ -1,6 +1,6 @@
 <nb-layout>
   <nb-layout-header class="header-container"><!--Should be containerized -->
-    <ui-navigation [headerTitle]="authQuery.loggedInACL$ | async " (toggle)="toggleMenu()" (logout)="logOut()"></ui-navigation>
+    <ui-navigation [headerTitle]="loggedIn$ | async " (toggle)="toggleMenu()" (logout)="logOut()"></ui-navigation>
   </nb-layout-header>
 
   <nb-sidebar responsive="true"><!--Should be containerized -->
