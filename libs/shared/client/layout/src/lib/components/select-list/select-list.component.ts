@@ -29,8 +29,6 @@ export class SelectListComponent extends DefaultEditor implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: how to solve the select in table issue... the data inside the select should be pre-loaded,
-    // TODO: Instead of loaded on demand.
   }
 
   updateSelected($event) {

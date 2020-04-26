@@ -7,6 +7,7 @@ import moment from 'moment';
   template: `
     <input nbInput
            [nbDatepicker]="datepicker"
+           [fullWidth]
            [(ngModel)]="inputModel"
            placeholder="{{placeholder}}"
            readonly
@@ -38,7 +39,7 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
     }
 
     if(!this.inputModel) {
-      this.cell.newValue = this.inputModel.toISOString();
+      this.cell.newValue  = new Date().toISOString();
     }
   }
 

@@ -31,13 +31,17 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
         return { value: prod.objectId, title: prod.title, price: prod.price }
       });
       this.rowData.push(...options);
-      let { title } = this.cell.getRow().getData().productTitle;
-      if (!title) {
-        title = this.cell.getRow().getData().productTitle;
+      try {
+        let { title } = this.cell.getRow().getData()?.productTitle;
+        if (!title) {
+          title = this.cell.getRow().getData().productTitle;
+        }
+        this.selectedItem =
+          this.rowData.find((prod: Product) => prod.title === title);
+        this.cd.detectChanges();
+      } catch (e) {
+        this.selectedItem = this.rowData[0];
       }
-      this.selectedItem =
-        this.rowData.find((prod: Product) => prod.title === title);
-      this.cd.detectChanges();
     });
   }
 

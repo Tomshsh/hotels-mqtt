@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 import { ProductService, TagsService } from '@my-tray/data-services/mytray/services';
 import { RoutingComponent } from '@my-tray/shared/utilities';
@@ -55,13 +55,22 @@ export class TagsComponent implements OnInit {
     console.log('::Create row::', event);
     // todo: dismiss if you don't want to save event.confirm.reject();
     // todo: send data to Parse
-    this.tagsService.createTag(event.newData).subscribe((created: boolean) => {
-      if (created) {
-        // todo: show toaster after confirmation dialog
-        event.confirm.resolve();
-      } else {
-        event.confirm.reject();
-      }
+
+    this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
+    this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
+      this.tagsService.createTag(event.newData).subscribe((created: boolean) => {
+        if (created) {
+          event.confirm.resolve();
+          this.confirm.close();
+          this.toastrService.success('Successfully created Tag', `Creating Tag`);
+          setTimeout(() => {
+            this.cd.detectChanges();
+          }, 300);
+        } else {
+          this.confirm.close();
+          this.toastrService.danger('Failed creating Tag', `Creating Tag`);
+        }
+      });
     });
   }
 
@@ -97,10 +106,26 @@ export class TagsComponent implements OnInit {
 
   onDeleteRowConfirm(event: { data: TagDto, confirm: Deferred }) {
     console.log('::Delete row::', event);
-   /* this.tagsService.deleteTag(event.data.objectId).subscribe(() => {
-      event.confirm.resolve();
-    }, (err) => {
+    this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
+
+    this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
+      this.tagsService.deleteTag(event.data.objectId).subscribe(() => {
+        event.confirm.resolve();
+        this.confirm.close();
+        this.toastrService.success('Successfully Deleted a Tag', `Deleting Tag`);
+        setTimeout(() => {
+          this.cd.detectChanges();
+        }, 300);
+      }, (err) => {
+        event.confirm.reject();
+        this.toastrService.danger('Failed deleting Tag', `Deleting Tag`);
+      })
+    });
+
+    this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {
       event.confirm.reject();
-    });*/
+      this.confirm.close();
+    });
   }
+
 }
