@@ -12,6 +12,5 @@ export class DatepickerRendererComponent implements ViewCell, OnInit {
   }
 
   ngOnInit() {
-    console.log(this.value);
   }
 }

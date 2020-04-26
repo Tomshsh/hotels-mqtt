@@ -9,7 +9,7 @@ import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
-import { tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'my-tray-tags',
@@ -97,10 +97,10 @@ export class TagsComponent implements OnInit {
 
   onDeleteRowConfirm(event: { data: TagDto, confirm: Deferred }) {
     console.log('::Delete row::', event);
-    this.tagsService.deleteTag(event.data.objectId).subscribe(() => {
+   /* this.tagsService.deleteTag(event.data.objectId).subscribe(() => {
       event.confirm.resolve();
     }, (err) => {
       event.confirm.reject();
-    });
+    });*/
   }
 }

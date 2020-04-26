@@ -32,9 +32,13 @@ export class DateRangePickerComponent extends DefaultEditor implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.inputModel) {
-      this.inputModel = this.cell.getValue();
-      this.cell.newValue = new Date(this.inputModel).toISOString();
+    if(this.cell.newValue) {
+      this.inputModel = new Date(this.cell.newValue);
+      this.cell.newValue = this.inputModel.toISOString();
+    }
+
+    if(!this.inputModel) {
+      this.cell.newValue = this.inputModel.toISOString();
     }
   }
 

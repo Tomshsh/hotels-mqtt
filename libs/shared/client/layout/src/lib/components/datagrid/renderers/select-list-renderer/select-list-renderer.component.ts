@@ -12,8 +12,11 @@ export class SelectListRendererComponent implements ViewCell, OnInit {
   }
 
   ngOnInit() {
-    this.value = !this.rowData.productTitle?.hasOwnProperty('title')
-      ? this.rowData.productTitle
-      : this.rowData.productTitle.title;
+    const { title } = this.rowData.productTitle;
+    if(title) {
+      this.value = title;
+    } else {
+      this.value = this.rowData.productTitle;
+    }
   }
 }

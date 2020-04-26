@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SelectListComponent } from '@my-tray/shared/layout';
 import { ProductService } from '@my-tray/data-services/mytray/services';
 import { Product } from '@my-tray/api-interfaces';
@@ -11,37 +11,33 @@ import { Product } from '@my-tray/api-interfaces';
     </ui-select-list>
   `
 })
-export class SelectListRendererContextComponent extends SelectListComponent implements OnInit {
+export class SelectListRendererContextComponent extends SelectListComponent implements OnInit, AfterViewInit {
+
+  rowData: any[] = [];
+
   constructor(private readonly productService: ProductService,
               private readonly cd: ChangeDetectorRef) {
     super();
-    this.rowData = [];
+    this.rowData.push({ value: '', title: 'Select Product', price: 0 });
   }
 
   ngOnInit(): void {
     if (!this.cell.getRow().getData().productTitle) {
-      this.rowData.push({ value: '', title: 'Select Product' });
       this.selectedItem = this.rowData[0];
     }
+
     this.productService.getProducts().subscribe((products: Product[]) => {
       const options = products.map(prod => {
         return { value: prod.objectId, title: prod.title, price: prod.price }
       });
       this.rowData.push(...options);
-
-      if (!this.selectedItem) {
-        this.selectedItem =
-          this.rowData.find(product => {
-            if (product.title === this.cell.getRow().getData().productTitle) {
-              this.loadProductPriceOnItemChanged(product);
-              return true;
-            }
-            return false;
-          });
+      let { title } = this.cell.getRow().getData().productTitle;
+      if (!title) {
+        title = this.cell.getRow().getData().productTitle;
       }
-      setTimeout(() => {
-        this.cd.detectChanges();
-      }, 0);
+      this.selectedItem =
+        this.rowData.find((prod: Product) => prod.title === title);
+      this.cd.detectChanges();
     });
   }
 
@@ -52,5 +48,9 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
       .getCells()
       .find(x => x['column']['id'] === 'productPrice');
     priceCell.newValue = $event.price;
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.rowData);
   }
 }
