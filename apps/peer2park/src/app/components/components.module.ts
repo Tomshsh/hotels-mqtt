@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { ComponentsRoutingModule } from './components-routing.module';
 import { SharedLayoutModule } from '@my-tray/shared/layout';
+import { DevicesComponent } from './devices/devices.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [DevicesComponent],
   imports: [
     CommonModule,
     SharedLayoutModule,

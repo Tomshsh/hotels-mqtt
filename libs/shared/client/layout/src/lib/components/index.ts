@@ -6,3 +6,5 @@ export * from './select-list/select-list.component';
 
 export * from './datagrid/renderers/datepicker-renderer/datepicker-render.component';
 export * from './datagrid/renderers/select-list-renderer/select-list-renderer.component';
+
+export * from './btn-group/btn-group.component'

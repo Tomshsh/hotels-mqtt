@@ -33,6 +33,7 @@ import {
   SelectListComponent,
   SelectListRendererComponent
 } from './components';
+import { BtnGroupComponent } from './components/btn-group/btn-group.component';
 
 const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent];
 
@@ -74,8 +75,8 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     NbDatepickerModule.forRoot(),
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
-  declarations: [...components],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent]
+  declarations: [...components, BtnGroupComponent],
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, BtnGroupComponent]
 })
 
 export class SharedLayoutModule {

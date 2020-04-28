@@ -34,7 +34,7 @@ const routes: Route[] = [
     ComponentsModule,
     RouterModule.forRoot(routes),
     environment.production ? [] : AkitaNgDevtools.forRoot(),
-    RouterModule.forRoot(routes)
+    // RouterModule.forRoot(routes)
   ],
   exports: [HttpClientModule],
   providers: [{
