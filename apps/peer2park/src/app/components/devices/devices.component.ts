@@ -3,14 +3,12 @@ import { RoutingComponent } from '@my-tray/shared/utilities';
 import { LocalDataSource } from 'ng2-smart-table';
 import { tap } from 'rxjs/operators';
 import { DatepickerRendererComponent, DateRangePickerComponent, SelectListComponent, SelectListRendererComponent, BtnGroupComponent } from '@my-tray/shared/layout';
-import { UserDto } from '@my-tray/api-interfaces';
 
 class Valve {
   started: string;
   stopped: string;
   state: "on" | "off";
   kwt: number;
-  user: UserDto;
 }
 
 
@@ -19,7 +17,6 @@ class Socket extends Valve {
 }
 
 class DeviceDto {
-  id: string
   serial: string;
   sockets: Socket[];
   valve: Valve;
@@ -45,7 +42,8 @@ export class DevicesComponent implements OnInit {
     },
     sockets: {
       title: 'Sockets',
-      type: 'text',
+      type: 'custom',
+      renderComponent: BtnGroupComponent,
       editor: {
         type: 'custom',
         component: BtnGroupComponent,
@@ -55,7 +53,19 @@ export class DevicesComponent implements OnInit {
     },
     valve: {
       title: 'Valve',
-      type: 'text'
+      type: 'custom',
+      renderComponent: BtnGroupComponent
+    },
+    actions: {
+      columnTitle: 'Actions',
+      add: false,
+      edit: false,
+      delete: true,
+      custom: [
+        { name: 'viewrecord', title: '<i class="fa fa-eye"></i>' },
+        { name: 'editrecord', title: '&nbsp;&nbsp;<i class="fa  fa-pencil"></i>' }
+      ],
+      position: 'right'
     }
   };
 
@@ -66,19 +76,57 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit(): void {
     //get devices, sockets, and valves from backend interface
-  //   this.devicesService.getDevices().pipe(
-  //     tap(() => this.loading = true)
-  //   ).subscribe((devices: DeviceDto[]) => {
-  //     this.dataSource = new LocalDataSource(devices);
-  //     setTimeout(() => {
-  //       this.cd.detectChanges();
-  //     }, 0);
-  //   },
-  //     (error) => {
-  //     },
-  //     () => {
-  //       this.loading = false;
-  //     });
+    //   this.devicesService.getDevices().pipe(
+    //     tap(() => this.loading = true)
+    //   ).subscribe((devices: DeviceDto[]) => {
+    const devices: DeviceDto[] = [
+      {
+        serial: 'A1',
+        sockets: [
+          {
+            serial:1,
+            started: 'yesterday',
+            stopped: 'christmans',
+            state: "off",
+            kwt: 300
+          },{
+            serial:2,
+            started: 'yesterday',
+            stopped: 'christmans',
+            state: "off",
+            kwt: 300
+          },{
+            serial:3,
+            started: 'yesterday',
+            stopped: 'christmans',
+            state: "off",
+            kwt: 300
+          },{
+            serial:4,
+            started: 'yesterday',
+            stopped: 'christmans',
+            state: "off",
+            kwt: 300
+          }
+        ],
+        valve: {
+            started: 'yesterday',
+            stopped: 'christmans',
+            state: "off",
+            kwt: 300
+        }
+      }
+    ]
+    this.dataSource = new LocalDataSource(devices);
+    //     setTimeout(() => {
+    //       this.cd.detectChanges();
+    //     }, 0);
+    //   },
+    //     (error) => {
+    //     },
+    //     () => {
+    //       this.loading = false;
+    //     });
 
   }
 }

@@ -396,7 +396,14 @@
               "apps/peer2park/src/favicon.ico",
               "apps/peer2park/src/assets"
             ],
-            "styles": ["apps/peer2park/src/styles.scss"],
+            "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/@nebular/theme/styles/prebuilt/default.css",
+              "./node_modules/nebular-icons/scss/nebular-icons.scss",
+              "./node_modules/font-awesome/css/font-awesome.css",
+              "apps/peer2park/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
