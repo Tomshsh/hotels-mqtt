@@ -3,13 +3,13 @@ import { ViewCell } from 'ng2-smart-table';
 
 @Component({
   template: `
-    <nb-icon class="center" icon="{{value}}"
+    <nb-icon class="center" status="{{value.status}}" icon="{{value.icon}}"
              [options]="{ animation: { type: 'zoom' } }">
     </nb-icon>
   `,
 })
 export class IconRendererComponent implements ViewCell, OnInit {
-  @Input() value: string;
+  @Input() value: any;
   @Input() rowData: any;
 
   constructor() {

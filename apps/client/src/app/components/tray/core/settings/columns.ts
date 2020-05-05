@@ -40,7 +40,10 @@ export const TRAY_COLUMNS = {
     type: 'custom',
     filter: false,
     valuePrepareFunction: (value, cell, row) => {
-      return toBoolean(value) ? 'wifi-outline' : 'wifi-off-outline';
+      return toBoolean(value) ? { icon: 'wifi-outline', status: 'success' } : {
+        icon: 'wifi-off-outline',
+        status: 'danger'
+      };
     },
     renderComponent: IconRendererComponent,
     width: '80px',
