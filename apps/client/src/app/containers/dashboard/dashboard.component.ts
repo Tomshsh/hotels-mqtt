@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import * as eva from 'eva-icons';
 
 @Component({
   selector: 'my-tray',
@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
   `
 })
 export class DashboardComponent {
-
 }

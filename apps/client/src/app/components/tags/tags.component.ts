@@ -53,23 +53,20 @@ export class TagsComponent implements OnInit {
 
   onCreateRowConfirm(event: { newData: TagDto, confirm: Deferred }) {
     console.log('::Create row::', event);
-    // todo: dismiss if you don't want to save event.confirm.reject();
-    // todo: send data to Parse
 
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
       this.tagsService.createTag(event.newData).subscribe((created: boolean) => {
-        if (created) {
-          event.confirm.resolve();
-          this.confirm.close();
-          this.toastrService.success('Successfully created Tag', `Creating Tag`);
-          setTimeout(() => {
-            this.cd.detectChanges();
-          }, 300);
-        } else {
-          this.confirm.close();
-          this.toastrService.danger('Failed creating Tag', `Creating Tag`);
-        }
+        event.confirm.resolve();
+        this.confirm.close();
+        this.toastrService.success('Successfully created Tag', `Creating Tag`);
+        setTimeout(() => {
+          this.cd.detectChanges();
+        }, 300);
+      }, error => {
+        event.confirm.resolve();
+        this.confirm.close();
+        this.toastrService.danger('Failed creating Tag', `Creating Tag`);
       });
     });
   }

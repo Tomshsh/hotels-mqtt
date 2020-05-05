@@ -8,7 +8,7 @@ import {
   OnInit, Output,
   SimpleChanges, ViewChild
 } from '@angular/core';
-import { ɵbo as Ng2SmartTableComponent, LocalDataSource } from 'ng2-smart-table';
+import { ɵbo as Ng2SmartTableComponent } from 'ng2-smart-table';
 
 @Component({
   selector: 'ui-data-grid',

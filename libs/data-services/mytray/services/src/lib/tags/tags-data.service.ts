@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -13,7 +13,7 @@ import { Tag, TagDto } from '@my-tray/api-interfaces';
 export class TagsService {
   private baseURL = `${ this.env.parse.serverURL }classes/`;
 
-  constructor(private readonly tagsRepository: TagsRepository,
+  constructor(private readonly tagsRepository: TagsRepository<Tag>,
               private readonly httpClient: HttpClient,
               private readonly authQuery: AuthSessionQuery,
               @Inject('env') private readonly env: any) {
@@ -36,7 +36,6 @@ export class TagsService {
   }
 
   createTag(newTag: TagDto) {
-    // todo:
     return this.httpClient.post(this.baseURL + 'Tag', {
       'objectId': newTag.objectId,
       'expiration_date': {
@@ -46,11 +45,9 @@ export class TagsService {
       'product': {
         '__type': 'Pointer',
         'className': 'Product',
-        'objectId': newTag.productTitle
+        'objectId': newTag.productTitle.value
       },
-      'ACL': {
-        'role': this.authQuery.getAcl()
-      }
+      'ACL': this.authQuery.getAcl()[0].acl
     }, {
       headers: new HttpHeaders()
         .append('Content-Type', 'application/json')
