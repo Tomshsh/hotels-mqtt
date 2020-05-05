@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Credentials, Permissions, Role, UserDto } from '@my-tray/api-interfaces';
+import { AclDto, Credentials, Permissions, Role, UserDto } from '@my-tray/api-interfaces';
 import { UsersRepository } from '../../repositories';
 import { User } from 'parse';
 import { fromPromise } from 'rxjs/internal-compatibility';
@@ -23,7 +23,10 @@ export class UsersService {
         permissions: [Permissions.WRITE],
         acl: await this.usersRepository.getACL('Hotel').then((hotels) => {
           return hotels.map(hotel => {
-            return hotel.toJSON().name;
+            return {
+              name: hotel.toJSON().name,
+              acl: hotel.getACL().permissionsById
+            } as AclDto;
           });
         })
       };

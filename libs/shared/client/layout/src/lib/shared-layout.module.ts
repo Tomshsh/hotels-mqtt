@@ -22,7 +22,7 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
 import { RouterModule } from '@angular/router';
-import {DashboardContainerComponent } from './containers';
+import { DashboardContainerComponent } from './containers';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -34,10 +34,22 @@ import {
   NavigationComponent,
   SelectListComponent,
   SelectListRendererComponent,
-  SidebarContainerComponent
+  SidebarContainerComponent,
+  IconRendererComponent
 } from './components';
 
-const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent, NavigationComponent, ConfirmPromptDialogComponent];
+const components = [
+  DashboardContainerComponent,
+  SidebarContainerComponent,
+  DatagridComponent,
+  DateRangePickerComponent,
+  SelectListComponent,
+  NavigationComponent,
+  ConfirmPromptDialogComponent,
+  DatepickerRendererComponent,
+  SelectListRendererComponent,
+  IconRendererComponent
+];
 
 @NgModule({
   imports: [
@@ -82,7 +94,7 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent]
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, IconRendererComponent]
 })
 
 export class SharedLayoutModule {

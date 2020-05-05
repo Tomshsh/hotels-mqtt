@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import * as Parse from 'parse';
+import { Pointer } from 'parse';
 import { Tag, TagDto } from '@my-tray/api-interfaces';
 import moment from 'moment';
 import { ProductDataRepository } from '../products';
-
-import {Pointer} from 'parse';
+import { Repository } from '../repository';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TagsRepository {
+export class TagsRepository<T extends Tag> extends Repository<T> {
 
   constructor(private readonly productRepository: ProductDataRepository) {
+    super();
   }
 
   async getTags(): Promise<Tag[]> {
@@ -42,10 +43,10 @@ export class TagsRepository {
 
   async updateTag(updateTag: TagDto): Promise<Tag> {
     try {
-      const query = new Parse.Query(Parse.Object.extend('Tag'))
+      const tagForUpdate = await new Parse.Query(Parse.Object.extend('Tag'))
         .equalTo('objectId', updateTag.objectId)
         .first();
-      const tagForUpdate = await query;
+
       const product = await this.productRepository.getProductById(updateTag.productObjectId);
       tagForUpdate.set('expiration_date', moment(updateTag.expDate).toDate());
       tagForUpdate.set('product', {

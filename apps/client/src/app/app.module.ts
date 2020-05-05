@@ -13,6 +13,8 @@ import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { environment } from '@my-tray/env/client/environment';
 import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/services';
 import { SelectListRendererContextComponent } from './components/tags/components/select-list-renderer-context/select-list-renderer-context.component';
+import { TrayComponent } from './components/tray/tray.component';
+import { SelectRoomRendererComponent } from './components/tray/components/select-room-renderer/select-room-renderer.component';
 
 
 export function initializer(configurationService: ConfigurationService) {
@@ -44,7 +46,7 @@ const routes: Route[] = [
     multi: true
   },
     { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [AuthSessionService, AuthSessionQuery] }],
-  declarations: [DashboardComponent, SelectListRendererContextComponent],
+  declarations: [DashboardComponent, SelectListRendererContextComponent, TrayComponent, SelectRoomRendererComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {

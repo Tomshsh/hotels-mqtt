@@ -2,6 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { SelectListComponent } from '@my-tray/shared/layout';
 import { ProductService } from '@my-tray/data-services/mytray/services';
 import { Product } from '@my-tray/api-interfaces';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   template: `
@@ -11,8 +13,8 @@ import { Product } from '@my-tray/api-interfaces';
     </ui-select-list>
   `
 })
-export class SelectListRendererContextComponent extends SelectListComponent implements OnInit, AfterViewInit {
-
+export class SelectListRendererContextComponent extends SelectListComponent implements OnInit {
+  private readonly destroy$: Subject<any> = new Subject<any>();
   rowData: any[] = [];
 
   constructor(private readonly productService: ProductService,
@@ -26,7 +28,14 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
       this.selectedItem = this.rowData[0];
     }
 
-    this.productService.getProducts().subscribe((products: Product[]) => {
+    this.productService.getProducts().pipe(
+      takeUntil(this.destroy$),
+      finalize(() => {
+        setTimeout(() => {
+          this.cd.detectChanges();
+        });
+      })
+    ).subscribe((products: Product[]) => {
       const options = products.map(prod => {
         return { value: prod.objectId, title: prod.title, price: prod.price }
       });
@@ -38,7 +47,7 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
         }
         this.selectedItem =
           this.rowData.find((prod: Product) => prod.title === title);
-        this.cd.detectChanges();
+        this.cell.newValue = this.selectedItem;
       } catch (e) {
         this.selectedItem = this.rowData[0];
       }
@@ -52,9 +61,5 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
       .getCells()
       .find(x => x['column']['id'] === 'productPrice');
     priceCell.newValue = $event.price;
-  }
-
-  ngAfterViewInit(): void {
-    console.log(this.rowData);
   }
 }

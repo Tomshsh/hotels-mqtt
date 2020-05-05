@@ -15,7 +15,6 @@ export class HttpAuthErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status !== 209) {
           // 401 handled in auth.interceptor
-          alert(1)
         }
         return throwError(error);
       })
