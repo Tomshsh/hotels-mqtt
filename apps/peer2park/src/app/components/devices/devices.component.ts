@@ -1,8 +1,14 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, AfterContentInit, SimpleChange, Input } from '@angular/core';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { LocalDataSource } from 'ng2-smart-table';
+import { LocalDataSource, ViewCell, Cell } from 'ng2-smart-table';
 import { tap } from 'rxjs/operators';
-import { DatepickerRendererComponent, DateRangePickerComponent, SelectListComponent, SelectListRendererComponent, BtnGroupComponent } from '@my-tray/shared/layout';
+import { DatepickerRendererComponent, DateRangePickerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent } from '@my-tray/shared/layout';
+import { SocketStatusRendererComponent } from '../socket-status-renderer/socket-status-renderer.component';
+import { DeviceModalComponent } from '../device-modal/device-modal.component';
+import { NbDialogService } from '@nebular/theme';
+import Parse from 'parse'
+import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
+import { fromPromise } from 'rxjs/internal-compatibility';
 
 class Valve {
   started: string;
@@ -23,101 +29,104 @@ class DeviceDto {
 
 }
 
-
-
 @Component({
   selector: 'p2p-devices',
-  template: '<ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading"></ui-data-grid>',
+  template: `
+  <ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading" [displayActions]="false" (userRowSelect)="openDialog($event)"></ui-data-grid>`,
   styleUrls: ['./devices.component.css']
 })
 
 @RoutingComponent()
-export class DevicesComponent implements OnInit {
-  dataSource: DeviceDto[] | LocalDataSource;
+export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
+  dataSource: LocalDataSource;
   loading: boolean;
   columns = {
     serial: {
       title: 'Serial',
-      type: 'text'
+      type: 'text',
+      valuePrepareFunction: (cell: any, row: Parse.Attributes) => {
+        return row.deviceNo
+      }
     },
     sockets: {
       title: 'Sockets',
       type: 'custom',
-      renderComponent: BtnGroupComponent,
-      editor: {
-        type: 'custom',
-        component: BtnGroupComponent,
-        config: {
+      renderComponent: SocketStatusRendererComponent,
+      onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
+        btnGroup.onInitFunction = function () {
+          //     const sockets: Parse.Attributes = btnGroup.rowData.sockets
+          //     btnGroup.indicators = sockets.map((s)=> s.socketNo)
+          let sockets: any[] = btnGroup.value
+          btnGroup.indicators = sockets.map(s => s.socketNo).filter(s => s < 7).sort((a, b) => a - b)
         }
+      },
+      valuePrepareFunction: (cell, row) => {
+        const sockets: any[] = row.sockets
+        console.log(sockets)
+        return sockets.length ? sockets :null
       }
     },
     valve: {
       title: 'Valve',
       type: 'custom',
-      renderComponent: BtnGroupComponent
+      renderComponent: SocketStatusRendererComponent,
+      onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
+      }
     },
     actions: {
-      columnTitle: 'Actions',
-      add: false,
-      edit: false,
-      delete: true,
-      custom: [
-        { name: 'viewrecord', title: '<i class="fa fa-eye"></i>' },
-        { name: 'editrecord', title: '&nbsp;&nbsp;<i class="fa  fa-pencil"></i>' }
-      ],
-      position: 'right'
+      title: 'actions',
+      type: 'custom',
+      renderComponent: CustomActionsComponent,
+      onComponentInitFunction: (actionsComp: CustomActionsComponent) => {
+        actionsComp.buttons = ['control', 'history']
+        actionsComp.clickHandler = (ref: HTMLButtonElement) => {
+          switch (ref.innerText) {
+            case 'control':
+              break;
+
+            default:
+              break;
+          }
+        }
+      }
     }
   };
 
-  constructor(private readonly cd: ChangeDetectorRef,
-    //private readonly devicesService: DevicesService
+  constructor(
+    private readonly cd: ChangeDetectorRef,
+    private dialog: NbDialogService,
+    //private  devicesService: DevicesService
   ) {
   }
 
-  ngOnInit(): void {
+  openDialog($event): void {
+    const dialogRef = this.dialog.open(DeviceModalComponent)
+    dialogRef.componentRef.instance.data = $event.data
+  }
+
+  async ngOnInit() {
     //get devices, sockets, and valves from backend interface
+
     //   this.devicesService.getDevices().pipe(
     //     tap(() => this.loading = true)
     //   ).subscribe((devices: DeviceDto[]) => {
-    const devices: DeviceDto[] = [
-      {
-        serial: 'A1',
-        sockets: [
-          {
-            serial:1,
-            started: 'yesterday',
-            stopped: 'christmans',
-            state: "off",
-            kwt: 300
-          },{
-            serial:2,
-            started: 'yesterday',
-            stopped: 'christmans',
-            state: "off",
-            kwt: 300
-          },{
-            serial:3,
-            started: 'yesterday',
-            stopped: 'christmans',
-            state: "off",
-            kwt: 300
-          },{
-            serial:4,
-            started: 'yesterday',
-            stopped: 'christmans',
-            state: "off",
-            kwt: 300
-          }
-        ],
-        valve: {
-            started: 'yesterday',
-            stopped: 'christmans',
-            state: "off",
-            kwt: 300
-        }
-      }
-    ]
-    this.dataSource = new LocalDataSource(devices);
+    let q = new Parse.Query(Parse.Object.extend('Device'))
+    let sessionToken = Parse.User.current().get('sessionToken')
+    let flatArr = []
+    fromPromise(q.find({ sessionToken })
+      .then(async (devices) => {
+        await devices.map(async (d, i) => {
+          let fDevice = d.toJSON()
+          flatArr.push(fDevice)
+          let sockets = await d.relation('sockets').query().select('active', 'consumption', 'resource', 'socketNo').find()
+          flatArr[i].sockets = sockets.map(s => (s.toJSON()))
+        })
+        this.dataSource = new LocalDataSource(flatArr);
+        console.log(this.dataSource)
+
+      })).subscribe(()=>{setTimeout(()=>{this.cd.detectChanges(),0})})
+
+
     //     setTimeout(() => {
     //       this.cd.detectChanges();
     //     }, 0);
@@ -128,5 +137,12 @@ export class DevicesComponent implements OnInit {
     //       this.loading = false;
     //     });
 
+  }
+
+  ngAfterContentInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("changes " + changes)
   }
 }

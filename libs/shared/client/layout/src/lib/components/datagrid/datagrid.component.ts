@@ -30,6 +30,9 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   loading: boolean;
 
+  @Input()
+  displayActions:boolean
+
   @Output()
   createConfirm: EventEmitter<any> = new EventEmitter<any>();
 
@@ -42,8 +45,12 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   @Output()
   deleteConfirm: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output()
+  userRowSelect: EventEmitter<any> = new EventEmitter<any>()
+
 
   constructor(private readonly cd: ChangeDetectorRef) {}
+
 
   settings = {
     noDataMessage: 'No data loaded.',
@@ -68,13 +75,16 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 
     actions: {
       add: true,
-      edit: true,
+      edit:true,
       delete: true,
     }
   };
 
   ngOnInit(): void {
     this.settings.columns = Object.assign({}, this.columns);
+    this.settings.actions.add = this.displayActions
+    this.settings.actions.edit = this.displayActions
+    this.settings.actions.delete = this.displayActions
   }
 
   ngAfterViewInit() {
@@ -102,5 +112,9 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 
   onDelete($event) {
     this.deleteConfirm.emit($event);
+  }
+
+  onUserRowSelect($event){
+    this.userRowSelect.emit($event)
   }
 }
