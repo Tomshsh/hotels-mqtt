@@ -9,6 +9,7 @@ import { NbDialogService } from '@nebular/theme';
 import Parse from 'parse'
 import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
 import { fromPromise } from 'rxjs/internal-compatibility';
+import { DevicesService } from '@my-tray/data-services/peer2park/services'
 
 class Valve {
   started: string;
@@ -63,7 +64,7 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
       valuePrepareFunction: (cell, row) => {
         const sockets: any[] = row.sockets
         console.log(sockets)
-        return sockets.length ? sockets :null
+        return sockets.length ? sockets : null
       }
     },
     valve: {
@@ -95,7 +96,7 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
   constructor(
     private readonly cd: ChangeDetectorRef,
     private dialog: NbDialogService,
-    //private  devicesService: DevicesService
+    private devicesService: DevicesService
   ) {
   }
 
@@ -107,36 +108,18 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
   async ngOnInit() {
     //get devices, sockets, and valves from backend interface
 
-    //   this.devicesService.getDevices().pipe(
-    //     tap(() => this.loading = true)
-    //   ).subscribe((devices: DeviceDto[]) => {
-    let q = new Parse.Query(Parse.Object.extend('Device'))
-    let sessionToken = Parse.User.current().get('sessionToken')
-    let flatArr = []
-    fromPromise(q.find({ sessionToken })
-      .then(async (devices) => {
-        await devices.map(async (d, i) => {
-          let fDevice = d.toJSON()
-          flatArr.push(fDevice)
-          let sockets = await d.relation('sockets').query().select('active', 'consumption', 'resource', 'socketNo').find()
-          flatArr[i].sockets = sockets.map(s => (s.toJSON()))
-        })
-        this.dataSource = new LocalDataSource(flatArr);
-        console.log(this.dataSource)
 
-      })).subscribe(()=>{setTimeout(()=>{this.cd.detectChanges(),0})})
-
-
-    //     setTimeout(() => {
-    //       this.cd.detectChanges();
-    //     }, 0);
-    //   },
-    //     (error) => {
-    //     },
-    //     () => {
-    //       this.loading = false;
-    //     });
-
+    this.devicesService.getDevices()
+    .pipe(tap(()=> this.loading = true))
+    .subscribe((devices) => {
+      this.dataSource = new LocalDataSource(devices);
+      setTimeout(() => {
+        this.cd.detectChanges()
+      }, 0)
+    },(err)=>{},
+    ()=> {
+      this.loading = false
+    })
   }
 
   ngAfterContentInit() {

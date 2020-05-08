@@ -28,6 +28,9 @@
       "@my-tray/shared/utilities": ["libs/shared/utilities/src/index.ts"],
       "@my-tray/data-services/mytray/services": [
         "libs/data-services/mytray/services/src/index.ts"
+      ],
+      "@my-tray/data-services/peer2park/services": [
+        "libs/data-services/peer2park/services/src/index.ts"
       ]
     }
   },
