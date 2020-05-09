@@ -55,15 +55,12 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
       renderComponent: SocketStatusRendererComponent,
       onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
         btnGroup.onInitFunction = function () {
-          //     const sockets: Parse.Attributes = btnGroup.rowData.sockets
-          //     btnGroup.indicators = sockets.map((s)=> s.socketNo)
           let sockets: any[] = btnGroup.value
           btnGroup.indicators = sockets.map(s => s.socketNo).filter(s => s < 7).sort((a, b) => a - b)
         }
       },
       valuePrepareFunction: (cell, row) => {
         const sockets: any[] = row.sockets
-        console.log(sockets)
         return sockets.length ? sockets : null
       }
     },
