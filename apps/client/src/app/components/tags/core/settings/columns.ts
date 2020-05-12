@@ -18,12 +18,12 @@ export const TAGS_COLUMNS = {
     type: 'custom',
     width: '250px',
     renderComponent: DatepickerRendererComponent,
+    valuePrepareFunction: (value, cell, row) => {
+      return value;
+    },
     editor: {
       type: 'custom',
       component: DateRangePickerComponent,
-      config: {
-        format: 'dd-MMM-yyyy'
-      }
     }
   },
   productTitle: {
@@ -31,7 +31,7 @@ export const TAGS_COLUMNS = {
     type: 'custom',
     width: '450px',
     valuePrepareFunction: (value, cell, row) => {
-      return row.productTitle;
+      return value;
     },
     renderComponent: SelectListRendererComponent,
     editor: {

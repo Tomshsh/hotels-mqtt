@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import Parse from 'parse'
 import {fromPromise} from 'rxjs/internal-compatibility'
 import { Observable } from 'rxjs';
-
+import { AuthSessionQuery } from '@my-tray/shared/client/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class DevicesService {
 
-  constructor() { }
+  constructor(private readonly authQuery: AuthSessionQuery) { }
 
   getDevices(): Observable<any>{
     let q = new Parse.Query(Parse.Object.extend('Device'))
-      let sessionToken = Parse.User.current().get('sessionToken')
+      let sessionToken = this.authQuery.getValue().token;
       let flatArr = []
       return fromPromise(
         q.find({ sessionToken })

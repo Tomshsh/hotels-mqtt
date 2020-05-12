@@ -5,13 +5,17 @@ import { ViewCell } from 'ng2-smart-table';
   template: `{{value}}`,
 })
 export class SelectListRendererComponent implements ViewCell, OnInit {
-  @Input() value: string;
+  @Input() value: any;
   @Input() rowData: any;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.value = this.rowData.productTitle;
+    const { title } = this.value;
+    if(title) {
+      this.value = title;
+    }
   }
 }
+

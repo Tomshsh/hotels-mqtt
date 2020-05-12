@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import * as Parse from 'parse';
+import { Pointer } from 'parse';
 import { Tag, TagDto } from '@my-tray/api-interfaces';
 import moment from 'moment';
+import { ProductDataRepository } from '../products';
+import { Repository } from '../repository';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TagsRepository {
+export class TagsRepository<T extends Tag> extends Repository<T> {
 
-  constructor() {
+  constructor(private readonly productRepository: ProductDataRepository) {
+    super();
   }
 
   async getTags(): Promise<Tag[]> {
@@ -35,5 +39,32 @@ export class TagsRepository {
       }, (err) => {
         throw new Error(err);
       });
+  }
+
+  async updateTag(updateTag: TagDto): Promise<Tag> {
+    try {
+      const tagForUpdate = await new Parse.Query(Parse.Object.extend('Tag'))
+        .equalTo('objectId', updateTag.objectId)
+        .first();
+
+      const product = await this.productRepository.getProductById(updateTag.productObjectId);
+      tagForUpdate.set('expiration_date', moment(updateTag.expDate).toDate());
+      tagForUpdate.set('product', {
+        __type: 'Pointer',
+        objectId: product.objectId,
+        className: 'Product'
+      });
+      await tagForUpdate.save()
+
+      const tag = tagForUpdate.toJSON();
+      return Promise.resolve({
+        objectId: tag.objectId,
+        product: tag.product,
+        expDate: tag.expiration_date.iso
+      });
+
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 }

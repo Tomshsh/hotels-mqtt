@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMenuBag, NbMenuItem, NbMenuService, NbSidebarService } from '@nebular/theme';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { RoutesService } from '@my-tray/data-services/mytray/services';
-import { AppNavItem } from '@my-tray/api-interfaces';
-import { AuthSessionService } from '@my-tray/shared/client/auth';
+import { AclDto, AppNavItem } from '@my-tray/api-interfaces';
+import { AuthSessionQuery, AuthSessionService } from '@my-tray/shared/client/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,11 +17,12 @@ import { Router } from '@angular/router';
 @RoutingComponent()
 export class DashboardContainerComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-
+  headerTitle: string;
   items: NbMenuItem[] = [];
 
   constructor(private readonly sidebarService: NbSidebarService,
               private readonly authService: AuthSessionService,
+              private readonly authQuery: AuthSessionQuery,
               private readonly menuService: NbMenuService,
               private readonly routesService: RoutesService,
               private readonly cd: ChangeDetectorRef,
@@ -34,6 +35,12 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
       .subscribe((menuBag: NbMenuBag) => {
         this.resetSelection(this.items);
         menuBag.item.selected = true;
+      });
+
+    this.authQuery.loggedInACL$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((acl: AclDto) => {
+        this.headerTitle = acl[0].name;
       });
 
     this.routesService.getRoutesForLayout()

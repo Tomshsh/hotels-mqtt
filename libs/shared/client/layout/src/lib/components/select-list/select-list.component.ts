@@ -1,18 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DefaultEditor, ViewCell } from 'ng2-smart-table';
+import { DefaultEditor } from 'ng2-smart-table';
 
 @Component({
   selector: 'ui-select-list',
   template: `
-    <nb-select [placeholder]="placeholder" status="info"
+    <nb-select [placeholder]="placeholder"
+               [ngModel]="selectedItem"
+               status="info"
                [(selected)]="selectedItem"
                [fullWidth]="true"
-               (selectedChange)="updateSelected($event)">
+               (selectedChange)="updateSelected($event)"
+               #selectComponent>
       <nb-option *ngFor="let option of rowData" [value]="option">
         {{ option.title }}
       </nb-option>
     </nb-select>
-  `
+
+  `,
 })
 export class SelectListComponent extends DefaultEditor implements OnInit {
   @Input() placeholder: string;
@@ -25,10 +29,6 @@ export class SelectListComponent extends DefaultEditor implements OnInit {
   }
 
   ngOnInit(): void {
-   /* if (!this.selectedItem) {
-      this.rowData.push({ value: '', title: 'Select Product' });
-      this.selectedItem = this.rowData[0];
-    }*/
   }
 
   updateSelected($event) {

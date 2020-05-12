@@ -1,0 +1,14 @@
+<nb-actions [fullWidth]="true">
+  <nb-action (click)="onToggleMenu($event)" class="toggle-menu-button">
+    <nb-icon icon="menu-outline"></nb-icon>
+    {{headerTitle}}
+  </nb-action>
+  <nb-action icon="bell-outline"></nb-action>
+  <nb-action icon="email-outline"></nb-action>
+  <nb-action>
+    <button (click) = "onLogout($event)" size="small" outline nbButton [appearance]="'ghost'">
+      <nb-icon icon="log-out-outline"></nb-icon>
+      LOGOUT
+    </button>
+  </nb-action>
+</nb-actions>

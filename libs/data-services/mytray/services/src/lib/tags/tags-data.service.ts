@@ -1,13 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { Tag, TagDto } from '@my-tray/api-interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { TagsRepository } from '@my-tray/data-layers/mytray/repositories';
 import { AuthSessionQuery } from '@my-tray/shared/client/auth';
-
-import moment from 'moment';
-
+import { Tag, TagDto } from '@my-tray/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +13,7 @@ import moment from 'moment';
 export class TagsService {
   private baseURL = `${ this.env.parse.serverURL }classes/`;
 
-  constructor(private readonly tagsRepository: TagsRepository,
+  constructor(private readonly tagsRepository: TagsRepository<Tag>,
               private readonly httpClient: HttpClient,
               private readonly authQuery: AuthSessionQuery,
               @Inject('env') private readonly env: any) {
@@ -33,7 +31,6 @@ export class TagsService {
               expDate: tag.expDate
             };
           });
-
       })
     );
   }
@@ -48,11 +45,9 @@ export class TagsService {
       'product': {
         '__type': 'Pointer',
         'className': 'Product',
-        'objectId': newTag.productTitle
+        'objectId': newTag.productTitle.value
       },
-      'ACL': {
-        'role': ''
-      }
+      'ACL': this.authQuery.getAcl()[0].acl
     }, {
       headers: new HttpHeaders()
         .append('Content-Type', 'application/json')
@@ -61,13 +56,18 @@ export class TagsService {
     });
   }
 
-  updateTag(updateTag: TagDto): Observable<boolean> {
-    return of(true);
-    /*return fromPromise(
-      this.tagsRepository.createTag(newTag).then((tag: Tag) => {
-        return null;
+  updateTag(updateTag: TagDto): Observable<TagDto> {
+    return fromPromise(
+      this.tagsRepository.updateTag(updateTag).then((tag: Tag) => {
+        return {
+          productObjectId: tag.product.objectId,
+          productPrice: tag.product.price,
+          expDate: tag.expDate,
+          objectId: tag.objectId,
+          productTitle: tag.product.title
+        } as TagDto;
       })
-    );*/
+    );
   }
 
   deleteTag(objectId: string): Observable<void> {

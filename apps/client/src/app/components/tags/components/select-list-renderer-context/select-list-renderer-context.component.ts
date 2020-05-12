@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SelectListComponent } from '@my-tray/shared/layout';
 import { ProductService } from '@my-tray/data-services/mytray/services';
 import { Product } from '@my-tray/api-interfaces';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   template: `
@@ -12,38 +14,49 @@ import { Product } from '@my-tray/api-interfaces';
   `
 })
 export class SelectListRendererContextComponent extends SelectListComponent implements OnInit {
+  private readonly destroy$: Subject<any> = new Subject<any>();
+  rowData: any[] = [];
+
   constructor(private readonly productService: ProductService,
               private readonly cd: ChangeDetectorRef) {
     super();
-    this.rowData = [];
+    this.rowData.push({ value: '', title: 'Select Product', price: 0 });
   }
 
   ngOnInit(): void {
     if (!this.cell.getRow().getData().productTitle) {
-      this.rowData.push({ value: '', title: 'Select Product' });
       this.selectedItem = this.rowData[0];
     }
-    this.productService.getProducts().subscribe((products: Product[]) => {
+
+    this.productService.getProducts().pipe(
+      takeUntil(this.destroy$),
+      finalize(() => {
+        setTimeout(() => {
+          this.cd.detectChanges();
+        });
+      })
+    ).subscribe((products: Product[]) => {
       const options = products.map(prod => {
         return { value: prod.objectId, title: prod.title, price: prod.price }
       });
       this.rowData.push(...options);
-
-      if(!this.selectedItem) {
+      try {
+        let { title } = this.cell.getRow().getData()?.productTitle;
+        if (!title) {
+          title = this.cell.getRow().getData().productTitle;
+        }
         this.selectedItem =
-          this.rowData.find(product =>
-            product.title === this.cell.getRow().getData().productTitle
-          );
+          this.rowData.find((prod: Product) => prod.title === title);
+        this.cell.newValue = this.selectedItem;
+      } catch (e) {
+        this.selectedItem = this.rowData[0];
       }
-      setTimeout(() => {
-        this.cd.detectChanges();
-      }, 0);
     });
   }
 
   loadProductPriceOnItemChanged($event) {
     this.selectedItem = $event;
-    this.cell.newValue = $event.title;
+    this.cell.newValue = $event;
     const priceCell = this.cell.getRow()
       .getCells()
       .find(x => x['column']['id'] === 'productPrice');

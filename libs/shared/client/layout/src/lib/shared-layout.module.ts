@@ -6,17 +6,18 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
-  NbDatepickerModule,
+  NbDatepickerModule, NbDialogModule, NbDialogService,
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbMenuModule,
-  NbMenuService, NbSelectModule,
+  NbMenuService,
+  NbSelectModule,
   NbSidebarModule,
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
-  NbToastrModule,
+  NbToastrModule, NbToastrService
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -26,16 +27,30 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {
+  ConfirmPromptDialogComponent,
   DatagridComponent,
   DatepickerRendererComponent,
   DateRangePickerComponent,
-  SidebarContainerComponent,
+  NavigationComponent,
   SelectListComponent,
-  SelectListRendererComponent
+  SelectListRendererComponent,
+  SidebarContainerComponent,
+  IconRendererComponent
 } from './components';
 import { CustomActionsComponent } from './components/custom-actions/custom-actions.component';
 
-const components = [DashboardContainerComponent, SidebarContainerComponent, DatagridComponent, DateRangePickerComponent, DatepickerRendererComponent, SelectListComponent, SelectListRendererComponent];
+const components = [
+  DashboardContainerComponent,
+  SidebarContainerComponent,
+  DatagridComponent,
+  DateRangePickerComponent,
+  SelectListComponent,
+  NavigationComponent,
+  ConfirmPromptDialogComponent,
+  DatepickerRendererComponent,
+  SelectListRendererComponent,
+  IconRendererComponent
+];
 
 @NgModule({
   imports: [
@@ -53,6 +68,7 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     NbCardModule,
     NbSidebarModule,
     NbToastrModule,
+    NbDialogModule.forRoot(),
     NbThemeModule.forRoot({
       name: 'corporate'
     }),
@@ -73,10 +89,19 @@ const components = [DashboardContainerComponent, SidebarContainerComponent, Data
     FormsModule,
     NbSelectModule,
     NbDatepickerModule.forRoot(),
+    NbToastrModule.forRoot({
+      preventDuplicates: true
+    })
   ],
+<<<<<<< HEAD
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
   declarations: [...components, CustomActionsComponent],
   exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent]
+=======
+  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
+  declarations: [...components],
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, IconRendererComponent]
+>>>>>>> 900e91a4ada37eb5807e2b8f4cac2e69201d796b
 })
 
 export class SharedLayoutModule {

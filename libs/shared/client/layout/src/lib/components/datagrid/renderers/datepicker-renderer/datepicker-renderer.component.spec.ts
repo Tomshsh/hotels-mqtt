@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatepickerRendererComponent } from './datepicker-render.component';
+import { DatepickerRendererComponent } from '@my-tray/shared/layout';
 
 describe('DatepickerRendererComponent', () => {
   let component: DatepickerRendererComponent;
