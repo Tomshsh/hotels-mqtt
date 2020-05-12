@@ -19,7 +19,7 @@ export const TRAY_COLUMNS = {
     editable: true
   },
   room: {
-    title: 'Room Name',
+    title: 'Room',
     type: 'string',
     width: '250px',
     valuePrepareFunction: (value, cell, row) => {

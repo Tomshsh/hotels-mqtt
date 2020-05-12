@@ -97,7 +97,7 @@ export class TrayComponent implements OnInit {
           .subscribe(() => {
             event.confirm.resolve();
             this.confirm.close();
-            this.toastrService.success('Successfully update Tray', `Updating Tray`);
+            this.toastrService.success('Successfully updated Tray', `Updating Tray`);
             this.immidiate();
           }, error => {
             event.confirm.resolve();
@@ -105,6 +105,11 @@ export class TrayComponent implements OnInit {
             this.toastrService.danger('Failed updating Tray', `Updating Tray`);
           });
       });
+
+    this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {
+      event.confirm.reject();
+      this.confirm.close();
+    });
   }
 
   onDeleteRowConfirm(event: { data: TrayDto, confirm: Deferred }) {

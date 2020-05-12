@@ -8,23 +8,23 @@ import { CheckOutComponent } from './reception/check-out/check-out.component';
 import { AuthGuard } from '@my-tray/shared/client/auth';
 import { TagsComponent } from './tags/tags.component';
 import { TrayComponent } from './tray/tray.component';
+import { ProductsComponent } from './products/products.component';
 
 
-const routes: Routes = [
-  {
-    path: 'dashboard',
-    component: DashboardContainerComponent,
-    children: [
-      { path: 'users', component: UsersComponent },
-      { path: 'devices', component: DevicesComponent },
-      { path: 'tags', component: TagsComponent },
-      { path: 'check-in', component: CheckInComponent },
-      { path: 'check-out', component: CheckOutComponent },
-      { path: 'trays', component: TrayComponent },
-    ],
-    canActivate: [AuthGuard]
-  }
-];
+const routes: Routes = [{
+  path: 'dashboard',
+  component: DashboardContainerComponent,
+  children: [
+    { path: 'users', component: UsersComponent },
+    { path: 'devices', component: DevicesComponent },
+    { path: 'tags', component: TagsComponent },
+    { path: 'check-in', component: CheckInComponent },
+    { path: 'check-out', component: CheckOutComponent },
+    { path: 'trays', component: TrayComponent },
+    { path: 'products', component: ProductsComponent },
+  ],
+  canActivate: [AuthGuard]
+}];
 
 @NgModule({
   imports: [

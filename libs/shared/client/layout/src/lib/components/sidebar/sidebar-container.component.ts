@@ -1,8 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { RoutesService } from '@my-tray/data-services/mytray/services';
-import { AppNavItem } from '@my-tray/api-interfaces';
-import { AuthSessionService } from '@my-tray/shared/client/auth';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { NbMenuItem } from '@nebular/theme';
 
 @Component({
