@@ -93,15 +93,10 @@ const components = [
       preventDuplicates: true
     })
   ],
-<<<<<<< HEAD
-  providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService],
-  declarations: [...components, CustomActionsComponent],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent]
-=======
+
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
-  declarations: [...components],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, IconRendererComponent]
->>>>>>> 900e91a4ada37eb5807e2b8f4cac2e69201d796b
+  declarations: [...components, CustomActionsComponent],
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent, IconRendererComponent]
 })
 
 export class SharedLayoutModule {
