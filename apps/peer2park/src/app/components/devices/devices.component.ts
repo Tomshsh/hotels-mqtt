@@ -60,6 +60,7 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
         }
       },
       valuePrepareFunction: (cell, row) => {
+        console.log(row)
         const sockets: any[] = row.sockets
         return sockets.length ? sockets : null
       }
@@ -106,17 +107,16 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
     //get devices, sockets, and valves from backend interface
 
 
-    this.devicesService.getDevices()
-    .pipe(tap(()=> this.loading = true))
-    .subscribe((devices) => {
-      this.dataSource = new LocalDataSource(devices);
-      setTimeout(() => {
-        this.cd.detectChanges()
-      }, 0)
-    },(err)=>{},
-    ()=> {
-      this.loading = false
-    })
+    this.loading = true
+    this.devicesService.getDevices().subscribe(
+      (devices)=>{
+        this.dataSource = new LocalDataSource(devices);
+        this.loading = false
+        setTimeout(()=>{
+          this.cd.detectChanges()
+        },0)
+      }
+    )
   }
 
   ngAfterContentInit() {
