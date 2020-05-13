@@ -33,8 +33,7 @@ const routes: Route[] = [
     SharedClientAuthModule.forRoot(),
     ComponentsModule,
     RouterModule.forRoot(routes),
-    environment.production ? [] : AkitaNgDevtools.forRoot(),
-    // RouterModule.forRoot(routes)
+    environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
   exports: [HttpClientModule],
   providers: [{

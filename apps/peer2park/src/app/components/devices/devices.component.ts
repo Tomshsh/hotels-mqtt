@@ -1,14 +1,10 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges, AfterContentInit, SimpleChange, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, AfterContentInit } from '@angular/core';
 import { RoutingComponent } from '@my-tray/shared/utilities';
 import { LocalDataSource, ViewCell, Cell } from 'ng2-smart-table';
-import { tap } from 'rxjs/operators';
-import { DatepickerRendererComponent, DateRangePickerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent } from '@my-tray/shared/layout';
+import { CustomActionsComponent } from '@my-tray/shared/layout';
 import { SocketStatusRendererComponent } from '../socket-status-renderer/socket-status-renderer.component';
-import { DeviceModalComponent } from '../device-modal/device-modal.component';
 import { NbDialogService } from '@nebular/theme';
 import Parse from 'parse'
-import { CloneVisitor } from '@angular/compiler/src/i18n/i18n_ast';
-import { fromPromise } from 'rxjs/internal-compatibility';
 import { DevicesService } from '@my-tray/data-services/peer2park/services'
 
 class Valve {
@@ -33,12 +29,12 @@ class DeviceDto {
 @Component({
   selector: 'p2p-devices',
   template: `
-  <ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading" [displayActions]="false" (userRowSelect)="openDialog($event)"></ui-data-grid>`,
+  <ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading" [displayActions]="false" ></ui-data-grid>`,
   styleUrls: ['./devices.component.css']
 })
 
 @RoutingComponent()
-export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
+export class DevicesComponent implements OnInit {
   dataSource: LocalDataSource;
   loading: boolean;
   columns = {
@@ -98,15 +94,7 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
   ) {
   }
 
-  openDialog($event): void {
-    const dialogRef = this.dialog.open(DeviceModalComponent)
-    dialogRef.componentRef.instance.data = $event.data
-  }
-
   async ngOnInit() {
-    //get devices, sockets, and valves from backend interface
-
-
     this.loading = true
     this.devicesService.getDevices().subscribe(
       (devices)=>{
@@ -119,10 +107,5 @@ export class DevicesComponent implements OnInit, AfterContentInit, OnChanges {
     )
   }
 
-  ngAfterContentInit() {
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log("changes " + changes)
-  }
 }
