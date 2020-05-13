@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Parse from 'parse';
 import { Pointer } from 'parse';
-import { Tag, TagDto } from '@my-tray/api-interfaces';
+import { Product, Tag, TagDto } from '@my-tray/api-interfaces';
 import moment from 'moment';
 import { ProductDataRepository } from '../products';
 import { Repository } from '../repository';
@@ -11,7 +11,7 @@ import { Repository } from '../repository';
 })
 export class TagsRepository<T extends Tag> extends Repository<T> {
 
-  constructor(private readonly productRepository: ProductDataRepository) {
+  constructor(private readonly productRepository: ProductDataRepository<Product>) {
     super();
   }
 

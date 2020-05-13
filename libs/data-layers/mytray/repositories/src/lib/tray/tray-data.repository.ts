@@ -31,13 +31,7 @@ export class TrayDataRepository<T extends Tray> extends Repository<T> {
   }
 
   async deleteTray(objectId: string): Promise<void> {
-    await new Parse.Query(Parse.Object.extend('Tray'))
-      .get(objectId)
-      .then((toBeDeleted: Parse.Object) => {
-        toBeDeleted.destroy({});
-      }, (err) => {
-        throw new Error(err);
-      });
+    await this.delete(objectId, 'Tray');
   }
 
   async updateTray(tray: TrayDto): Promise<Tray> {

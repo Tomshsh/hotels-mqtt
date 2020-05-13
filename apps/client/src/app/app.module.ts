@@ -15,6 +15,7 @@ import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/
 import { SelectListRendererContextComponent } from './components/tags/components/select-list-renderer-context/select-list-renderer-context.component';
 import { TrayComponent } from './components/tray/tray.component';
 import { SelectRoomRendererComponent } from './components/tray/components/select-room-renderer/select-room-renderer.component';
+import { ProductsComponent } from './components/products/products.component';
 
 
 export function initializer(configurationService: ConfigurationService) {
@@ -46,7 +47,7 @@ const routes: Route[] = [
     multi: true
   },
     { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [AuthSessionService, AuthSessionQuery] }],
-  declarations: [DashboardComponent, SelectListRendererContextComponent, TrayComponent, SelectRoomRendererComponent],
+  declarations: [DashboardComponent, SelectListRendererContextComponent, TrayComponent, SelectRoomRendererComponent, ProductsComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {

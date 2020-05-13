@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   NbActionsModule,
-  NbAlertModule,
+  NbAlertModule, NbBadgeModule,
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
   NbDatepickerModule, NbDialogModule, NbDialogService,
   NbIconModule,
   NbInputModule,
-  NbLayoutModule,
+  NbLayoutModule, NbListModule,
   NbMenuModule,
   NbMenuService,
   NbSelectModule,
@@ -17,7 +17,7 @@ import {
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
-  NbToastrModule, NbToastrService
+  NbToastrModule, NbToastrService, NbUserModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -90,7 +90,10 @@ const components = [
     NbDatepickerModule.forRoot(),
     NbToastrModule.forRoot({
       preventDuplicates: true
-    })
+    }),
+    NbListModule,
+    NbUserModule,
+    NbBadgeModule
   ],
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
