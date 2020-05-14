@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ProductDataRepository } from '@my-tray/data-layers/mytray/repositories';
 import { Observable } from 'rxjs';
-import { Product, ProductDto, Tray, TrayDto } from '@my-tray/api-interfaces';
+import { Product, ProductDto } from '@my-tray/api-interfaces';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthSessionQuery } from '@my-tray/shared/client/auth';
@@ -34,7 +34,7 @@ export class ProductService {
     const body = {
       'objectId': newModel.objectId,
       'title': newModel.title,
-      'price': newModel.price,
+      'price': Number(newModel.price),
       'currency': newModel.currency,
       'ACL': this.authQuery.getAcl()[0].acl
     };
