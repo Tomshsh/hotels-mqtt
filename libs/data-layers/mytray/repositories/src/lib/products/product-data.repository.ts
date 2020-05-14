@@ -19,9 +19,9 @@ export class ProductDataRepository<T extends Product> extends Repository<T> {
       .then((products: any[]) => products.map((product): Product => {
         const productJson = product.toJSON();
         return {
-          title: productJson.title,
-          price: productJson.price,
           objectId: productJson.objectId,
+          title: productJson.title,
+          price: Number(productJson.price),
           currency: productJson.currency
         };
       }));
@@ -35,9 +35,9 @@ export class ProductDataRepository<T extends Product> extends Repository<T> {
       .then((product) => {
         const productJson = product.toJSON();
         return {
-          title: productJson.title,
-          price: productJson.price,
           objectId: productJson.objectId,
+          title: productJson.title,
+          price: Number(productJson.price),
           currency: productJson.currency
         };
       });
