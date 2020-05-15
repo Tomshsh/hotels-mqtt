@@ -40,13 +40,15 @@ const routes: Route[] = [
     DataServicesMytrayServicesModule.forRoot(environment)
   ],
   exports: [HttpClientModule],
-  providers: [{
-    provide: APP_INITIALIZER,
-    useFactory: initializer,
-    deps: [ConfigurationService],
-    multi: true
-  },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [AuthSessionService, AuthSessionQuery] }],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      deps: [ConfigurationService],
+      multi: true
+    },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [AuthSessionService, AuthSessionQuery] }
+  ],
   declarations: [DashboardComponent, SelectListRendererContextComponent, TrayComponent, SelectRoomRendererComponent, ProductsComponent],
   bootstrap: [DashboardComponent]
 })

@@ -26,6 +26,7 @@
         "libs/data-layers/mytray/repositories/src/index.ts"
       ],
       "@my-tray/shared/utilities": ["libs/shared/utilities/src/index.ts"],
+      "@my-tray/shared/utilities/mocks": ["libs/shared/utilities/src/lib/mocks/index.ts"],
       "@my-tray/data-services/mytray/services": [
         "libs/data-services/mytray/services/src/index.ts"
       ]
