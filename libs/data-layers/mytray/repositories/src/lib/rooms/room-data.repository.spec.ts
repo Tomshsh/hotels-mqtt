@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { RoomDataRepository } from './room-data.repository';
+import { Room } from '@my-tray/api-interfaces';
 
 describe('RoomDataRepository', () => {
-  let service: RoomDataRepository;
+  let service: RoomDataRepository<Room>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
