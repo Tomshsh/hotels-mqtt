@@ -1,4 +1,3 @@
-/*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DevicesComponent } from './devices.component';
@@ -9,6 +8,8 @@ describe('DevicesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+      ],
       declarations: [ DevicesComponent ]
     })
     .compileComponents();
@@ -24,4 +25,3 @@ describe('DevicesComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-*/

@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
 import { COLUMNS } from './core/settings';
-import { Product, ProductDto, TrayDto } from '@my-tray/api-interfaces';
+import { ProductDto } from '@my-tray/api-interfaces';
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 
 @Component({

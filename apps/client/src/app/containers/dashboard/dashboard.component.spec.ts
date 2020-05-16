@@ -1,8 +1,9 @@
 import { TestBed, async } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard.component';
-import { RouterTestingModule } from "@angular/router/testing";
-import { APP_BASE_HREF } from "@angular/common";
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_BASE_HREF } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 
 describe('Dashboard', () => {
@@ -18,5 +19,11 @@ describe('Dashboard', () => {
     const fixture = TestBed.createComponent(DashboardComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  it('should have <router-outlet> in template', () => {
+    const fixture = TestBed.createComponent(DashboardComponent);
+    expect(fixture.debugElement.query(el => !el.query(By.css('router-outlet'))).name)
+      .toEqual('router-outlet');
   });
 });
