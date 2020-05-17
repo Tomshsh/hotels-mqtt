@@ -4,6 +4,7 @@
       [source]="source"
       [settings]="settings"
       (createConfirm)="onCreate($event)"
+      (userRowSelect)="onUserRowSelect($event)"
       (editConfirm)="onUpdate($event)"
       (deleteConfirm)="onDelete($event)"
       #table>

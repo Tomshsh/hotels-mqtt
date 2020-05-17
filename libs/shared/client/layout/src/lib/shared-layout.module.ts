@@ -37,6 +37,7 @@ import {
   SidebarContainerComponent,
   IconRendererComponent
 } from './components';
+import { CustomActionsComponent } from './components/custom-actions/custom-actions.component';
 
 const components = [
   DashboardContainerComponent,
@@ -95,9 +96,10 @@ const components = [
     NbUserModule,
     NbBadgeModule
   ],
+
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
-  declarations: [...components],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, IconRendererComponent]
+  declarations: [...components, CustomActionsComponent],
+  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent, IconRendererComponent]
 })
 
 export class SharedLayoutModule {
