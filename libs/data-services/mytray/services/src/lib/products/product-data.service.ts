@@ -24,7 +24,8 @@ export class ProductService {
             objectId: product.objectId,
             title: product.title,
             price: product.price,
-            currency: product.currency
+            currency: product.currency,
+            abbr: product.abbr
           };
         });
       }));
@@ -36,6 +37,7 @@ export class ProductService {
       'title': newModel.title,
       'price': Number(newModel.price),
       'currency': newModel.currency,
+      'shortName': newModel.abbr,
       'ACL': this.authQuery.getAcl()[0].acl
     };
 
@@ -55,7 +57,8 @@ export class ProductService {
             objectId: updatedModel.objectId,
             currency: updatedModel.currency,
             price: updatedModel.price,
-            title: updatedModel.title
+            title: updatedModel.title,
+            abbr: updatedModel.abbr
           } as ProductDto;
         }
       )

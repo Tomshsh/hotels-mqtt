@@ -5,18 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { Route, RouterModule } from '@angular/router';
 import { AuthSessionQuery, AuthSessionService, SharedClientAuthModule } from '@my-tray/shared/client/auth';
 import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared/layout';
-
 import { ConfigurationService, GlobalErrorHandler, SharedUtilitiesModule } from '@my-tray/shared/utilities';
+import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/services';
+
 import { ComponentsModule } from './components/components.module';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 
 import { environment } from '@my-tray/env/client/environment';
-import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/services';
-import { SelectListRendererContextComponent } from './components/tags/components/select-list-renderer-context/select-list-renderer-context.component';
-import { TrayComponent } from './components/tray/tray.component';
-import { SelectRoomRendererComponent } from './components/tray/components/select-room-renderer/select-room-renderer.component';
-import { ProductsComponent } from './components/products/products.component';
-
 
 export function initializer(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
@@ -49,7 +44,7 @@ const routes: Route[] = [
     },
     { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [AuthSessionService, AuthSessionQuery] }
   ],
-  declarations: [DashboardComponent, SelectListRendererContextComponent, TrayComponent, SelectRoomRendererComponent, ProductsComponent],
+  declarations: [DashboardComponent],
   bootstrap: [DashboardComponent]
 })
 export class AppModule {

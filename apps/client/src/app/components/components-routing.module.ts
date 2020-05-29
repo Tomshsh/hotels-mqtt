@@ -9,6 +9,7 @@ import { AuthGuard } from '@my-tray/shared/client/auth';
 import { TagsComponent } from './tags/tags.component';
 import { TrayComponent } from './tray/tray.component';
 import { ProductsComponent } from './products/products.component';
+import { TemplatesComponent } from './tray/components/templates/templates.component';
 
 
 const routes: Routes = [{
@@ -21,6 +22,7 @@ const routes: Routes = [{
     { path: 'check-in', component: CheckInComponent },
     { path: 'check-out', component: CheckOutComponent },
     { path: 'trays', component: TrayComponent },
+    { path: 'templates', component: TemplatesComponent },
     { path: 'products', component: ProductsComponent },
   ],
   canActivate: [AuthGuard]

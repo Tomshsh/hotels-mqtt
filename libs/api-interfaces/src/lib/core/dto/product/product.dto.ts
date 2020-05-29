@@ -3,5 +3,6 @@ export class ProductDto {
   readonly title: string;
   readonly price: number;
   readonly currency: string;
+  readonly abbr: string;
 }
 

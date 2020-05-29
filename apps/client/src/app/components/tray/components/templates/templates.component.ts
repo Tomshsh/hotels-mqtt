@@ -1,26 +1,25 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { TRAY_COLUMNS } from './core/settings';
-import { TrayDataService } from '@my-tray/data-services/mytray/services';
-import { TagDto, TrayDto } from '@my-tray/api-interfaces';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
+import { TemplatesDataService } from '@my-tray/data-services/mytray/services';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
+import { Subject } from 'rxjs';
+import { TemplateDto } from '@my-tray/api-interfaces';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
-import { toBoolean } from '@datorama/akita';
+import { TEMPLATE_COLUMNS } from '../../core/settings/template-columns';
+import { takeUntil } from 'rxjs/operators';
+import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 
 @Component({
-  selector: 'my-tray-tray',
-  templateUrl: './tray.component.html',
-  styleUrls: ['./tray.component.scss']
+  selector: 'my-tray-templates',
+  templateUrl: './templates.component.html',
+  styleUrls: ['./templates.component.scss']
 })
-export class TrayComponent implements OnInit, OnDestroy {
+export class TemplatesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   loading: boolean;
-  columns: any = TRAY_COLUMNS;
-  dataSource: TrayDto[];
+  columns: any = TEMPLATE_COLUMNS;
+  dataSource: TemplateDto[];
 
   private confirm: NbDialogRef<ConfirmPromptDialogComponent>;
   private confirmOptions = {
@@ -30,7 +29,7 @@ export class TrayComponent implements OnInit, OnDestroy {
     context: { content: 'Are you sure you want to do this?' }
   };
 
-  constructor(private readonly dataService: TrayDataService,
+  constructor(private readonly dataService: TemplatesDataService,
               private readonly dialogService: NbDialogService,
               private readonly toastrService: NbToastrService,
               private readonly cd: ChangeDetectorRef) {
@@ -38,39 +37,31 @@ export class TrayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    this.dataService.getAllTrays()
+    this.dataService.getAll()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((trays: TrayDto[]) => {
-        this.dataSource = trays;
+      .subscribe((source: TemplateDto[]) => {
+        this.dataSource = source;
         this.loading = false;
         this.immidiate();
       });
   }
 
-  onCreateRowConfirm(event: { newData: TrayDto, confirm: Deferred }) {
-    const newTray = {
-      objectId: event.newData.objectId,
-      title: event.newData.title,
-      room: event.newData.room,
-      isService: toBoolean(event.newData.isService),
-      isOnline: toBoolean(event.newData.isOnline)
-    } as TrayDto;
-
+  onCreateRowConfirm(event: { newData: TemplateDto, confirm: Deferred }) {
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm
       .pipe(takeUntil(this.destroy$))
       .subscribe((confirmEvent) => {
-        this.dataService.createTray(newTray)
+        this.dataService.create(event.newData)
           .pipe(takeUntil(this.destroy$))
-          .subscribe(createdTray => {
+          .subscribe((createdTemplate: TemplateDto) => {
             event.confirm.resolve();
             this.confirm.close();
-            this.toastrService.success('Successfully created Tray', `Creating Tray`);
+            this.toastrService.success('Successfully created Template', `Creating Template`);
             this.immidiate();
           }, error => {
             event.confirm.resolve();
             this.confirm.close();
-            this.toastrService.danger('Failed creating Tray', `Creating Tray`);
+            this.toastrService.danger('Failed creating Template', `Creating Template`);
           });
       });
 
@@ -81,54 +72,51 @@ export class TrayComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditRowConfirm(event: { newData: any, confirm: Deferred }) {
-    console.log('::Update row::', event);
+  onEditRowConfirm(event: { newData: TemplateDto, confirm: Deferred }) {
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm
       .pipe(takeUntil(this.destroy$))
       .subscribe((confirmEvent) => {
-        this.dataService.updateTray({
-          objectId: event.newData.objectId,
+        this.dataService.update({
           title: event.newData.title,
-          room: event.newData.room,
-          isService: toBoolean(event.newData.isService),
-          isOnline: toBoolean(event.newData.isOnline)
-        } as TrayDto).pipe(takeUntil(this.destroy$))
+          products: event.newData.products,
+          objectId: event.newData.objectId
+        }).pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             event.confirm.resolve();
             this.confirm.close();
-            this.toastrService.success('Successfully updated Tray', `Updating Tray`);
+            this.toastrService.success('Successfully updated Template', `Updating Template`);
             this.immidiate();
           }, error => {
             event.confirm.resolve();
             this.confirm.close();
-            this.toastrService.danger('Failed updating Tray', `Updating Tray`);
+            this.toastrService.danger('Failed updating Template', `Updating Template`);
           });
       });
 
-    this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {
+    this.confirm.componentRef.instance.onCancel.pipe(takeUntil(this.destroy$)).subscribe((confirmEvent) => {
       event.confirm.reject();
       this.confirm.close();
     });
   }
 
-  onDeleteRowConfirm(event: { data: TrayDto, confirm: Deferred }) {
+  onDeleteRowConfirm(event: { newData: TemplateDto, confirm: Deferred }) {
     console.log('::Delete row::', event);
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
 
-    this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
-      this.dataService.deleteTray(event.data.objectId).subscribe(() => {
+    this.confirm.componentRef.instance.onConfirm.pipe(takeUntil(this.destroy$)).subscribe((confirmEvent) => {
+      this.dataService.delete(event.newData.objectId).pipe(takeUntil(this.destroy$)).subscribe(() => {
         event.confirm.resolve();
         this.confirm.close();
-        this.toastrService.success('Successfully Deleted a Tray', `Deleting Tray`);
+        this.toastrService.success('Successfully Deleted a Template', `Deleting Template`);
         this.immidiate();
       }, (err) => {
         event.confirm.reject();
-        this.toastrService.danger('Failed deleting Tray', `Deleting Tray`);
+        this.toastrService.danger('Failed deleting Template', `Deleting Template`);
       })
     });
 
-    this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {
+    this.confirm.componentRef.instance.onCancel.pipe(takeUntil(this.destroy$)).subscribe((confirmEvent) => {
       event.confirm.reject();
       this.confirm.close();
     });

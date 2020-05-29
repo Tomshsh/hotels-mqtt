@@ -10,4 +10,9 @@ export abstract class Repository<T> {
         throw new Error(err);
       });
   }
+
+
+  getEntityName(entity: new () => T): string {
+    return entity.name;
+  }
 }
