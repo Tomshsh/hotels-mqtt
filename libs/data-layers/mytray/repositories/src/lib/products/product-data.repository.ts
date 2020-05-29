@@ -22,8 +22,9 @@ export class ProductDataRepository<T extends Product> extends Repository<T> {
           objectId: productJson.objectId,
           title: productJson.title,
           price: Number(productJson.price),
-          currency: productJson.currency
-        };
+          currency: productJson.currency,
+          abbr: productJson.shortName
+        } as Product;
       }));
   }
 
@@ -38,7 +39,8 @@ export class ProductDataRepository<T extends Product> extends Repository<T> {
           objectId: productJson.objectId,
           title: productJson.title,
           price: Number(productJson.price),
-          currency: productJson.currency
+          currency: productJson.currency,
+          abbr: productJson.shortName
         };
       });
   }
@@ -58,7 +60,8 @@ export class ProductDataRepository<T extends Product> extends Repository<T> {
         objectId: updateEntity.toJSON().objectId,
         currency: updateEntity.toJSON().currency,
         title: updateEntity.toJSON().title,
-        price: updateEntity.toJSON().price
+        price: updateEntity.toJSON().price,
+        abbr: updateEntity.toJSON().shortName
       } as T;
       return await updatedEntity;
     } catch (e) {

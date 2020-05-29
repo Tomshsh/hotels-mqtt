@@ -1,0 +1,6 @@
+<ui-chips-autocomplete-form
+  [allEntries]="dataSource$ | async"
+  [entries]="value"
+  (updateOnChange)="onAddProductListItem($event)"
+  (deleteOnChange)="onDeleteProductListItem($event)">
+</ui-chips-autocomplete-form>

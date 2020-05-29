@@ -9,8 +9,27 @@ import { SharedLayoutModule } from '@my-tray/shared/layout';
 import { TagsComponent } from './tags/tags.component';
 
 import { ComponentsRoutingModule } from './components-routing.module';
+import { TrayComponent } from './tray/tray.component';
+import { SelectListRendererContextComponent } from './tags/components/select-list-renderer-context/select-list-renderer-context.component';
+import { SelectRoomRendererComponent } from './tray/components/select-room-renderer/select-room-renderer.component';
+import { ProductsComponent } from './products/products.component';
+import { TemplatesComponent } from './tray/components/templates/templates.component';
+import { ProductsSelectionComponent } from './tray/components/products-selection/products-selection.component';
 
-const components = [DevicesComponent, UsersComponent, CheckInComponent, CheckOutComponent, TagsComponent];
+const components = [
+  TrayComponent,
+  ProductsComponent,
+  DevicesComponent,
+  UsersComponent,
+  CheckInComponent,
+  CheckOutComponent,
+  TrayComponent,
+  TemplatesComponent,
+  TagsComponent,
+  SelectRoomRendererComponent,
+  SelectListRendererContextComponent,
+  ProductsSelectionComponent
+];
 
 @NgModule({
   declarations: [...components],
@@ -19,8 +38,7 @@ const components = [DevicesComponent, UsersComponent, CheckInComponent, CheckOut
     SharedLayoutModule,
     ComponentsRoutingModule
   ],
-  providers: [
-  ]
+  providers: []
 })
 export class ComponentsModule {
 }

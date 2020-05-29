@@ -5,3 +5,4 @@ export * from './tags/tag.dto';
 export * from './room/room.dto';
 export * from './tray/tray.dto';
 export * from './product/product.dto';
+export * from './template/template.dto';
