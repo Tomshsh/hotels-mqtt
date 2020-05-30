@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChipsAutocompleteFormComponent } from './chips-autocomplete-form.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ChipsAutocompleteFormComponent', () => {
   let component: ChipsAutocompleteFormComponent;
@@ -8,9 +9,9 @@ describe('ChipsAutocompleteFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChipsAutocompleteFormComponent ]
-    })
-    .compileComponents();
+      declarations: [ChipsAutocompleteFormComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

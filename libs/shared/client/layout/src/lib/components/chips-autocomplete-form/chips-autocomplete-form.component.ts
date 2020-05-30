@@ -42,11 +42,10 @@ import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operato
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         />
       </mat-chip-list>
-
       <mat-autocomplete #auto="matAutocomplete"
                         (optionSelected)="onSelectionChanged($event)">
         <mat-option *ngFor="let entry of allEntries" [value]="entry">
-          {{entry.title}} ({{entry.abbr}})
+          {{entry.abbr}} - {{entry.title}}
         </mat-option>
       </mat-autocomplete>
 
