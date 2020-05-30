@@ -11,7 +11,6 @@ describe('TemplatesDataService', () => {
   let service: TemplatesDataService;
 
   beforeEach(() => {
-    const mockEnv =
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule],
         providers: [
