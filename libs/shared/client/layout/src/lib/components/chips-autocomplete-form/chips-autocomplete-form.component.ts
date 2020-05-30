@@ -1,7 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { DefaultEditor, ViewCell } from 'ng2-smart-table';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import {
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+  MatChipInputEvent
+} from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
@@ -9,8 +14,17 @@ import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operato
 @Component({
   selector: 'ui-chips-autocomplete-form',
   template: `
-    <mat-form-field class="chip-list" fxFill fxFlexFill>
-      <mat-chip-list #chipList aria-label="Element selection">
+    <mat-form-field class="chip-list" fxFlexFill>
+
+      <button nbButton (click)='openPanel($event)'
+              fxLayout="row"
+              fxFlex="8%"
+              [style.height]="'2rem'"
+              [style.margin-right]="'1rem'">
+        <nb-icon icon="plus"></nb-icon>
+      </button>
+
+      <mat-chip-list #chipList aria-label="Element selection" fxLayout="row" fxFlex="92%" >
         <mat-chip
           *ngFor="let entry of entries"
           [selectable]="selectable"
@@ -26,13 +40,18 @@ import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operato
           [matAutocomplete]="auto"
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          autofocus>
+        />
       </mat-chip-list>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+
+      <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="onSelectionChanged($event)">
         <mat-option *ngFor="let entry of allEntries" [value]="entry">
-          {{entry.abbr}}
+          {{entry.title}} ({{entry.abbr}})
         </mat-option>
       </mat-autocomplete>
+
+
+
     </mat-form-field>
   `,
   styleUrls: ['./chips-autocomplete-form.component.scss']
@@ -51,8 +70,9 @@ export class ChipsAutocompleteFormComponent implements OnInit {
   filteredElements$: Observable<any[]>;
 
 
-  @ViewChild('formInput') formInput: ElementRef<HTMLInputElement>;
+  @ViewChild('formInput') formInputElement: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocompleteTrigger, { read: MatAutocompleteTrigger }) formInput: MatAutocompleteTrigger;
 
   constructor() {
   }
@@ -79,9 +99,14 @@ export class ChipsAutocompleteFormComponent implements OnInit {
   }
 
   onSelectionChanged(event: MatAutocompleteSelectedEvent): void {
-    this.formInput.nativeElement.value = '';
+    this.formInputElement.nativeElement.value = '';
     this.updateOnChange.emit(event.option.value);
     this.formControl.setValue(null);
+  }
+
+  openPanel(evt: Event): void {
+    evt.stopPropagation();
+    this.formInput.openPanel();
   }
 
   private _filter(value: any): any[] {
