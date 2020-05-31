@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChipsAutocompleteFormComponent } from './chips-autocomplete-form.component';
+import { ChipsAutocompleteFormComponent } from '@my-tray/shared/layout';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ChipsAutocompleteFormComponent', () => {

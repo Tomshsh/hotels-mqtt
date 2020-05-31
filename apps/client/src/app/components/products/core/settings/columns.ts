@@ -13,7 +13,13 @@ export const COLUMNS = {
     addable: true,
     editable: true
   },
-
+  abbr: {
+    title: 'Short Name',
+    type: 'string',
+    width: '10%',
+    addable: true,
+    editable: true
+  },
   currency: {
     title: 'Currency',
     type: 'string',
