@@ -54,7 +54,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         this.dataService.create(event.newData)
           .pipe(takeUntil(this.destroy$))
           .subscribe((createdTemplate: TemplateDto) => {
-            event.confirm.resolve();
+            const resolveData = Object.assign(event.newData, createdTemplate);
+            event.confirm.resolve(resolveData);
             this.confirm.close();
             this.toastrService.success('Successfully created Template', `Creating Template`);
             this.immidiate();
