@@ -47,6 +47,13 @@ export const TRAY_COLUMNS = {
     },
     renderComponent: IconRendererComponent,
     width: '80px',
+    addable: false,
+    editable: false,
+  },
+  isService: {
+    title: 'Service',
+    type: 'bool',
+    width: '200px',
     editor: {
       type: 'list',
       width: '80px',
@@ -59,13 +66,5 @@ export const TRAY_COLUMNS = {
         ],
       },
     }
-  },
-  isService: {
-    title: 'Service',
-    type: 'bool',
-    width: '200px',
-    addable: false,
-    editable: false,
-    filter: false
   }
 };
