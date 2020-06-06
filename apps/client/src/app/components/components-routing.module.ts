@@ -10,6 +10,7 @@ import { TagsComponent } from './tags/tags.component';
 import { TrayComponent } from './tray/tray.component';
 import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
+import { RoomsComponent } from './rooms/rooms.component';
 
 
 const routes: Routes = [{
@@ -24,6 +25,7 @@ const routes: Routes = [{
     { path: 'trays', component: TrayComponent },
     { path: 'templates', component: TemplatesComponent },
     { path: 'products', component: ProductsComponent },
+    { path: 'rooms', component: RoomsComponent }
   ],
   canActivate: [AuthGuard]
 }];

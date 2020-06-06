@@ -15,6 +15,8 @@ import { SelectRoomRendererComponent } from './tray/components/select-room-rende
 import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
 import { ProductsSelectionComponent } from './tray/components/products-selection/products-selection.component';
+import { RoomsComponent } from './rooms/rooms.component';
+
 
 const components = [
   TrayComponent,
@@ -28,7 +30,8 @@ const components = [
   TagsComponent,
   SelectRoomRendererComponent,
   SelectListRendererContextComponent,
-  ProductsSelectionComponent
+  ProductsSelectionComponent,
+  RoomsComponent
 ];
 
 @NgModule({

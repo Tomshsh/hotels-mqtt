@@ -29,7 +29,7 @@ export class SelectRoomRendererComponent extends SelectListComponent implements 
     if (!this.cell.getRow().getData().room) {
       this.selectedItem = this.rowData[0];
     }
-    this.roomService.getAllRooms()
+    this.roomService.getRooms()
       .pipe(
         takeUntil(this.destroy$),
         finalize(() => {
