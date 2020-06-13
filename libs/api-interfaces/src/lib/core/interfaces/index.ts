@@ -5,3 +5,4 @@ export * from './product';
 export * from './tray';
 export * from './room';
 export * from './core'
+export * from './status';

@@ -13,7 +13,7 @@ import { DashboardComponent } from './containers/dashboard/dashboard.component';
 
 import { environment } from '@my-tray/env/client/environment';
 
-export function initializer(configurationService: ConfigurationService) {
+export function initConfig(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
 }
 
@@ -38,7 +38,7 @@ const routes: Route[] = [
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: initializer,
+      useFactory: initConfig,
       deps: [ConfigurationService],
       multi: true
     },
