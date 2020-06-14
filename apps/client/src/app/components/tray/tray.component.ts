@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TRAY_COLUMNS } from './core/settings';
 import { TrayDataService } from '@my-tray/data-services/mytray/services';
-import { TagDto, TrayDto } from '@my-tray/api-interfaces';
+import { TrayDto } from '@my-tray/api-interfaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
@@ -16,7 +16,7 @@ import { toBoolean } from '@datorama/akita';
   styleUrls: ['./tray.component.scss']
 })
 export class TrayComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   loading: boolean;
   columns: any = TRAY_COLUMNS;
@@ -57,6 +57,7 @@ export class TrayComponent implements OnInit, OnDestroy {
     } as TrayDto;
 
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
+
     this.confirm.componentRef.instance.onConfirm
       .pipe(takeUntil(this.destroy$))
       .subscribe((confirmEvent) => {

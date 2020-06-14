@@ -9,7 +9,7 @@ import { SharedLayoutModule } from '@my-tray/shared/layout';
 import { TagsComponent } from './tags/tags.component';
 import { TrayComponent } from './tray/tray.component';
 import { RoomsComponent } from './rooms/rooms.component';
-import { StatusComponent } from './status/status.component';
+import { StatusComponent } from './tray/components/status/status.component';
 import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
 

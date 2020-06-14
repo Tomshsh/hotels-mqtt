@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { StatusComponent } from './status.component';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
@@ -12,7 +12,7 @@ describe('StatusComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StatusComponent ],
+      declarations: [StatusComponent],
       providers: [
         { provide: NbDialogService, useValue: {} },
         { provide: NbToastrService, useValue: {} },
@@ -24,7 +24,7 @@ describe('StatusComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,4 +36,16 @@ describe('StatusComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('when component is initializing', () => {
+    it('should verify that immidiate function works properly', fakeAsync(() => {
+      component.ngOnInit();
+      tick(3);
+      expect(component.loading).toBe(true);
+    }));
+
+
+    it('should load data after the ngOnInit', fakeAsync(() => {
+    }));
+  })
 });

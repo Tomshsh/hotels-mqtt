@@ -11,7 +11,7 @@ import { TrayComponent } from './tray/tray.component';
 import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
 import { RoomsComponent } from './rooms/rooms.component';
-import { StatusComponent } from './status/status.component';
+import { StatusComponent } from './tray/components/status/status.component';
 
 const routes: Routes = [{
   path: 'dashboard',
