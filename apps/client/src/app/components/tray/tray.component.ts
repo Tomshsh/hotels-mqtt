@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TRAY_COLUMNS } from './core/settings';
 import { TrayDataService } from '@my-tray/data-services/mytray/services';
 import { TagDto, TrayDto } from '@my-tray/api-interfaces';
@@ -15,7 +15,7 @@ import { toBoolean } from '@datorama/akita';
   templateUrl: './tray.component.html',
   styleUrls: ['./tray.component.scss']
 })
-export class TrayComponent implements OnInit {
+export class TrayComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   loading: boolean;
@@ -138,5 +138,10 @@ export class TrayComponent implements OnInit {
     setTimeout(() => {
       this.cd.detectChanges();
     }, 300);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 }

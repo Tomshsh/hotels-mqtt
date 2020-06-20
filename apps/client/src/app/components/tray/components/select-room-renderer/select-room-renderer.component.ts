@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { SelectListComponent } from '@my-tray/shared/layout';
 import { RoomDataService } from '@my-tray/data-services/mytray/services';
 import { finalize, takeUntil } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class SelectRoomRendererComponent extends SelectListComponent implements 
     if (!this.cell.getRow().getData().room) {
       this.selectedItem = this.rowData[0];
     }
-    this.roomService.getAllRooms()
+    this.roomService.getRooms()
       .pipe(
         takeUntil(this.destroy$),
         finalize(() => {

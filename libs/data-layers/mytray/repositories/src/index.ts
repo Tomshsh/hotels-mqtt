@@ -6,3 +6,4 @@ export * from './lib/products';
 export * from './lib/tray';
 export * from './lib/rooms';
 export * from './lib/data-layers-mytray-repositories.module';
+export * from './lib/tray-templates';

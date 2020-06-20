@@ -2,14 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   NbActionsModule,
-  NbAlertModule, NbBadgeModule,
+  NbAlertModule,
+  NbBadgeModule,
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
-  NbDatepickerModule, NbDialogModule, NbDialogService,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbDialogService,
   NbIconModule,
   NbInputModule,
-  NbLayoutModule, NbListModule,
+  NbLayoutModule,
+  NbListModule,
   NbMenuModule,
   NbMenuService,
   NbSelectModule,
@@ -17,7 +21,9 @@ import {
   NbSidebarService,
   NbSpinnerModule,
   NbThemeModule,
-  NbToastrModule, NbToastrService, NbUserModule
+  NbToastrModule,
+  NbToastrService,
+  NbUserModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -27,17 +33,19 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {
+  ChipsAutocompleteFormComponent,
+  ChipsComponent,
   ConfirmPromptDialogComponent,
   DatagridComponent,
   DatepickerRendererComponent,
   DateRangePickerComponent,
+  IconRendererComponent,
   NavigationComponent,
   SelectListComponent,
   SelectListRendererComponent,
   SidebarContainerComponent,
-  IconRendererComponent
 } from './components';
-import { CustomActionsComponent } from './components/custom-actions/custom-actions.component';
+import { MaterialLayoutModule } from './components/material-layout.module';
 
 const components = [
   DashboardContainerComponent,
@@ -49,7 +57,9 @@ const components = [
   ConfirmPromptDialogComponent,
   DatepickerRendererComponent,
   SelectListRendererComponent,
-  IconRendererComponent
+  IconRendererComponent,
+  ChipsComponent,
+  ChipsAutocompleteFormComponent
 ];
 
 @NgModule({
@@ -94,12 +104,21 @@ const components = [
     }),
     NbListModule,
     NbUserModule,
-    NbBadgeModule
+    NbBadgeModule,
+    MaterialLayoutModule,
   ],
 
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
-  declarations: [...components, CustomActionsComponent],
-  exports: [RouterModule, DatagridComponent, DashboardContainerComponent, SelectListComponent, SelectListRendererComponent, CustomActionsComponent, IconRendererComponent]
+  declarations: [...components],
+  exports: [
+    DatagridComponent,
+    DashboardContainerComponent,
+    SelectListComponent,
+    SelectListRendererComponent,
+    IconRendererComponent,
+    ChipsComponent,
+    ChipsAutocompleteFormComponent,
+  ]
 })
 
 export class SharedLayoutModule {
