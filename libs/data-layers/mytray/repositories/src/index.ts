@@ -5,5 +5,6 @@ export * from './lib/tags';
 export * from './lib/products';
 export * from './lib/tray';
 export * from './lib/rooms';
-export * from './lib/data-layers-mytray-repositories.module';
 export * from './lib/tray-templates';
+export * from './lib/tray-state/tray-state.repository';
+export * from './lib/data-layers-mytray-repositories.module';

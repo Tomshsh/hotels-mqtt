@@ -1,18 +1,15 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
-import { TrayStatusDto } from '@my-tray/api-interfaces';
-
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 
 export class BaseComponent<T> implements OnInit, OnDestroy {
-  private readonly destroy$: Subject<any> = new Subject<any>();
-  public dataSource: T[];
-  public columns: any;
-  public loading: boolean;
-  public confirm: NbDialogRef<ConfirmPromptDialogComponent>;
-
+  readonly destroy$: Subject<any> = new Subject<any>();
+  dataSource: T[];
+  columns: any;
+  loading: boolean;
+  protected confirm: NbDialogRef<ConfirmPromptDialogComponent>;
 
   private confirmOptions = {
     hasBackdrop: true,
@@ -28,7 +25,7 @@ export class BaseComponent<T> implements OnInit, OnDestroy {
     protected readonly cd: ChangeDetectorRef) {
   }
 
-  protected immidiate() {
+  immidiate() {
     setTimeout(() => {
       this.cd.detectChanges();
     }, 300);
@@ -55,27 +52,3 @@ export class BaseComponent<T> implements OnInit, OnDestroy {
     this.toastrService.danger(message, title);
   }
 }
-
-@Component({
-  selector: 'my-tray-status',
-  templateUrl: './status.component.html',
-  styleUrls: ['./status.component.scss']
-})
-export class StatusComponent extends BaseComponent<TrayStatusDto> implements OnInit, OnDestroy {
-  constructor(readonly dialogService: NbDialogService,
-              readonly toastrService: NbToastrService,
-              readonly cd: ChangeDetectorRef) {
-    super(dialogService, toastrService, cd);
-  }
-
-  ngOnInit(): void {
-    super.ngOnInit();
-  }
-
-
-  ngOnDestroy(): void {
-    super.ngOnDestroy();
-  }
-}
-
-

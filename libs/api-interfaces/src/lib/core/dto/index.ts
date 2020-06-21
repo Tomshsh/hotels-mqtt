@@ -6,4 +6,4 @@ export * from './room/room.dto';
 export * from './tray/tray.dto';
 export * from './product/product.dto';
 export * from './template/template.dto';
-export * from './tray-status';
+export * from './tray-state';

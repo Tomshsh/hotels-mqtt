@@ -11,7 +11,7 @@ import { TrayComponent } from './tray/tray.component';
 import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
 import { RoomsComponent } from './rooms/rooms.component';
-import { StatusComponent } from './tray/components/status/status.component';
+import { StateComponent } from './tray/components/state/state.component';
 
 const routes: Routes = [{
   path: 'dashboard',
@@ -26,7 +26,7 @@ const routes: Routes = [{
     { path: 'templates', component: TemplatesComponent },
     { path: 'products', component: ProductsComponent },
     { path: 'rooms', component: RoomsComponent },
-    { path: 'status', component: StatusComponent }
+    { path: 'state', component: StateComponent }
   ],
   canActivate: [AuthGuard]
 }];

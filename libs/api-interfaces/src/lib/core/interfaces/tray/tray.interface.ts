@@ -1,4 +1,5 @@
 import { Room } from '../room';
+import { Template } from './template.interface';
 
 export interface Tray {
   readonly objectId: string;
@@ -6,4 +7,5 @@ export interface Tray {
   readonly room: Room;
   readonly isOnline: boolean;
   readonly isService: boolean;
+  readonly template?: Template;
 }

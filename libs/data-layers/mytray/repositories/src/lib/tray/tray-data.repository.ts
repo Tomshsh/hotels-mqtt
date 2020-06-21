@@ -23,7 +23,7 @@ export class TrayDataRepository<T extends Tray> extends Repository<T> {
             title: thisJsonTray.title,
             isOnline: thisJsonTray.isOnline,
             isService: thisJsonTray.isService,
-            room: thisJsonTray.room
+            room: thisJsonTray.room,
           };
           return mappedTray;
         });
