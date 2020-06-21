@@ -1,26 +1,6 @@
 <mat-button-toggle-group name="filter" aria-label="Toggleable filters" multiple>
-  <mat-button-toggle value="Empty" (change)="onToggleChange($event)">
-    <span class="circle" style="--color: #ccc">&nbsp;</span>
-    Empty
-  </mat-button-toggle>
-  <mat-button-toggle value="InPlace" (change)="onToggleChange($event)">
-    <span class="circle" style="--color: #C7F6C7">&nbsp;</span>
-    In Place
-  </mat-button-toggle>
-  <mat-button-toggle value="Momentary" (change)="onToggleChange($event)">
-    <span class="circle" style="--color: #7FB17F">&nbsp;</span>
-    Charged
-  </mat-button-toggle>
-  <mat-button-toggle value="Charged"(change)="onToggleChange($event)">
-    <span class="circle" style="--color: #7F7FFF">&nbsp;</span>
-    Charged
-  </mat-button-toggle>
-  <mat-button-toggle value="VacantChange" (change)="onToggleChange($event)">
-    <span class="circle" style="--color: #FF7F7F">&nbsp;</span>
-    Vacant Change
-  </mat-button-toggle>
-  <mat-button-toggle value="Replaced" (change)="onToggleChange($event)">
-    <span class="circle" style="--color: #FFCC7A">&nbsp;</span>
-    Replaced
+  <mat-button-toggle (change)="onToggleChange($event)" *ngFor="let item of source">
+    <span class="circle" [style.--color]="item.color">&nbsp;</span>
+    {{item.value}}
   </mat-button-toggle>
 </mat-button-toggle-group>

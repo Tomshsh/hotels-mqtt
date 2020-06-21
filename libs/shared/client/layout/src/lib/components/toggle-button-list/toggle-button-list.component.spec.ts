@@ -5,6 +5,15 @@ import { MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+const MockListItems = [
+  { value: 'Empty', color: '#ccc' },
+  { value: 'InPlace', color: '#C7F6C7' },
+  { value: 'Momentary', color: '#7FB17F' },
+  { value: 'Charged', color: '#7F7FFF' },
+  { value: 'VacantChange', color: '#FF7F7F' },
+  { value: 'Replaced', color: '#FFCC7A' },
+];
+
 describe('ToggleButtonListComponent', () => {
   let component: ToggleButtonListComponent;
   let fixture: ComponentFixture<ToggleButtonListComponent>;
@@ -17,7 +26,6 @@ describe('ToggleButtonListComponent', () => {
       declarations: [ToggleButtonListComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -33,6 +41,12 @@ describe('ToggleButtonListComponent', () => {
   it('should have six buttons', () => {
     const buttons = fixture.debugElement.queryAll(By.css('mat-button-toggle'));
     expect(buttons).toHaveLength(6);
+  });
+
+  it('should verify that ngOnInit() is worked', () => {
+    spyOn(component, 'ngOnInit').and.callThrough();
+    component.ngOnInit();
+    expect(component.ngOnInit).toHaveBeenCalled();
   });
 
   describe('when clicking on toggle-buttons', () => {
@@ -58,10 +72,17 @@ describe('ToggleButtonListComponent', () => {
       );
     });
 
-    it('should trigger onToggleChange when button clicked', () => {
+    it('should trigger toggleChange when button clicked', () => {
       spyOn(component.toggleChange, 'emit');
       groupInstance._buttonToggles.first._onButtonClick();
       expect(component.toggleChange.emit).toHaveBeenCalled();
+    });
+
+
+    it('should trigger onToggleChange when button clicked', () => {
+      spyOn(component, 'onToggleChange');
+      groupInstance._buttonToggles.first._onButtonClick();
+      expect(component.onToggleChange).toHaveBeenCalled();
     });
   });
 });
