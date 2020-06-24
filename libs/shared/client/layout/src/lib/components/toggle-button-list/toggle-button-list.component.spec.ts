@@ -1,7 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { ToggleButtonListComponent } from './toggle-button-list.component';
-import { MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material';
+import { MatButtonToggleChange, MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -78,11 +78,23 @@ describe('ToggleButtonListComponent', () => {
       expect(component.toggleChange.emit).toHaveBeenCalled();
     });
 
+    it('should emit when button is clicked', () => {
+      spyOn(component.toggleChange, 'emit');
+      groupInstance._buttonToggles.first._onButtonClick();
+      expect(component.toggleChange.emit)
+    });
 
     it('should trigger onToggleChange when button clicked', () => {
       spyOn(component, 'onToggleChange');
       groupInstance._buttonToggles.first._onButtonClick();
-      expect(component.onToggleChange).toHaveBeenCalled();
+      expect(component.onToggleChange).toHaveBeenCalledTimes(1);
     });
+
+    it('should verify that onClick correct value is returned', fakeAsync(() => {
+      component.toggleChange.subscribe((event: MatButtonToggleChange) => {
+        expect(event.value).toEqual(MockListItems[0].value);
+      });
+      groupInstance._buttonToggles.first._onButtonClick();
+    }));
   });
 });

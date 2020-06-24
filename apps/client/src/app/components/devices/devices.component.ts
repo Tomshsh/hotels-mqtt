@@ -29,8 +29,7 @@ export class DevicesComponent implements OnInit {
     }
   };
 
-  constructor(private readonly devicesService: DevicesService,
-              private readonly cd: ChangeDetectorRef) {
+  constructor(private readonly devicesService: DevicesService) {
   }
 
   ngOnInit(): void {

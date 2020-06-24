@@ -1,4 +1,6 @@
-export const MockedDataResponseArray = [{
+import { TrayStateDto } from '@my-tray/api-interfaces';
+
+export const MockedDataResponseArray: any[] = [{
   'products': [],
   'createdAt': '2020-06-07T13:39:43.916Z',
   'updatedAt': '2020-06-07T13:41:01.627Z',

@@ -8,8 +8,8 @@ import { environment } from '@my-tray/shared/utilities/mocks';
 import { TrayStateService } from '@my-tray/data-services/mytray/services';
 import { Observable, of } from 'rxjs';
 import { TrayStateDto } from '@my-tray/api-interfaces';
+import { STATE_COLUMNS } from '../../core/settings';
 import { MockedDataResponseArray } from './mocks/get-all-states.mock';
-import { STATE_COLUMNS } from '../../core/settings/state-columns';
 
 
 class TrayStateServiceMock {
@@ -87,7 +87,7 @@ describe('StateComponent', () => {
     });
   });
 
-  describe('when trying to create new TrayState', () => {
+ /* describe('when trying to create new TrayState', () => {
     it('should show an notification success when it\'s by the server', fakeAsync(() => {
 
     }));
@@ -95,5 +95,5 @@ describe('StateComponent', () => {
     it('should show an notification error when it\'s failed by the server', fakeAsync(() => {
 
     }));
-  });
+  });*/
 });

@@ -31,7 +31,6 @@ export class StateComponent extends BaseGridViewComponent<TrayStateDto> implemen
         takeUntil(this.destroy$),
         finalize(() => {
           this.loading = false;
-          this.immidiate();
         })
       )
       .subscribe((states: TrayStateDto[]) => {

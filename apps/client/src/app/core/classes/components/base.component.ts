@@ -25,11 +25,6 @@ export class BaseComponent<T> implements OnInit, OnDestroy {
     protected readonly cd: ChangeDetectorRef) {
   }
 
-  immidiate() {
-    setTimeout(() => {
-      this.cd.detectChanges();
-    }, 300);
-  }
 
   ngOnInit(): void {
     this.loading = true;
@@ -50,5 +45,11 @@ export class BaseComponent<T> implements OnInit, OnDestroy {
 
   protected danger(title: string, message: string) {
     this.toastrService.danger(message, title);
+  }
+
+  immidiate() {
+    setTimeout(() => {
+      this.cd.detectChanges();
+    }, 300);
   }
 }
