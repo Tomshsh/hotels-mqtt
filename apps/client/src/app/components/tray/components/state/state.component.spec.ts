@@ -86,14 +86,4 @@ describe('StateComponent', () => {
       expect(component.columns).toEqual(STATE_COLUMNS);
     });
   });
-
- /* describe('when trying to create new TrayState', () => {
-    it('should show an notification success when it\'s by the server', fakeAsync(() => {
-
-    }));
-
-    it('should show an notification error when it\'s failed by the server', fakeAsync(() => {
-
-    }));
-  });*/
 });

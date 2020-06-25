@@ -100,7 +100,6 @@ describe('RoomsComponent', () => {
 
   describe('when creating room', () => {
     const confirmMock = new ConfirmMock();
-
     it('should create room from view', () => {
       // component.onCreateRowConfirm({ newData: newRoomMock, confirm: confirmMock });
     });
@@ -125,7 +124,6 @@ describe('RoomsComponent', () => {
 
        req.flush(newRoomMock);
      });*/
-
     /*afterEach(() => {
       httpTestingController.verify();
     });*/

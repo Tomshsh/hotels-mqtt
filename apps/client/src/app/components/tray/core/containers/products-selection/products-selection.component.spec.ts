@@ -7,10 +7,19 @@ import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AuthSessionQuery } from '@my-tray/shared/client/auth';
 import { environment } from '@my-tray/shared/utilities/mocks';
+import { ProductsMock } from './mocks/products.mock';
+import { Observable, of } from 'rxjs';
+import { ProductDto } from '@my-tray/api-interfaces';
 
+class ProductServiceStub {
+  getProducts(): Observable<ProductDto[]> {
+    return of(ProductsMock);
+  }
+}
 describe('ProductsSelectionComponent', () => {
   let component: ProductsSelectionComponent;
   let fixture: ComponentFixture<ProductsSelectionComponent>;
+  let service: ProductService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,8 +37,8 @@ describe('ProductsSelectionComponent', () => {
         }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
-    })
-      .compileComponents();
+    }).compileComponents();
+    service = TestBed.inject(ProductService);
   }));
 
   beforeEach(() => {
@@ -41,4 +50,10 @@ describe('ProductsSelectionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+/*
+  describe('when it should initialize the grid', () => {
+    it('should run ngOnInit', () => {
+
+    });
+  });*/
 });

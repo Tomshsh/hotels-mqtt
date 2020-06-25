@@ -7,7 +7,6 @@ import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 import { STATE_COLUMNS } from '../../core/settings';
 import { BaseGridViewComponent } from '../../../../core/classes/components';
 
-
 @Component({
   selector: 'my-tray-state',
   templateUrl: './state.component.html',
@@ -35,6 +34,7 @@ export class StateComponent extends BaseGridViewComponent<TrayStateDto> implemen
       )
       .subscribe((states: TrayStateDto[]) => {
         this.dataSource = states;
+        this.immidiate();
       });
   }
 

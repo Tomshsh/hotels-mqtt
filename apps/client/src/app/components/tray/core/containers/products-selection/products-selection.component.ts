@@ -15,12 +15,12 @@ export class ProductsSelectionComponent extends DefaultEditor implements OnInit,
   rowData: any;
   value: string | number | any | any[];
 
-  constructor(private readonly productService: ProductService) {
+  constructor(readonly productService: ProductService) {
     super();
   }
 
   ngOnInit(): void {
-    this.dataSource$ = this.productService.getProducts()
+    this.dataSource$ = this.productService.getProducts();
     if(this.cell && this.cell.getValue) {
       this.value = this.cell.getValue() === '' ? [] : this.cell.getValue();
       if (this.value.length === 0) {

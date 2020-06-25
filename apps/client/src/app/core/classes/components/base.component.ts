@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit, ViewRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
@@ -49,7 +49,9 @@ export class BaseComponent<T> implements OnInit, OnDestroy {
 
   immidiate() {
     setTimeout(() => {
-      this.cd.detectChanges();
+      if (this.cd && !(this.cd as ViewRef).destroyed) {
+        this.cd.detectChanges();
+      }
     }, 300);
   }
 }

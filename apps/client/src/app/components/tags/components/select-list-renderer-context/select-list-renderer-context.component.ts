@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SelectListComponent } from '@my-tray/shared/layout';
 import { ProductService } from '@my-tray/data-services/mytray/services';
 import { Product } from '@my-tray/api-interfaces';
@@ -15,16 +15,16 @@ import { Subject } from 'rxjs';
 })
 export class SelectListRendererContextComponent extends SelectListComponent implements OnInit {
   private readonly destroy$: Subject<any> = new Subject<any>();
-  rowData: any[] = [];
+  // rowData: any[] = [];
 
   constructor(private readonly productService: ProductService,
               private readonly cd: ChangeDetectorRef) {
     super();
-    this.rowData.push({ value: '', title: 'Select Product', price: 0 });
+    // this.rowData.push({ value: '', title: 'Select Product', price: 0 });
   }
 
   ngOnInit(): void {
-    if (!this.cell.getRow().getData().productTitle) {
+    /*if (!this.cell.getRow().getData().productTitle) {
       this.selectedItem = this.rowData[0];
     }
 
@@ -51,7 +51,7 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
       } catch (e) {
         this.selectedItem = this.rowData[0];
       }
-    });
+    });*/
   }
 
   loadProductPriceOnItemChanged($event) {
