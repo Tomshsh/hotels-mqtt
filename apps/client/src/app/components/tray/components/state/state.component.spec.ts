@@ -9,7 +9,7 @@ import { TrayStateService } from '@my-tray/data-services/mytray/services';
 import { Observable, of } from 'rxjs';
 import { TrayStateDto } from '@my-tray/api-interfaces';
 import { STATE_COLUMNS } from '../../core/settings';
-import { MockedDataResponseArray } from './mocks/get-all-states.mock';
+import { MockedDataResponseArray } from '../../core/mocks/get-all-states.mock';
 
 
 class TrayStateServiceMock {

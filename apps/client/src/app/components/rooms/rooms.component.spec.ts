@@ -44,10 +44,7 @@ describe('RoomsComponent', () => {
   let dialogService: NbDialogService;
   let toastrService: NbToastrService;
 
-
   beforeEach(async(() => {
-
-
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [RoomsComponent],

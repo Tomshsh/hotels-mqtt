@@ -9,7 +9,7 @@ import { RoomDto } from '@my-tray/api-interfaces';
   selector: 'my-tray-select-room-renderer',
   template: `
     <ui-select-list
-      [rowData]="rowData"
+      [options]="rowData"
       (itemSelect)="onItemSelect($event)"
       [selectedItem]="selectedItem">
     </ui-select-list>
