@@ -30,7 +30,7 @@ export class TemplatesDataRepository<R extends Template> extends Repository<R> {
                 title: product.title,
                 currency: product.currency,
                 price: product.price,
-                abbr: product.shortName
+                shortName: product.shortName
               } as Product;
             })
           } as Template;

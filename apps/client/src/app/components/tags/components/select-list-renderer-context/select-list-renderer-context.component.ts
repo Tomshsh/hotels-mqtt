@@ -36,7 +36,7 @@ export class SelectListRendererContextComponent extends SelectListComponent impl
           this.updateImmidiate();
         })
       )
-      .subscribe((products) => {
+      .subscribe((products: ProductDto[]) => {
         this.options.push(
           ...products.map(product => {
             return { value: product.objectId, title: product.title, price: product.price };

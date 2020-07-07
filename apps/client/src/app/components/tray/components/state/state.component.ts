@@ -1,22 +1,22 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NbDialogService, NbToastrService } from '@nebular/theme';
-import { TrayStateDto } from '@my-tray/api-interfaces';
-import { TrayStateService } from '@my-tray/data-services/mytray/services';
+import { TrayDto } from '@my-tray/api-interfaces';
+import { TrayDataService } from '@my-tray/data-services/mytray/services';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 import { STATE_COLUMNS } from '../../core/settings';
-import { BaseGridViewComponent } from '../../../../core/classes/components';
+import { BaseComponent } from '../../../../core/classes/components';
 
 @Component({
   selector: 'my-tray-state',
   templateUrl: './state.component.html',
   styleUrls: ['./state.component.scss']
 })
-export class StateComponent extends BaseGridViewComponent<TrayStateDto> implements OnInit, OnDestroy {
+export class StateComponent extends BaseComponent<TrayDto> implements OnInit, OnDestroy {
   columns = STATE_COLUMNS;
+  actions = false;
 
   constructor(
-    readonly service: TrayStateService,
+    readonly service: TrayDataService,
     readonly dialogService: NbDialogService,
     readonly toastrService: NbToastrService,
     readonly cd: ChangeDetectorRef) {
@@ -25,26 +25,17 @@ export class StateComponent extends BaseGridViewComponent<TrayStateDto> implemen
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.service.getAll()
+    this.service.getAllTrays()
       .pipe(
         takeUntil(this.destroy$),
         finalize(() => {
           this.loading = false;
         })
       )
-      .subscribe((states: TrayStateDto[]) => {
-        this.dataSource = states;
+      .subscribe((states: TrayDto[]) => {
+        this.dataSource = states.filter(tray => !tray.isService);
         this.immidiate();
       });
-  }
-
-  onCreateRowConfirm(event: { model: TrayStateDto; confirm: Deferred }) {
-  }
-
-  onDeleteRowConfirm(event: { model: TrayStateDto; confirm: Deferred }) {
-  }
-
-  onEditRowConfirm(event: { model: TrayStateDto; confirm: Deferred }) {
   }
 
   ngOnDestroy(): void {

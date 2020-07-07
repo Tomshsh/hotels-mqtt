@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material';
 
 interface ToggleListItem {
-  value: string;
-  color: string;
+  readonly value: string;
+  readonly color: string;
+  readonly state: string;
 }
 
 
@@ -15,12 +16,12 @@ interface ToggleListItem {
 export class ToggleButtonListComponent implements OnInit {
   @Output() toggleChange: EventEmitter<any> = new EventEmitter<any>();
   @Input() source: ToggleListItem[] = [
-    { value: 'Empty', color: '#ccc' },
-    { value: 'InPlace', color: '#C7F6C7' },
-    { value: 'Momentary', color: '#7FB17F' },
-    { value: 'Charged', color: '#7F7FFF' },
-    { value: 'VacantChange', color: '#FF7F7F' },
-    { value: 'Replaced', color: '#FFCC7A' },
+    { value: 'Empty', color: '#ccc', state: 'empty' },
+    { value: 'InPlace', color: '#C7F6C7', state: 'inplace' },
+    { value: 'Momentary', color: '#7FB17F', state: 'momentary' },
+    { value: 'Charged', color: '#7F7FFF', state: 'charged' },
+    { value: 'VacantChange', color: '#FF7F7F', state: 'vcharge' },
+    { value: 'Replaced', color: '#FFCC7A', state: 'replaced' },
   ];
 
   constructor() {

@@ -16,6 +16,10 @@ export class StateFiltersComponent extends DefaultFilter implements OnInit, OnCh
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
   }
 
+  onFilterUpdate($event) {
+    this.query = $event.value;
+  }
 }

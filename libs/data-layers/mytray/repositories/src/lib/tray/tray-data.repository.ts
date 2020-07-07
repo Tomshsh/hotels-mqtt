@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RoomDataRepository } from '../rooms';
-import { Room, Tray, TrayDto } from '@my-tray/api-interfaces';
+import { ProductState, Room, Tray, TrayDto } from '@my-tray/api-interfaces';
 import * as Parse from 'parse';
 import { Repository } from '../repository';
 
@@ -15,6 +15,9 @@ export class TrayDataRepository<T extends Tray> extends Repository<T> {
   async getTrays(): Promise<Tray[]> {
     return await new Parse.Query(Parse.Object.extend('Tray'))
       .include('room')
+      .include('template.products')
+      .include('state.tag')
+      .include('state.tag.product')
       .find().then((trays) => {
         return trays.map((tray) => {
           const thisJsonTray = tray.toJSON();
@@ -24,6 +27,14 @@ export class TrayDataRepository<T extends Tray> extends Repository<T> {
             isOnline: thisJsonTray.isOnline,
             isService: thisJsonTray.isService,
             room: thisJsonTray.room,
+            template: thisJsonTray.template,
+            states: thisJsonTray.state?.map((state: ProductState) => {
+              return {
+                lastAction: state.lastAction,
+                updatedAt: state.updatedAt,
+                tag: state.tag,
+              };
+            })
           };
           return mappedTray;
         });
@@ -46,6 +57,10 @@ export class TrayDataRepository<T extends Tray> extends Repository<T> {
         objectId: selectedRoom.objectId,
         className: 'Room'
       });
+      updateTray.set('title', tray.title);
+      updateTray.set('isOnline', tray.isOnline);
+      updateTray.set('isService', tray.isService);
+
       await updateTray.save();
       const returnTray = updateTray.toJSON();
       return Promise.resolve({

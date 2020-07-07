@@ -16,7 +16,7 @@ export class TrayStateRepository<T extends TrayStateEntity> extends Repository<T
       .include('room')
       .include('tray')
       .include('tray.template')
-      .include('tray.template.products')
+      .include('tray.tag.product')
       .find()
       .then((trayStatuses: TrayStateEntity[]) => {
         return trayStatuses;
