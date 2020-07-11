@@ -1,5 +1,5 @@
 <mat-button-toggle-group name="filter" aria-label="Toggleable filters" multiple>
-  <mat-button-toggle (change)="onToggleChange($event)" *ngFor="let item of source" [value]="item.value">
+  <mat-button-toggle (change)="onToggleChange($event)" *ngFor="let item of source" [value]="item.state" [appearance]="'legacy'">
     <span class="circle" [style.--color]="item.color">&nbsp;</span>
     {{item.value}}
   </mat-button-toggle>

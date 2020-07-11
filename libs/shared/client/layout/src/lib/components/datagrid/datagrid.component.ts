@@ -49,7 +49,6 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   settings: any;
 
   ngOnInit(): void {
-    console.log('Actions', this.actions);
     this.settings = {
       noDataMessage: 'No data loaded.',
       columns: [],

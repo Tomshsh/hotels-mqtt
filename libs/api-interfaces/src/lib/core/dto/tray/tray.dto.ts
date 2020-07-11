@@ -7,7 +7,7 @@ export class TrayDto {
   readonly isService: boolean;
   readonly room: RoomDto & SelectRoomDto;
   readonly template: TemplateDto;
-  readonly states: ProductStateDto[];
+  states: ProductStateDto[];
 }
 
 export interface ProductStateDto {

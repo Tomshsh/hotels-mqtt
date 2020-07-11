@@ -31,8 +31,7 @@ export class StateComponent extends BaseComponent<TrayDto> implements OnInit, On
         finalize(() => {
           this.loading = false;
         })
-      )
-      .subscribe((states: TrayDto[]) => {
+      ).subscribe((states: TrayDto[]) => {
         this.dataSource = states.filter(tray => !tray.isService);
         this.immidiate();
       });
