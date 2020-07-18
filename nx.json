@@ -45,6 +45,9 @@
     "peer2park-e2e": {
       "tags": [],
       "implicitDependencies": ["peer2park"]
+    },
+    "data-services-peer2park-services": {
+      "tags": []
     }
   }
 }
