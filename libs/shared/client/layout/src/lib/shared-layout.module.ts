@@ -107,6 +107,7 @@ const components = [
     NbBadgeModule,
     MaterialLayoutModule,
   ],
+
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
   exports: [
