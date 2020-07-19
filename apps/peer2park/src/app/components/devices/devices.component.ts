@@ -23,7 +23,6 @@ class DeviceDto {
   serial: string;
   sockets: Socket[];
   valve: Valve;
-
 }
 
 @Component({
@@ -52,11 +51,10 @@ export class DevicesComponent implements OnInit {
       onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
         btnGroup.onInitFunction = function () {
           let sockets: any[] = btnGroup.value
-          btnGroup.indicators = sockets.map(s => s.socketNo).filter(s => s < 7).sort((a, b) => a - b)
+          btnGroup.indicators = sockets.filter(s => s.resource === 'energy').map(s => s.socketNo).sort((a, b) => a - b)
         }
       },
       valuePrepareFunction: (cell, row) => {
-        console.log(row)
         const sockets: any[] = row.sockets
         return sockets.length ? sockets : null
       }
@@ -66,6 +64,14 @@ export class DevicesComponent implements OnInit {
       type: 'custom',
       renderComponent: SocketStatusRendererComponent,
       onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
+        btnGroup.onInitFunction = function () {
+          let sockets: any[] = btnGroup.value
+          btnGroup.indicators = sockets.filter(s => s.resource === 'water').map(s => s.socketNo).sort((a, b) => a - b)
+        }
+      },
+      valuePrepareFunction: (cell, row) => {
+        const sockets: any[] = row.sockets
+        return sockets.length ? sockets : null
       }
     },
     actions: {
@@ -91,8 +97,7 @@ export class DevicesComponent implements OnInit {
     private readonly cd: ChangeDetectorRef,
     private dialog: NbDialogService,
     private devicesService: DevicesService
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     this.loading = true

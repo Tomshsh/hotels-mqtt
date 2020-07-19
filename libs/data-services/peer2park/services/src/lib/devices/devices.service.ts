@@ -26,12 +26,6 @@ export class DevicesService {
     for(let i in devices){
       let fDevice = devices[i].toJSON()
       flatArr.push(fDevice)
-      const sockets = await devices[i].relation('sockets')
-        .query()
-        .select('active', 'consumption', 'resource', 'socketNo')
-        .find();
-
-      flatArr[i].sockets = sockets.map((s: Parse.Object) => s.toJSON());
     }
       return flatArr
   }
