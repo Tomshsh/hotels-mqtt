@@ -1,11 +1,9 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, AfterContentInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RoutingComponent } from '@my-tray/shared/utilities';
-import { LocalDataSource, ViewCell, Cell } from 'ng2-smart-table';
-import { CustomActionsComponent } from '@my-tray/shared/layout';
-import { SocketStatusRendererComponent } from '../socket-status-renderer/socket-status-renderer.component';
+import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
-import Parse from 'parse'
 import { DevicesService } from '@my-tray/data-services/peer2park/services'
+import { DEVICES_COLUMNS } from './core/classes/devices-columns';
 
 class Valve {
   started: string;
@@ -28,7 +26,7 @@ class DeviceDto {
 @Component({
   selector: 'p2p-devices',
   template: `
-  <ui-data-grid [source]="dataSource" [columns]="columns"  [loading]="loading" [displayActions]="false" ></ui-data-grid>`,
+  <ui-data-grid [source]="dataSource" [columns]="columns" [loading]="loading" [actions]="false"></ui-data-grid>`,
   styleUrls: ['./devices.component.css']
 })
 
@@ -36,62 +34,7 @@ class DeviceDto {
 export class DevicesComponent implements OnInit {
   dataSource: LocalDataSource;
   loading: boolean;
-  columns = {
-    serial: {
-      title: 'Serial',
-      type: 'text',
-      valuePrepareFunction: (cell: any, row: Parse.Attributes) => {
-        return row.deviceNo
-      }
-    },
-    sockets: {
-      title: 'Sockets',
-      type: 'custom',
-      renderComponent: SocketStatusRendererComponent,
-      onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
-        btnGroup.onInitFunction = function () {
-          let sockets: any[] = btnGroup.value
-          btnGroup.indicators = sockets.filter(s => s.resource === 'energy').map(s => s.socketNo).sort((a, b) => a - b)
-        }
-      },
-      valuePrepareFunction: (cell, row) => {
-        const sockets: any[] = row.sockets
-        return sockets.length ? sockets : null
-      }
-    },
-    valve: {
-      title: 'Valve',
-      type: 'custom',
-      renderComponent: SocketStatusRendererComponent,
-      onComponentInitFunction: (btnGroup: SocketStatusRendererComponent) => {
-        btnGroup.onInitFunction = function () {
-          let sockets: any[] = btnGroup.value
-          btnGroup.indicators = sockets.filter(s => s.resource === 'water').map(s => s.socketNo).sort((a, b) => a - b)
-        }
-      },
-      valuePrepareFunction: (cell, row) => {
-        const sockets: any[] = row.sockets
-        return sockets.length ? sockets : null
-      }
-    },
-    actions: {
-      title: 'actions',
-      type: 'custom',
-      renderComponent: CustomActionsComponent,
-      onComponentInitFunction: (actionsComp: CustomActionsComponent) => {
-        actionsComp.buttons = ['control', 'history']
-        actionsComp.clickHandler = (ref: HTMLButtonElement) => {
-          switch (ref.innerText) {
-            case 'control':
-              break;
-
-            default:
-              break;
-          }
-        }
-      }
-    }
-  };
+  readonly columns: any = DEVICES_COLUMNS;
 
   constructor(
     private readonly cd: ChangeDetectorRef,
@@ -107,10 +50,8 @@ export class DevicesComponent implements OnInit {
         this.loading = false
         setTimeout(()=>{
           this.cd.detectChanges()
-        },0)
+        })
       }
     )
   }
-
-
 }

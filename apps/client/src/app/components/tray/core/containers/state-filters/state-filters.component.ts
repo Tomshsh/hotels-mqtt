@@ -43,8 +43,8 @@ export class StateFiltersComponent extends DefaultFilter implements OnInit, OnCh
         const rows = Array.from(document.querySelectorAll('ng2-smart-table table > tbody > tr'));
         rows.forEach(row => {
           row.dispatchEvent(new Event('click', {}));
-        })
-      })
+        });
+      });
   }
 
   ngOnDestroy(): void {
