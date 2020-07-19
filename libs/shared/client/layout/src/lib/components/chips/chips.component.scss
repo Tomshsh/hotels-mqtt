@@ -1,0 +1,16 @@
+$color-list:(
+  empty: #ccc,
+  refill: #C7f6c7,
+  momentary: #7FB17F,
+  charge: #7F7FFF,
+  vcharge: #FF7F7F,
+  replace: #FFCC7A
+);
+
+::ng-deep {
+  @each $key, $val in $color-list {
+    .#{$key} {
+      background-color: $val !important;
+    }
+  }
+}

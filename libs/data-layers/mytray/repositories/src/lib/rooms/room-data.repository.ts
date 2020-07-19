@@ -48,10 +48,6 @@ export class RoomDataRepository<T extends Room> extends Repository<T> {
       })
   }
 
-  async deleteRoom(objectId: string): Promise<void> {
-    return await this.delete(objectId, 'Room');
-  }
-
   async updateRoom(model: RoomDto): Promise<Room> {
     try {
       const updateModel = await new Parse.Query(Parse.Object.extend('Room'))

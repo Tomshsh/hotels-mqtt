@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UsersServices } from '@my-tray/data-services/mytray/services';
 import { UserDto } from '@my-tray/api-interfaces';
 import { RoutingComponent } from '@my-tray/shared/utilities';
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
     this.usersService.getUsers().pipe(
       tap(() => this.loading = true)
     ).subscribe((users: UserDto[]) => {
-        this.dataSource = new LocalDataSource(users);
+        this.dataSource = users;
         setTimeout(() => {
           this.cd.detectChanges();
         }, 0);

@@ -17,7 +17,6 @@ import { ɵbo as Ng2SmartTableComponent } from 'ng2-smart-table';
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
-
   @ViewChild('table', { static: false })
   gridView: Ng2SmartTableComponent;
 
@@ -31,7 +30,7 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
   loading: boolean;
 
   @Input()
-  displayActions:boolean
+  actions: any;
 
   @Output()
   createConfirm: EventEmitter<any> = new EventEmitter<any>();
@@ -51,40 +50,36 @@ export class DatagridComponent implements OnInit, OnChanges, AfterViewInit {
 
   constructor(private readonly cd: ChangeDetectorRef) {}
 
-
-  settings = {
-    noDataMessage: 'No data loaded.',
-    columns: [],
-    hideSubHeader: false,
-    add: {
-      addButtonContent: '<i class="fa fa-plus" title="Create"></i>',
-      createButtonContent: '<i class="fa fa-check" ></i>',
-      cancelButtonContent: '<i class="fa fa-close"></i>',
-      confirmCreate: true
-    },
-    edit: {
-      editButtonContent: '<i class="fa fa-edit" title="Update"></i>',
-      saveButtonContent: '<i class="fa fa-check"></i>',
-      cancelButtonContent: '<i class="fa fa-close"></i>',
-      confirmSave: true
-    },
-    delete: {
-      deleteButtonContent: '<i class="fa fa-trash" title="Delete"></i>',
-      confirmDelete: true
-    },
-
-    actions: {
-      add: true,
-      edit:true,
-      delete: true,
-    }
-  };
+  settings: any;
 
   ngOnInit(): void {
+    this.settings = {
+      noDataMessage: 'No data loaded.',
+      columns: [],
+      hideSubHeader: false,
+      add: {
+        addButtonContent: '<i class="fa fa-plus" title="Create"></i>',
+        createButtonContent: '<i class="fa fa-check" ></i>',
+        cancelButtonContent: '<i class="fa fa-close"></i>',
+        confirmCreate: true
+      },
+      edit: {
+        editButtonContent: '<i class="fa fa-edit" title="Update"></i>',
+        saveButtonContent: '<i class="fa fa-check"></i>',
+        cancelButtonContent: '<i class="fa fa-close"></i>',
+        confirmSave: true
+      },
+      delete: {
+        deleteButtonContent: '<i class="fa fa-trash" title="Delete"></i>',
+        confirmDelete: true
+      },
+      actions: this.actions !== undefined ? this.actions : {
+        add: true,
+        edit: true,
+        delete: true,
+      }
+    };
     this.settings.columns = Object.assign({}, this.columns);
-    this.settings.actions.add = this.displayActions
-    this.settings.actions.edit = this.displayActions
-    this.settings.actions.delete = this.displayActions
   }
 
   ngAfterViewInit() {

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { TemplateDto } from '@my-tray/api-interfaces';
 import { NbDialogRef } from '@nebular/theme/components/dialog/dialog-ref';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
-import { TEMPLATE_COLUMNS } from '../../core/settings/template-columns';
+import { TEMPLATE_COLUMNS } from '../../core/settings';
 import { takeUntil } from 'rxjs/operators';
 import { Deferred } from 'ng2-smart-table/lib/lib/helpers';
 

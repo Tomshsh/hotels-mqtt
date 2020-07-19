@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectListRendererComponent } from './select-list-renderer.component';
+import { SelectListRendererComponent } from '@my-tray/shared/layout';
+import { createSpyObj } from '@my-tray/shared/utilities/testing';
 
 describe('SelectListRendererComponent', () => {
   let component: SelectListRendererComponent;

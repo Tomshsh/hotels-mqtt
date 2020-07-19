@@ -1,0 +1,15 @@
+::ng-deep .circle {
+  & {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 70%;
+    margin: 0 10px;
+  }
+  background: var(--color);
+}
+::ng-deep {
+  mat-button-toggle {
+    border: none;
+  }
+}

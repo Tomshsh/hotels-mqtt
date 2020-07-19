@@ -1,6 +1,6 @@
 import { ErrorHandler } from '@angular/core';
 import { AuthSessionService } from '@my-tray/shared/client/auth';
-import { ParseError } from '@my-tray/api-interfaces';
+import { ParseError } from '@my-tray/api-interfaces/entities';
 
 export class GlobalErrorHandler implements ErrorHandler {
   constructor(private readonly authService: AuthSessionService) {

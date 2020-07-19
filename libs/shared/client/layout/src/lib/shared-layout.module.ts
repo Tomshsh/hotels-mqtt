@@ -46,6 +46,7 @@ import {
   SidebarContainerComponent,
 } from './components';
 import { MaterialLayoutModule } from './components/material-layout.module';
+import { ToggleButtonListComponent } from './components/toggle-button-list/toggle-button-list.component';
 
 const components = [
   DashboardContainerComponent,
@@ -59,7 +60,18 @@ const components = [
   SelectListRendererComponent,
   IconRendererComponent,
   ChipsComponent,
-  ChipsAutocompleteFormComponent
+  ChipsAutocompleteFormComponent,
+  ToggleButtonListComponent
+];
+const exportComponents = [
+  DatagridComponent,
+  DashboardContainerComponent,
+  SelectListComponent,
+  SelectListRendererComponent,
+  IconRendererComponent,
+  ChipsComponent,
+  ChipsAutocompleteFormComponent,
+  ToggleButtonListComponent
 ];
 
 @NgModule({
@@ -111,13 +123,7 @@ const components = [
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
   exports: [
-    DatagridComponent,
-    DashboardContainerComponent,
-    SelectListComponent,
-    SelectListRendererComponent,
-    IconRendererComponent,
-    ChipsComponent,
-    ChipsAutocompleteFormComponent,
+    ...exportComponents
   ]
 })
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { ViewCell } from 'ng2-smart-table';
 
 @Component({
@@ -6,7 +6,7 @@ import { ViewCell } from 'ng2-smart-table';
   template: `
     <mat-chip-list fxFill #chipList>
       <span *ngFor="let el of value">
-        <mat-chip>
+        <mat-chip [ngClass]="el.state">
           {{el.abbr}}
           <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
@@ -15,7 +15,7 @@ import { ViewCell } from 'ng2-smart-table';
   `,
   styleUrls: ['./chips.component.scss']
 })
-export class ChipsComponent implements ViewCell, OnInit {
+export class ChipsComponent implements ViewCell, OnInit, AfterViewInit {
   @Input() value: any;
   @Input() rowData: any;
   @Input() removable: boolean;
@@ -27,6 +27,10 @@ export class ChipsComponent implements ViewCell, OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
+  ngAfterViewInit(): void {
+
+  }
 }

@@ -25,7 +25,15 @@ export class TemplatesDataService {
         return templates.map((template => {
           return {
             objectId: template.objectId,
-            products: template.products,
+            products: template.products.map(product => {
+              return {
+                objectId: product.objectId,
+                currency: product.currency,
+                price: product.price,
+                abbr: product.shortName,
+                title: product.title
+              }
+            }),
             title: template.title
           } as TemplateDto;
         }))
@@ -62,8 +70,16 @@ export class TemplatesDataService {
       this.repository.update(entity).then(updated => {
         return {
           objectId: updated.objectId,
-          products: updated.products,
-          title: updated.title
+          products: updated.products.map(product => {
+            return {
+              objectId: product.objectId,
+              currency: product.currency,
+              price: product.price,
+              abbr: product.shortName,
+              title: product.title
+            }
+          }),
+          title: updated.title,
         } as TemplateDto;
       })
     );

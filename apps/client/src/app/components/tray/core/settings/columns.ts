@@ -1,5 +1,5 @@
 import { SelectListRendererComponent } from '@my-tray/shared/layout';
-import { SelectRoomRendererComponent } from '../../components/select-room-renderer/select-room-renderer.component';
+import { SelectRoomRendererComponent } from '../containers/select-room-renderer/select-room-renderer.component';
 import { IconRendererComponent } from '@my-tray/shared/layout';
 import { toBoolean } from '@datorama/akita';
 

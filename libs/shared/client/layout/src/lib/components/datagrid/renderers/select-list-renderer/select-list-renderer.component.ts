@@ -12,9 +12,11 @@ export class SelectListRendererComponent implements ViewCell, OnInit {
   }
 
   ngOnInit() {
-    const { title } = this.value;
-    if(title) {
-      this.value = title;
+    if(this.value) {
+      const { title } = this.value;
+      if (title) {
+        this.value = title;
+      }
     }
   }
 }

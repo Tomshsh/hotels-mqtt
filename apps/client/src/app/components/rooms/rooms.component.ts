@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewRef } from '@angular/core';
 import { RoomDto } from '@my-tray/api-interfaces';
 import { ROOMS_COLUMNS } from './core/settings';
 import { ConfirmPromptDialogComponent } from '@my-tray/shared/layout';
@@ -46,16 +46,13 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
   onCreateRowConfirm(event: { newData: RoomDto, confirm: Deferred }) {
     console.log('::Create row::', event);
-
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
       this.service.create(event.newData).subscribe(() => {
         event.confirm.resolve();
         this.confirm.close();
         this.toastrService.success('Successfully created Room', `Creating Room`);
-        setTimeout(() => {
-          this.cd.detectChanges();
-        }, 300);
+        this.immidiate();
       }, error => {
         event.confirm.resolve();
         this.confirm.close();
@@ -66,7 +63,6 @@ export class RoomsComponent implements OnInit, OnDestroy {
 
   onEditRowConfirm(event: { newData: RoomDto, confirm: Deferred }) {
     console.log('::Update row::', event);
-
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
       this.service.update({
@@ -80,9 +76,7 @@ export class RoomsComponent implements OnInit, OnDestroy {
         event.confirm.resolve();
         this.confirm.close();
         this.toastrService.success('Successfully update Room', `Updating Room`);
-        setTimeout(() => {
-          this.cd.detectChanges();
-        }, 300);
+        this.immidiate();
       }, error => {
         this.confirm.close();
         this.toastrService.danger('Failed updating Room', `Updating Room`);
@@ -119,11 +113,12 @@ export class RoomsComponent implements OnInit, OnDestroy {
     });
   }
 
-
   private immidiate() {
     setTimeout(() => {
-      this.cd.detectChanges();
-    }, 300);
+      if (this.cd && !(this.cd as ViewRef).destroyed) {
+        this.cd.detectChanges();
+      }
+    });
   }
 
   ngOnDestroy(): void {

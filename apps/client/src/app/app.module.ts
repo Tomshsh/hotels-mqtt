@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { Route, RouterModule } from '@angular/router';
 import { AuthSessionQuery, AuthSessionService, SharedClientAuthModule } from '@my-tray/shared/client/auth';
-import { DashboardContainerComponent, SharedLayoutModule } from '@my-tray/shared/layout';
+import { SharedLayoutModule } from '@my-tray/shared/layout';
 import { ConfigurationService, GlobalErrorHandler, SharedUtilitiesModule } from '@my-tray/shared/utilities';
 import { DataServicesMytrayServicesModule } from '@my-tray/data-services/mytray/services';
 
@@ -13,15 +13,13 @@ import { DashboardComponent } from './containers/dashboard/dashboard.component';
 
 import { environment } from '@my-tray/env/client/environment';
 
-export function initializer(configurationService: ConfigurationService) {
+export function initConfig(configurationService: ConfigurationService) {
   return () => configurationService.initializeConfiguration(environment);
 }
 
 const routes: Route[] = [
-  { path: 'dashboard', component: DashboardContainerComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
-
 
 @NgModule({
   imports: [
@@ -38,7 +36,7 @@ const routes: Route[] = [
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: initializer,
+      useFactory: initConfig,
       deps: [ConfigurationService],
       multi: true
     },
