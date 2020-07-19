@@ -36,7 +36,7 @@ export class LoginPageComponent extends NbLoginComponent implements OnInit {
         this.messages = ['Welcome to the Tray System'];
       }
       setTimeout(() => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['dashboard/state']);
       }, 1000);
       this.cd.detectChanges();
     },(error => {

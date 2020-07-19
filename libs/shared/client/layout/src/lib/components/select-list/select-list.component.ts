@@ -11,7 +11,7 @@ import { DefaultEditor } from 'ng2-smart-table';
                [fullWidth]="true"
                (selectedChange)="updateSelected($event)"
                #selectComponent>
-      <nb-option *ngFor="let option of rowData" [value]="option">
+      <nb-option *ngFor="let option of options" [value]="option">
         {{ option.title }}
       </nb-option>
     </nb-select>
@@ -21,7 +21,7 @@ import { DefaultEditor } from 'ng2-smart-table';
 export class SelectListComponent extends DefaultEditor implements OnInit {
   @Input() placeholder: string;
   @Input() selectedItem;
-  @Input() rowData: any[];
+  @Input() options: any[];
   @Output() itemSelect = new EventEmitter();
 
   constructor() {

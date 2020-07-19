@@ -6,3 +6,8 @@ export interface TagDto extends BaseDtoInterface {
   readonly productTitle: string|any;
   readonly productObjectId?: string;
 }
+
+export interface TagStateDto {
+  readonly title: string;
+  readonly abbr: string;
+}

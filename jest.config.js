@@ -18,6 +18,5 @@ if (process.env.IDE) {
       ],
     },
   };
-
   module.exports.setupFilesAfterEnv = ['<rootDir>/src/test-setup.ts'];
 }

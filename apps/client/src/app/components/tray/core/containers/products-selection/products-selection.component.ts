@@ -15,15 +15,17 @@ export class ProductsSelectionComponent extends DefaultEditor implements OnInit,
   rowData: any;
   value: string | number | any | any[];
 
-  constructor(private readonly productService: ProductService) {
+  constructor(readonly productService: ProductService) {
     super();
   }
 
   ngOnInit(): void {
-    this.dataSource$ = this.productService.getProducts()
-    this.value = this.cell.getValue() === '' ? [] : this.cell.getValue();
-    if (this.value.length === 0) {
-      this.cell.newValue = this.value;
+    this.dataSource$ = this.productService.getProducts();
+    if(this.cell && this.cell.getValue) {
+      this.value = this.cell.getValue() === '' ? [] : this.cell.getValue();
+      if (this.value.length === 0) {
+        this.cell.newValue = this.value;
+      }
     }
   }
 
@@ -33,7 +35,6 @@ export class ProductsSelectionComponent extends DefaultEditor implements OnInit,
       this.cell.newValue.push($event);
     }
   }
-
 
   onDeleteProductListItem($event) {
     console.log('Delete product list', $event);

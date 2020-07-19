@@ -3,6 +3,5 @@ export interface Product {
   readonly price: number;
   readonly title: string;
   readonly currency?: string;
-  readonly abbr: string;
+  readonly shortName: string;
 }
-

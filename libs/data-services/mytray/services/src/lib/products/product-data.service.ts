@@ -25,7 +25,7 @@ export class ProductService {
             title: product.title,
             price: product.price,
             currency: product.currency,
-            abbr: product.abbr
+            abbr: product.shortName
           };
         });
       }));
@@ -41,7 +41,7 @@ export class ProductService {
       'ACL': this.authQuery.getAcl()[0].acl
     };
 
-    return this.httpClient.post<R>(`${this.baseURL}Product`, body, {
+    return this.httpClient.post<R>(`${ this.baseURL }Product`, body, {
       headers: new HttpHeaders()
         .append('Content-Type', 'application/json')
         .append('X-Parse-Session-Token', this.authQuery.getValue().token)
@@ -51,23 +51,29 @@ export class ProductService {
 
   update(updateModel: ProductDto): Observable<ProductDto> {
     return fromPromise(
-      this.repository.update(updateModel, 'Product').then(
+      this.repository.update({
+        shortName: updateModel.abbr,
+        title: updateModel.title,
+        price: updateModel.price,
+        currency: updateModel.currency,
+        objectId: updateModel.objectId
+      }, 'Product').then(
         (updatedModel: Product) => {
           return {
             objectId: updatedModel.objectId,
             currency: updatedModel.currency,
             price: updatedModel.price,
             title: updatedModel.title,
-            abbr: updatedModel.abbr
+            abbr: updatedModel.shortName
           } as ProductDto;
         }
       )
     );
   }
 
-  delete(objectId: string) : Observable<void> {
+  delete(objectId: string): Observable<void> {
     return fromPromise(
-       this.repository.delete(objectId, 'Product')
+      this.repository.delete(objectId, 'Product')
     );
   }
 }

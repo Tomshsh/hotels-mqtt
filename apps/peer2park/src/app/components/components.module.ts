@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ComponentsRoutingModule } from './components-routing.module';
 import { SharedLayoutModule } from '@my-tray/shared/layout';
 import { DevicesComponent } from './devices/devices.component';
-import { SocketStatusRendererComponent } from './socket-status-renderer/socket-status-renderer.component';
+import { SocketStatusRendererComponent } from './devices/components/socket-status-renderer/socket-status-renderer.component';
 
 import { FormsModule } from '@angular/forms';
 

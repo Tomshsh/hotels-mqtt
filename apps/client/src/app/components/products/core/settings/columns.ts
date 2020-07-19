@@ -6,16 +6,16 @@ export const COLUMNS = {
     addable: true,
     editable: true
   },
-  price: {
-    title: 'Price',
-    type: 'number',
+  abbr: {
+    title: 'Short Name',
+    type: 'string',
     width: '10%',
     addable: true,
     editable: true
   },
-  abbr: {
-    title: 'Short Name',
-    type: 'string',
+  price: {
+    title: 'Price',
+    type: 'number',
     width: '10%',
     addable: true,
     editable: true

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { TrayDataRepository } from '@my-tray/data-layers/mytray/repositories';
 import { Observable } from 'rxjs';
-import { TrayDto, Tray } from '@my-tray/api-interfaces';
+import { Product, ProductDto, ProductState, TagStateDto, Tray, TrayDto } from '@my-tray/api-interfaces';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthSessionQuery } from '@my-tray/shared/client/auth';
@@ -34,7 +34,30 @@ export class TrayDataService {
               objectId: tray.room?.objectId,
               name: tray.room?.name,
               num: tray.room?.num,
-            }
+            },
+            template: {
+              title: tray.template.title,
+              objectId: tray.template.objectId,
+              products: tray.template.products.map((product: Product) => {
+                return {
+                  objectId: product.objectId,
+                  title: product.title,
+                  abbr: product.shortName,
+                  price: product.price,
+                  currency: product.currency
+                } as ProductDto;
+              })
+            },
+            states: tray.states?.map((state: ProductState) => {
+              return {
+                lastAction: state.lastAction,
+                updatedAt: state.updatedAt,
+                tag: {
+                  abbr: state.tag.product.shortName,
+                  title: state.tag.product.title
+                } as TagStateDto
+              };
+            })
           };
           return newTrayDto;
         })

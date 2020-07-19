@@ -1,5 +1,5 @@
 import { ChipsComponent } from '@my-tray/shared/layout';
-import { ProductsSelectionComponent } from '../../components/products-selection/products-selection.component';
+import { ProductsSelectionComponent } from '../containers/products-selection/products-selection.component';
 
 export const TEMPLATE_COLUMNS = {
   title: {
