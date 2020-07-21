@@ -22,7 +22,7 @@ export class TrayDataService {
     return fromPromise(
       this.repository.getTrays().then((trays: Tray[]) => {
         return trays.map((tray: Tray) => {
-          const newTrayDto: TrayDto = {
+          return {
             objectId: tray.objectId,
             title: tray.title,
             isOnline: tray.isOnline,
@@ -59,7 +59,6 @@ export class TrayDataService {
               };
             })
           };
-          return newTrayDto;
         })
       })
     );

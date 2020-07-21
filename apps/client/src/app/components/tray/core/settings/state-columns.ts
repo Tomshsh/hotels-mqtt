@@ -64,6 +64,6 @@ export const STATE_COLUMNS = {
 };
 
 function toTupleArray(array) {
-  return array?.map(x => x.tag.abbr ? { abbr: x.tag.abbr, state: x.lastAction } : '')
+  return array?.map(x => x.tag.title ? { title: x.tag.abbr, color: x.lastAction } : '')
     .filter(p => p);
 }

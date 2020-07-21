@@ -24,7 +24,7 @@ export class ChipsComponent implements ViewCell, OnInit{
   @Input() id: string;
 
   @Output()
-  onRemove: EventEmitter<any> = new EventEmitter<any>();
+  remove: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
   }
@@ -34,6 +34,6 @@ export class ChipsComponent implements ViewCell, OnInit{
   }
 
   onRemoveChip($event) {
-    this.onRemove.emit($event);
+    this.remove.emit($event);
   }
 }
