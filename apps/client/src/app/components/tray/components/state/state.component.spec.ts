@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 import { TrayStateDto } from '@my-tray/api-interfaces';
 import { STATE_COLUMNS } from '../../core/settings';
 import { MockedDataResponseArray } from '../../core/mocks/get-all-states.mock';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 
 class TrayStateServiceMock {
@@ -27,6 +28,7 @@ describe('StateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StateComponent],
+      imports: [HttpClientTestingModule],
       providers: [
         { provide: TrayStateService, useValue: mockService },
         { provide: NbDialogService, useValue: {} },
@@ -65,6 +67,7 @@ describe('StateComponent', () => {
       });
       component.ngOnInit();
       tick(300);
+
       expect(component.dataSource).not.toBeNull();
       expect(component.dataSource).toEqual(MockedDataResponseArray);
     }));

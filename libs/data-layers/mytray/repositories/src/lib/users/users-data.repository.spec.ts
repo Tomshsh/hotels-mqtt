@@ -2,7 +2,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 
 import { UsersDataRepository } from './users-data.repository';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { IUser } from '@my-tray/api-interfaces';
+import { IUser } from '@my-tray/api-interfaces/entities';
 
 describe('UsersRepositoryService', () => {
   let service: UsersDataRepository;
