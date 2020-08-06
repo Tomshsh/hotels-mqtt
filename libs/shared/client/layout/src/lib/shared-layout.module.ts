@@ -63,7 +63,7 @@ const components = [
   ChipsComponent,
   ChipsAutocompleteFormComponent,
   ToggleButtonListComponent,
-  ReactiveFormsModule
+  FormComponent,
 ];
 const exportComponents = [
   DatagridComponent,
@@ -74,8 +74,6 @@ const exportComponents = [
   ChipsComponent,
   ChipsAutocompleteFormComponent,
   ToggleButtonListComponent,
-  FormComponent,
-  ReactiveFormsModule,
 ];
 
 @NgModule({
@@ -112,8 +110,8 @@ const exportComponents = [
     BrowserAnimationsModule,
     NbSpinnerModule,
     RouterModule,
-    FormsModule,
     ReactiveFormsModule,
+    FormsModule,
     NbSelectModule,
     NbDatepickerModule.forRoot(),
     NbToastrModule.forRoot({
