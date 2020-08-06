@@ -10,3 +10,4 @@ export * from './select-list/select-list.component';
 export * from './confirm-prompt-dialog/confirm-prompt-dialog.component';
 export * from './chips/chips.component';
 export * from './chips-autocomplete-form/chips-autocomplete-form.component';
+export * from './form/form.component'

@@ -1,0 +1,62 @@
+<mat-card class="form-card">
+  <mat-card-content>
+
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" >
+
+      <div *ngFor="let input of inputs" class="form-input-wrapper" [ngSwitch]="input.input">
+
+          <mat-form-field *ngSwitchCase="'input'" appearance="outline" >
+            <mat-label >{{input.label}}</mat-label>
+            <input
+              matInput
+              [formControlName]="input.name"
+              [required]="input.required"
+              [type]="input.type || 'text'" >
+          </mat-form-field>
+
+          <div *ngSwitchCase="'duplicatable'" [formArrayName]="input.name" >
+            <h4>{{input.name}}</h4>
+            <div *ngFor="let d of duplicates.controls; let i=index">
+              <mat-form-field  appearance="outline">
+                <mat-label>{{input.label+' '+(i+1)}}</mat-label>
+                <input
+                  matInput
+                  [type]="input.type || 'text'"
+                  [formControlName]="i"
+                  >
+              </mat-form-field>
+              <button type="button" *ngIf="i===0" mat-mini-fab class="duplicate-btn" (click)="duplicate()" ><mat-icon>add</mat-icon></button>
+            </div>
+
+          </div>
+
+      <mat-form-field *ngSwitchCase="'select'"  appearance="outline" >
+        <mat-label>{{input.label}}</mat-label>
+        <mat-select
+          [formControlName]="input.name"
+          [required]="input.required"
+          >
+          <mat-option [value]="option.value" *ngFor="let option of input.selectOptions" >{{option.text}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-radio-group
+        *ngSwitchCase="'radio'"
+        [required]="input.required"
+        [formControlName]="input.name"
+        >
+        <mat-radio-button
+          *ngFor="let radio of input.radios"
+          value="radio.value"
+          [name]="radio.name">
+          {{radio.text}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+
+      </div>
+      <button mat-raised-button [disabled]="formGroup.invalid" type="submit" color="primary" style="width: 100%;" >SAVE</button>
+    </form>
+  </mat-card-content>
+
+</mat-card>

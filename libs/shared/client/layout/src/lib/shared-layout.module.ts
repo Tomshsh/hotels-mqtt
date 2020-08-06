@@ -31,7 +31,7 @@ import { RouterModule } from '@angular/router';
 import { DashboardContainerComponent } from './containers';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import {
   ChipsAutocompleteFormComponent,
   ChipsComponent,
@@ -44,6 +44,7 @@ import {
   SelectListComponent,
   SelectListRendererComponent,
   SidebarContainerComponent,
+  FormComponent,
 } from './components';
 import { MaterialLayoutModule } from './components/material-layout.module';
 import { ToggleButtonListComponent } from './components/toggle-button-list/toggle-button-list.component';
@@ -61,7 +62,8 @@ const components = [
   IconRendererComponent,
   ChipsComponent,
   ChipsAutocompleteFormComponent,
-  ToggleButtonListComponent
+  ToggleButtonListComponent,
+  ReactiveFormsModule
 ];
 const exportComponents = [
   DatagridComponent,
@@ -71,7 +73,9 @@ const exportComponents = [
   IconRendererComponent,
   ChipsComponent,
   ChipsAutocompleteFormComponent,
-  ToggleButtonListComponent
+  ToggleButtonListComponent,
+  FormComponent,
+  ReactiveFormsModule,
 ];
 
 @NgModule({
@@ -109,6 +113,7 @@ const exportComponents = [
     NbSpinnerModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     NbSelectModule,
     NbDatepickerModule.forRoot(),
     NbToastrModule.forRoot({
