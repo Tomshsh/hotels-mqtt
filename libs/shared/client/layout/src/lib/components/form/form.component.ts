@@ -9,7 +9,7 @@ import { EventEmitter } from '@angular/core';
 })
 export class FormComponent implements OnInit {
   @Input() inputs: any[]
-  @Output() submit: EventEmitter<any> = new EventEmitter()
+  @Output() formSubmit: EventEmitter<any> = new EventEmitter()
   controls = {}
 
   get duplicates(){
@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submit.emit(this.formGroup.value)
+    this.formSubmit.emit(this.formGroup.value)
   }
 
 
@@ -36,8 +36,8 @@ export class FormComponent implements OnInit {
     this.inputs.map(i => {
       Object.assign(this.controls, {
         [i.name]: i.input === "duplicatable"
-          ? this.fb.array([this.fb.control('')])
-          : ['']
+          ? this.fb.array([this.fb.control(i.value)])
+          : i.value
       })
     })
     this.formGroup = this.fb.group(this.controls)
