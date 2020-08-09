@@ -74,6 +74,7 @@ const exportComponents = [
   ChipsComponent,
   ChipsAutocompleteFormComponent,
   ToggleButtonListComponent,
+  FormComponent
 ];
 
 @NgModule({

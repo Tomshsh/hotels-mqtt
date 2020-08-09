@@ -19,6 +19,9 @@ import { ProductsSelectionComponent } from './tray/core/containers/products-sele
 import { StateFiltersComponent } from './tray/core/containers/state-filters/state-filters.component';
 
 import { ComponentsRoutingModule } from './components-routing.module';
+import { CupboardsComponent } from './cupboards/cupboards.component';
+import { TowelsComponent } from './towels/towels.component';
+import { NewGuestComponent } from './new-guest/new-guest.component';
 
 
 const components = [
@@ -40,7 +43,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, CupboardsComponent, TowelsComponent, NewGuestComponent],
   imports: [
     CommonModule,
     SharedLayoutModule,
