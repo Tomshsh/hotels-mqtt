@@ -1,7 +1,10 @@
 export class RoomTowelsDto{
   guestName?: string
-  RoomNo: number
-  Lang?: "HE" | "EN" | "RUS"
-  TowelLimit: number
+  room:{
+    num: string,
+    id: string
+  }
+  lang?: "HE" | "EN" | "RUS"
+  towelLimit: number
   cards: string []
 }

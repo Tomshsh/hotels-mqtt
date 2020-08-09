@@ -4,10 +4,8 @@ export const INPUTS = [
       label:"Room number",
       input:"select",
       required:true,
-      name:'roomNo',
-      selectOptions:[
-        {value:'option 1', text:'option'}
-      ]
+      name:'room',
+      selectOptions:[]
     },
     {
       label: "Language",
