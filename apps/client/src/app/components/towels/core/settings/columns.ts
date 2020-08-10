@@ -26,10 +26,13 @@ export const COLUMNS = {
     title: 'cards',
     type: 'custom',
     filter: false,
+    editable: true,
     renderComponent: ChipsComponent,
     valuePrepareFunction: (value, row, cell) => {
       return value.map(c => ({ title: c, color: '' }))
     },
-    editable: true
+    editor:{
+      type: 'custom'
+    }
   },
 }
