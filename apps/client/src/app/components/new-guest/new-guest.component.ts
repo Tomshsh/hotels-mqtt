@@ -24,7 +24,7 @@ export class NewGuestComponent implements OnInit {
 
     this.roomService.getRooms().subscribe(rooms => {
       rooms.map(r => {
-        roomNums.push({text: `${r.num}`, value: {num: r.num, id:r.objectId}})
+        roomNums.push({text: `${r.num}`, value: {num: r.num, id:r.objectId}, disabled:r.isOccupied})
       })
     })
 
