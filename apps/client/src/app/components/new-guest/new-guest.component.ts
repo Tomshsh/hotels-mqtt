@@ -24,7 +24,7 @@ export class NewGuestComponent implements OnInit {
 
     this.roomService.getRooms().subscribe(rooms => {
       rooms.map(r => {
-        roomNums.push({text: `${r.num}`, value: {num: r.num, id:r.objectId}, disabled:r.isOccupied})
+        roomNums.push({text: `${r.name}`, value: {name: r.name, id:r.objectId}})
       })
     })
 
@@ -34,6 +34,7 @@ export class NewGuestComponent implements OnInit {
 
   submit(roomTowelsObj){
     roomTowelsObj.towelLimit = Number(roomTowelsObj.towelLimit)
+    roomTowelsObj.currCount = 0
     this.towelsService.saveTowels(roomTowelsObj)
     .then(roomTowels => {
       this.toastrService.success('added '+roomTowels.get('guestName'))

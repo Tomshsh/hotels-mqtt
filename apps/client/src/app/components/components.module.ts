@@ -22,6 +22,7 @@ import { ComponentsRoutingModule } from './components-routing.module';
 import { CupboardsComponent } from './cupboards/cupboards.component';
 import { TowelsComponent } from './towels/towels.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
+import { CardsSelectionComponent } from './towels/core/containers/cards-selection/cards-selection.component';
 
 
 const components = [
@@ -39,11 +40,15 @@ const components = [
   ProductsSelectionComponent,
   RoomsComponent,
   StateComponent,
-  StateFiltersComponent
+  StateFiltersComponent,
+  CupboardsComponent,
+  TowelsComponent,
+  NewGuestComponent,
+  CardsSelectionComponent
 ];
 
 @NgModule({
-  declarations: [...components, CupboardsComponent, TowelsComponent, NewGuestComponent],
+  declarations: [...components],
   imports: [
     CommonModule,
     SharedLayoutModule,

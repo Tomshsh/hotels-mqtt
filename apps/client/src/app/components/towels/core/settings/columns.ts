@@ -1,17 +1,23 @@
 import { ChipsComponent } from '@my-tray/shared/layout'
+import { CardsSelectionComponent } from '../containers/cards-selection/cards-selection.component'
+import { SelectRoomRendererComponent } from '../../../tray/core/containers/select-room-renderer/select-room-renderer.component'
 
 export const COLUMNS = {
   room: {
     title: 'Room',
     type: 'string',
+    editable: true,
     valuePrepareFunction: (value, cell, row) => {
-      return value.num
+      return value.name
     },
-    editable: true
+    editor:{
+      type:'custom',
+      component: SelectRoomRendererComponent
+    }
   },
   currCount: {
     title: 'Current count',
-    type: 'string',
+    type: 'number',
     filter: false,
     editable: true
 
@@ -29,10 +35,11 @@ export const COLUMNS = {
     editable: true,
     renderComponent: ChipsComponent,
     valuePrepareFunction: (value, row, cell) => {
-      return value.map(c => ({ title: c, color: '' }))
+      return value.map(c => ({ title: c, color: '', abbr: c }))
     },
     editor:{
-      type: 'custom'
+      type: 'custom',
+      component: CardsSelectionComponent
     }
   },
 }
