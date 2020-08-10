@@ -6,7 +6,7 @@ import { RoomTowelsDto } from '@my-tray/api-interfaces';
 @Component({
   selector: 'my-tray-towels',
   template: `
-    <ui-data-grid [columns]='columns' [source]='dataSource' [actions]="true" ></ui-data-grid>
+    <ui-data-grid [columns]='columns' [source]='dataSource' [actions]="true" (updateConfirm)="onEditRowConfirm($event)" [actions]="undefined" ></ui-data-grid>
   `,
   styleUrls: ['./towels.component.css']
 })
@@ -25,6 +25,10 @@ export class TowelsComponent implements OnInit {
     setTimeout(() => {
       this.cd.detectChanges();
     });
+  }
+
+  onEditRowConfirm(e){
+    console.log('edit')
   }
 
   ngOnInit(): void {
