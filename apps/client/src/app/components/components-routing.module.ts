@@ -12,9 +12,10 @@ import { ProductsComponent } from './products/products.component';
 import { TemplatesComponent } from './tray/components/templates/templates.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { StateComponent } from './tray/components/state/state.component';
-import { CupboardsComponent } from './cupboards/cupboards.component';
+import { LockersComponent } from './lockers/lockers.component';
 import { TowelsComponent } from './towels/towels.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard/state', pathMatch: 'full' },
@@ -30,9 +31,10 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'rooms', component: RoomsComponent },
       { path: 'state', component: StateComponent },
-      { path: 'cupboard', component: CupboardsComponent },
+      { path: 'lockers', component: LockersComponent },
       { path: 'towels', component: TowelsComponent },
-      { path: 'new-guest', component: NewGuestComponent }
+      { path: 'new-guest', component: NewGuestComponent },
+      { path: 'maintenance', component: MaintenanceComponent }
     ],
     canActivate: [AuthGuard]
   }];

@@ -14,7 +14,6 @@ import { Subject } from 'rxjs';
     <ui-data-grid
       [columns]='columns'
       [source]='dataSource'
-      [actions]="true"
       [actions]="{edit:true, delete:true, add:false}"
       (updateConfirm)="onEditRowConfirm($event)"
       (deleteConfirm)="onDeleteRowConfirm($event)"

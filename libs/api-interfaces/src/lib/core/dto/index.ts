@@ -7,4 +7,5 @@ export * from './tray/tray.dto';
 export * from './product/product.dto';
 export * from './template/template.dto';
 export * from './tray-state';
-export * from './roomTowels'
+export * from './roomTowels';
+export * from './maintenance';

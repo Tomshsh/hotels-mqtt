@@ -10,3 +10,4 @@ export * from './lib/towels'
 export * from './lib/data-services-mytray-services.module';
 export * from './lib/tray-templates/templates-data.service';
 export * from './lib/tray-state/tray-state.service';
+export * from './lib/maintenance'
