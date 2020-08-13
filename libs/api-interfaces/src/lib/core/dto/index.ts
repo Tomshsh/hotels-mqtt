@@ -9,3 +9,4 @@ export * from './template/template.dto';
 export * from './tray-state';
 export * from './roomTowels';
 export * from './maintenance';
+export * from './locker';
