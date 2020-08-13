@@ -16,11 +16,9 @@ export class CardsSelectionComponent extends DefaultEditor implements OnInit, Vi
   }
 
   ngOnInit(): void {
-    if(this.cell && this.cell.getValue) {
-      this.value = this.cell.getValue() === '' ? [] : this.cell.getValue();
-      if (this.value.length === 0) {
-        this.cell.newValue = this.value;
-      }
+    this.value = !this.cell.getValue() ? [] : this.cell.getValue();
+    if (this.value.length === 0) {
+      this.cell.newValue = this.value;
     }
   }
 

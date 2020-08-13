@@ -1,5 +1,5 @@
 import { ChipsComponent } from '@my-tray/shared/layout'
-import { CardsSelectionComponent } from '../containers/cards-selection/cards-selection.component'
+import { CardsSelectionComponent } from '../containers'
 import { SelectRoomRendererComponent } from '../../../tray/core/containers/select-room-renderer/select-room-renderer.component'
 
 export const COLUMNS = {

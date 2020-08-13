@@ -1,5 +1,6 @@
-import { ChipsComponent, IconRendererComponent } from '@my-tray/shared/layout';
-import { CardsSelectionComponent } from '../../../towels/core/containers/cards-selection/cards-selection.component';
+import { ChipsComponent, IconRendererComponent, ToggleComponent } from '@my-tray/shared/layout';
+import { CardsSelectionComponent } from '../../../towels/core';
+import { OnShiftToggleComponent } from '../containers';
 
 export const COLUMNS = {
   name: {
@@ -10,14 +11,14 @@ export const COLUMNS = {
   onShift: {
     title: 'On Shift',
     type: 'custom',
-    renderComponent:IconRendererComponent,
+    renderComponent: IconRendererComponent,
     valuePrepareFunction: (val, row, cell) => {
-      return val ? {icon:'checkmark', status: 'success'} : {icon: 'close', status: 'danger'}
+      return val ? { icon: 'checkmark', status: 'success', value: true } : { icon: 'close', status: 'danger', value: false }
     },
     editable: true,
     editor: {
       type: 'custom',
-      component: ()=>{}
+      component: OnShiftToggleComponent
     }
   },
   chores: {
@@ -25,13 +26,15 @@ export const COLUMNS = {
     type: 'custom',
     renderComponent: ChipsComponent,
     valuePrepareFunction: (val, row, col) => {
-      return val.map(x => ({
-        title: x,
-        abbr: x
-      }))
+      if (val) {
+        return val.map(x => ({
+          title: x,
+          abbr: x
+        }))
+      }
     },
     editable: true,
-    editor:{
+    editor: {
       type: 'custom',
       component: CardsSelectionComponent
     }

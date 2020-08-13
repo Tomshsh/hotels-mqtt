@@ -122,7 +122,6 @@ export class TowelsComponent implements OnInit {
     this.loading = true;
     this.towelsService.getTowels()
       .subscribe(roomTowels => {
-        console.log(roomTowels)
         this.dataSource = roomTowels;
         this.immidiate();
         this.loading = false;

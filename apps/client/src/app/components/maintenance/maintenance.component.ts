@@ -53,19 +53,18 @@ export class MaintenanceComponent implements OnInit {
   private newDataToObj(newData): MaintenanceDto {
     return {
       id: newData.id,
-      name: newData.guestName,
+      name: newData.name,
       chores: newData.chores,
-      onShift: newData.shift
+      onShift: newData.onShift
     }
   }
 
-  private handleSubOutcome(eventConfirm: Deferred, error?: any) {
+  private handleSubOutcome(eventConfirm: Deferred,  error?: any) {
     eventConfirm.resolve();
     this.confirm.close();
     if (!error) {
       this.toastrService.success('Successfully updated', `Updating table`);
-      this.immidiate();
-      this.loadDataSource();
+      this.loadDataSource()
     } else {
       this.toastrService.danger('Failed to update', `Updating Table`);
       console.error(error);
@@ -73,14 +72,13 @@ export class MaintenanceComponent implements OnInit {
   }
 
   onEditRowConfirm(event: { newData: any, confirm: Deferred }) {
-    console.log('::Update row::', event);
     this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm
       .pipe(takeUntil(this.destroy$))
       .subscribe((confirmEvent) => {
         this.maintService.updateWorker(this.newDataToObj(event.newData))
           .pipe(takeUntil(this.destroy$))
-          .subscribe(() => {
+          .subscribe((val) => {
             this.handleSubOutcome(event.confirm);
           }, error => {
             this.handleSubOutcome(event.confirm, error);
@@ -102,6 +100,7 @@ export class MaintenanceComponent implements OnInit {
           .pipe(takeUntil(this.destroy$))
           .subscribe(()=> {
             this.handleSubOutcome(event.confirm);
+
           }, error => {
             this.handleSubOutcome(event.confirm, error)
           })
@@ -127,12 +126,11 @@ export class MaintenanceComponent implements OnInit {
     });
   }
 
+
   private loadDataSource() {
-    console.log('hi');
     this.loading = true;
     this.maintService.getWorkers()
       .subscribe(workers => {
-        console.log(workers)
         this.dataSource = workers;
         this.immidiate();
         this.loading = false;

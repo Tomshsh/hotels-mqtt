@@ -4,16 +4,16 @@ import { MaintenanceDto } from '@my-tray/api-interfaces';
 import { Repository } from '../repository';
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
 
 export class MaintenanceRepo extends Repository<MaintenanceDto>{
 
-  constructor(){
+  constructor() {
     super();
   }
 
-  private parseObjToDto(obj: Parse.Object): MaintenanceDto{
+  private parseObjToDto(obj: Parse.Object): MaintenanceDto {
     return {
       id: obj.id,
       name: obj.get('name'),
@@ -22,21 +22,25 @@ export class MaintenanceRepo extends Repository<MaintenanceDto>{
     };
   }
 
-  getWorkers(): Promise<MaintenanceDto[]>{
+  getWorkers(): Promise<MaintenanceDto[]> {
     const q = new Parse.Query('Maintenance');
     return q.find()
-    .then(workers => workers.map(this.parseObjToDto));
+      .then(workers => workers.map(this.parseObjToDto));
   }
 
-  addWorker(worker: MaintenanceDto): Promise<MaintenanceDto>{
+  addWorker(worker: MaintenanceDto): Promise<MaintenanceDto> {
     const maintenance = new Parse.Object('Maintenance');
     return maintenance.save(worker)
-    .then(this.parseObjToDto);
+      .then(this.parseObjToDto);
   }
 
-  updateWorker(worker: MaintenanceDto): Promise<MaintenanceDto>{
+  updateWorker(worker: MaintenanceDto): Promise<MaintenanceDto> {
     const q = new Parse.Query('Maintenance');
     return q.get(worker.id)
-    .then(this.parseObjToDto);
+      .then(maint => maint.save(worker))
+      .then(maint => {
+        return this.parseObjToDto(maint)
+      }
+      )
   }
 }

@@ -23,7 +23,8 @@ import {
   NbThemeModule,
   NbToastrModule,
   NbToastrService,
-  NbUserModule
+  NbUserModule,
+  NbToggleModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbAuthModule, NbAuthService, NbPasswordAuthStrategy, NbTokenService } from '@nebular/auth';
@@ -45,6 +46,7 @@ import {
   SelectListRendererComponent,
   SidebarContainerComponent,
   FormComponent,
+  ToggleComponent
 } from './components';
 import { MaterialLayoutModule } from './components/material-layout.module';
 import { ToggleButtonListComponent } from './components/toggle-button-list/toggle-button-list.component';
@@ -64,6 +66,7 @@ const components = [
   ChipsAutocompleteFormComponent,
   ToggleButtonListComponent,
   FormComponent,
+  ToggleComponent
 ];
 const exportComponents = [
   DatagridComponent,
@@ -74,7 +77,8 @@ const exportComponents = [
   ChipsComponent,
   ChipsAutocompleteFormComponent,
   ToggleButtonListComponent,
-  FormComponent
+  FormComponent,
+  ToggleComponent
 ];
 
 @NgModule({
@@ -122,12 +126,13 @@ const exportComponents = [
     NbUserModule,
     NbBadgeModule,
     MaterialLayoutModule,
+    NbToggleModule
   ],
 
   providers: [NbAuthService, NbTokenService, NbSidebarService, NbMenuService, NbDialogService, NbToastrService],
   declarations: [...components],
   exports: [
-    ...exportComponents
+    ...exportComponents,
   ]
 })
 
