@@ -12,3 +12,4 @@ export * from './lib/tray-templates/templates-data.service';
 export * from './lib/tray-state/tray-state.service';
 export * from './lib/maintenance';
 export * from './lib/lockers';
+export * from './lib/chores';

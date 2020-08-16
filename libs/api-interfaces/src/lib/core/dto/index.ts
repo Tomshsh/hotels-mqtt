@@ -10,3 +10,4 @@ export * from './tray-state';
 export * from './roomTowels';
 export * from './maintenance';
 export * from './locker';
+export * from './chore';

@@ -24,7 +24,8 @@ import { TowelsComponent } from './towels/towels.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
 import { CardsSelectionComponent } from './towels/core/containers/cards-selection/cards-selection.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
-import {OnShiftToggleComponent} from './maintenance/core/containers'
+import { OnShiftToggleComponent } from './maintenance/core/containers';
+import { ChoreSelectionComponent } from './maintenance/core/containers';
 
 const components = [
   TrayComponent,
@@ -47,7 +48,8 @@ const components = [
   NewGuestComponent,
   CardsSelectionComponent,
   MaintenanceComponent,
-  OnShiftToggleComponent
+  OnShiftToggleComponent,
+  ChoreSelectionComponent
 ];
 
 @NgModule({

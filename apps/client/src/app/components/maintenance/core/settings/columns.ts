@@ -1,6 +1,6 @@
 import { ChipsComponent, IconRendererComponent, ToggleComponent } from '@my-tray/shared/layout';
-import { CardsSelectionComponent } from '../../../towels/core';
-import { OnShiftToggleComponent } from '../containers';
+import { OnShiftToggleComponent, ChoreSelectionComponent } from '../containers';
+import { ChoreDto } from '@my-tray/api-interfaces';
 
 export const COLUMNS = {
   name: {
@@ -25,18 +25,18 @@ export const COLUMNS = {
     title: 'chores',
     type: 'custom',
     renderComponent: ChipsComponent,
-    valuePrepareFunction: (val, row, col) => {
+    valuePrepareFunction: (val: ChoreDto[], row, col) => {
       if (val) {
         return val.map(x => ({
-          title: x,
-          abbr: x
+          title: x.title,
+          abbr: x.abbr
         }))
       }
     },
     editable: true,
     editor: {
       type: 'custom',
-      component: CardsSelectionComponent
+      component: ChoreSelectionComponent
     }
 
   }
