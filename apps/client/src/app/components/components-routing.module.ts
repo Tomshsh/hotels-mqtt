@@ -16,6 +16,7 @@ import { LockersComponent } from './lockers/lockers.component';
 import { TowelsComponent } from './towels/towels.component';
 import { NewGuestComponent } from './new-guest/new-guest.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { ChoresComponent } from './chores/chores.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard/state', pathMatch: 'full' },
@@ -34,7 +35,8 @@ const routes: Routes = [
       { path: 'lockers', component: LockersComponent },
       { path: 'towels', component: TowelsComponent },
       { path: 'new-guest', component: NewGuestComponent },
-      { path: 'maintenance', component: MaintenanceComponent }
+      { path: 'maintenance', component: MaintenanceComponent },
+      { path: 'chores', component: ChoresComponent }
     ],
     canActivate: [AuthGuard]
   }];

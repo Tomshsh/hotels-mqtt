@@ -38,9 +38,6 @@ export class MaintenanceRepo extends Repository<MaintenanceDto>{
     const q = new Parse.Query('Maintenance');
     return q.get(worker.id)
       .then(maint => maint.save(worker))
-      .then(maint => {
-        return this.parseObjToDto(maint)
-      }
-      )
+      .then(this.parseObjToDto)
   }
 }

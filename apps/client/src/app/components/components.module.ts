@@ -26,6 +26,7 @@ import { CardsSelectionComponent } from './towels/core/containers/cards-selectio
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { OnShiftToggleComponent } from './maintenance/core/containers';
 import { ChoreSelectionComponent } from './maintenance/core/containers';
+import { ChoresComponent } from './chores/chores.component';
 
 const components = [
   TrayComponent,
@@ -53,7 +54,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, ChoresComponent],
   imports: [
     CommonModule,
     SharedLayoutModule,
