@@ -12,18 +12,18 @@ export class MaintenanceService {
   constructor(private maintRepo: MaintenanceRepo) { }
 
   getWorkers():Observable<MaintenanceDto[]> {
-    return fromPromise(this.maintRepo.getWorkers())
+    return fromPromise(this.maintRepo.getWorkers());
   }
 
   addWorker(obj: MaintenanceDto){
-    return fromPromise(this.maintRepo.addWorker(obj))
+    return fromPromise(this.maintRepo.addWorker(obj));
   }
 
   updateWorker(obj: MaintenanceDto){
-    return fromPromise(this.maintRepo.updateWorker(obj))
+    return fromPromise(this.maintRepo.updateWorker(obj));
   }
 
   deleteWorker(objId: string){
-    return fromPromise(this.maintRepo.delete(objId, 'Maintenance'))
+    return fromPromise(this.maintRepo.delete(objId, 'Maintenance'));
   }
 }

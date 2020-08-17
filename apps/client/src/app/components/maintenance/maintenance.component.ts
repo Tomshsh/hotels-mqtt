@@ -56,7 +56,7 @@ export class MaintenanceComponent implements OnInit {
       name: newData.name,
       chores: newData.chores,
       onShift: newData.onShift
-    }
+    };
   }
 
   private handleSubOutcome(eventConfirm: Deferred,  error?: any) {
@@ -64,7 +64,7 @@ export class MaintenanceComponent implements OnInit {
     this.confirm.close();
     if (!error) {
       this.toastrService.success('Successfully updated', `Updating table`);
-      this.loadDataSource()
+      this.loadDataSource();
     } else {
       this.toastrService.danger('Failed to update', `Updating Table`);
       console.error(error);
@@ -92,7 +92,7 @@ export class MaintenanceComponent implements OnInit {
   }
 
   onCreateRowConfirm(event: { newData: any, confirm: Deferred }) {
-    this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions)
+    this.confirm = this.dialogService.open(ConfirmPromptDialogComponent, this.confirmOptions);
     this.confirm.componentRef.instance.onConfirm
       .pipe(takeUntil(this.destroy$))
       .subscribe((confirmEvent) => {
@@ -102,9 +102,9 @@ export class MaintenanceComponent implements OnInit {
             this.handleSubOutcome(event.confirm);
 
           }, error => {
-            this.handleSubOutcome(event.confirm, error)
-          })
-      })
+            this.handleSubOutcome(event.confirm, error);
+          });
+      });
   }
 
   onDeleteRowConfirm(event: { data: MaintenanceDto, confirm: Deferred }) {
@@ -113,11 +113,11 @@ export class MaintenanceComponent implements OnInit {
     this.confirm.componentRef.instance.onConfirm.subscribe((confirmEvent) => {
       this.maintService.deleteWorker(event.data.id)
         .subscribe(() => {
-          this.handleSubOutcome(event.confirm)
+          this.handleSubOutcome(event.confirm);
         }, (err) => {
           event.confirm.reject();
           this.toastrService.danger('Failed to delete', `Deleting`);
-        })
+        });
     });
 
     this.confirm.componentRef.instance.onCancel.subscribe((confirmEvent) => {

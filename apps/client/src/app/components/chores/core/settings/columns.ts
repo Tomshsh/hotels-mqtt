@@ -11,7 +11,7 @@ export const COLUMNS = {
     editable: false,
     addable: false,
     valuePrepareFunction:(val, row, col) => {
-      return moment(row.updatedAt).format('lll')
+      return moment(row.updatedAt).format('lll');
     }
   },
 
