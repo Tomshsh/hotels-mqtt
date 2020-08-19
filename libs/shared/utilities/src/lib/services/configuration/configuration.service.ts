@@ -11,6 +11,7 @@ export class ConfigurationService {
   }
 
   initializeConfiguration(environment) {
+    console.log(environment)
     Parse.initialize(environment.parse.appId);
     (Parse as any).serverURL = environment.parse.serverURL;
   }

@@ -10,32 +10,71 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom", "es2019"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom",
+      "es2019"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@my-tray/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@my-tray/api-interfaces/entities": ["libs/api-interfaces/src/lib/core/entities/index.ts"],
-      "@my-tray/shared/client/auth": ["libs/shared/client/auth/src/index.ts"],
-      "@my-tray/env/client/*": ["apps/client/src/environments/*"],
-      "@my-tray/env/backend": ["apps/api/src/environments/*"],
-      "@my-tray/shared/layout": ["libs/shared/client/layout/src/index.ts"],
+      "@my-tray/api-interfaces": [
+        "libs/api-interfaces/src/index.ts"
+      ],
+      "@my-tray/api-interfaces/entities": [
+        "libs/api-interfaces/src/lib/core/entities/index.ts"
+      ],
+      "@my-tray/shared/client/auth": [
+        "libs/shared/client/auth/src/index.ts"
+      ],
+      "@my-tray/env/client/*": [
+        "apps/client/src/environments/*"
+      ],
+      "@my-tray/env/backend/": [
+        "apps/api/src/environments/*"
+      ],
+      "@my-tray/shared/layout": [
+        "libs/shared/client/layout/src/index.ts"
+      ],
       "@my-tray/data-layers/mytray/repositories": [
         "libs/data-layers/mytray/repositories/src/index.ts"
       ],
-      "@my-tray/shared/utilities": ["libs/shared/utilities/src/index.ts"],
-      "@my-tray/shared/utilities/mocks": ["libs/shared/utilities/src/lib/mocks/index.ts"],
-      "@my-tray/shared/utilities/testing": ["libs/shared/utilities/src/lib/testing/index.ts"],
+      "@my-tray/shared/utilities": [
+        "libs/shared/utilities/src/index.ts"
+      ],
+      "@my-tray/shared/utilities/mocks": [
+        "libs/shared/utilities/src/lib/mocks/index.ts"
+      ],
+      "@my-tray/shared/utilities/testing": [
+        "libs/shared/utilities/src/lib/testing/index.ts"
+      ],
       "@my-tray/data-services/mytray/services": [
         "libs/data-services/mytray/services/src/index.ts"
       ],
       "@my-tray/data-services/peer2park/services": [
         "libs/data-services/peer2park/services/src/index.ts"
+      ],
+      "@my-tray/shared/backend": [
+        "libs/shared/backend/src"
+      ],
+      "@my-tray/shared/backend/*": [
+        "libs/shared/backend/src/*"
+      ],
+      "app/api": [
+        "libs/data-services/api/src"
+      ],
+      "app/api/*": [
+        "libs/data-services/api/src/*"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
