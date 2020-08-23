@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { BackendModule, ConfigurationService } from '@my-tray/shared/backend'
 import {environment} from '../environments'
 import {ApiModule} from '@my-tray/data-services/api'
+import {ScheduleModule} from '@nestjs/schedule'
 
 export function initConfig(configurationService: ConfigurationService) {
   configurationService.initializeConfiguration(environment);
@@ -17,7 +18,7 @@ const AppInitializer: Provider = {
 }
 
 @Module({
-  imports: [BackendModule, ApiModule],
+  imports: [BackendModule, ApiModule, ScheduleModule.forRoot()],
   controllers: [AppController],
   providers: [AppService, AppInitializer]
 })
