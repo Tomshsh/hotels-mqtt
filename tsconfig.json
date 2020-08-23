@@ -36,7 +36,7 @@
         "apps/client/src/environments/*"
       ],
       "@my-tray/env/backend/": [
-        "apps/api/src/environments/*"
+        "apps/api/src/environments/"
       ],
       "@my-tray/shared/layout": [
         "libs/shared/client/layout/src/index.ts"
@@ -59,17 +59,14 @@
       "@my-tray/data-services/peer2park/services": [
         "libs/data-services/peer2park/services/src/index.ts"
       ],
+      "@my-tray/data-services/api": [
+        "libs/data-services/api/src"
+      ],
       "@my-tray/shared/backend": [
         "libs/shared/backend/src"
       ],
       "@my-tray/shared/backend/*": [
         "libs/shared/backend/src/*"
-      ],
-      "app/api": [
-        "libs/data-services/api/src"
-      ],
-      "app/api/*": [
-        "libs/data-services/api/src/*"
       ]
     }
   },

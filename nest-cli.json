@@ -1,14 +1,5 @@
 {
   "projects": {
-    "backend": {
-      "type": "library",
-      "root": "libs/shared/backend",
-      "entryFile": "index",
-      "sourceRoot": "libs/shared/backend/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/shared/backend/tsconfig.lib.json"
-      }
-    },
     "api": {
       "type": "library",
       "root": "libs/data-services/api",
@@ -16,6 +7,15 @@
       "sourceRoot": "libs/data-services/api/src",
       "compilerOptions": {
         "tsConfigPath": "libs/data-services/api/tsconfig.lib.json"
+      }
+    },
+    "backend": {
+      "type": "library",
+      "root": "libs/shared/backend",
+      "entryFile": "index",
+      "sourceRoot": "libs/shared/backend/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/shared/backend/tsconfig.lib.json"
       }
     }
   },
