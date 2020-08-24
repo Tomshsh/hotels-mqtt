@@ -8,7 +8,7 @@ import {ApiModule} from '@my-tray/data-services/api'
 import {ScheduleModule} from '@nestjs/schedule'
 
 export function initConfig(configurationService: ConfigurationService) {
-  configurationService.initializeConfiguration(environment);
+  return configurationService.initializeConfiguration(environment);
 }
 
 const AppInitializer: Provider = {
@@ -20,6 +20,6 @@ const AppInitializer: Provider = {
 @Module({
   imports: [BackendModule, ApiModule, ScheduleModule.forRoot()],
   controllers: [AppController],
-  providers: [AppService, AppInitializer]
+  providers: [AppInitializer, AppService]
 })
 export class AppModule { }

@@ -7,7 +7,7 @@ import { MaintanenceService } from './services';
 import { LockersService } from './services';
 
 @Module({
-  imports: [BackendModule],
+  imports: [BackendModule, ],
   providers: [ApiService, StaffAlertService, TowelsService, MaintanenceService, LockersService],
   exports: [ApiService, StaffAlertService, TowelsService, MaintanenceService, LockersService],
 })

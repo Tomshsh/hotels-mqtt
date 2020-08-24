@@ -14,11 +14,12 @@ export class StaffAlertService {
   alertStaff(number: string, body){
     this.configService.twilio.messages
     .create({
-      body,
+      body: body,
       from: this.fromNumber,
       to: number
     })
     .then(msg => console.log(msg))
+    .catch(err => console.log(err))
   }
 
 }
