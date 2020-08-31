@@ -15,11 +15,13 @@ export class BillingService {
 
   charge(amount, guest){
     this.httpService.post(this.chargeRoute, {amount, guest})
+    //todo: body= {roomNo, amount, desc("3xTOWELS")}
     .subscribe(res => {console.log(res)})
   }
 
   refund(amount, guest){
     this.httpService.post(this.refundRoute, {amount, guest})
+    //todo: body= {roomNo, amount, desc("3xTOWELS")}
     .subscribe(res => {console.log(res)})
   }
 
