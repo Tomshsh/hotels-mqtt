@@ -6,6 +6,7 @@ import { BackendModule, ConfigurationService } from '@my-tray/shared/backend'
 import {environment} from '../environments'
 import {ApiModule, BillingService} from '@my-tray/data-services/api'
 import {ScheduleModule} from '@nestjs/schedule'
+import { UserService } from '@my-tray/shared/backend/user';
 
 export function initConfig(configurationService: ConfigurationService) {
   return configurationService.initializeConfiguration(environment);
@@ -28,7 +29,7 @@ const BillingApiInit: Provider = {
 }
 
 @Module({
-  imports: [BackendModule, ApiModule, ScheduleModule.forRoot()],
+  imports: [BackendModule, ApiModule, ScheduleModule.forRoot(), UserService],
   controllers: [AppController],
   providers: [AppInitializer, BillingApiInit, AppService]
 })

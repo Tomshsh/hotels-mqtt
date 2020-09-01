@@ -1,13 +1,16 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 import { TowelsService, BillingService } from '@my-tray/data-services/api'
+import Parse from 'parse'
+import { UserService } from '@my-tray/shared/backend/user';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private towelsService: TowelsService,
-    private billingService: BillingService
+    private billingService: BillingService,
+    private userService: UserService
   ) { }
 
   @Get('hello')
@@ -17,6 +20,7 @@ export class AppController {
 
   @Post('draw-towels')
   async drawTowels(@Body() { cardNum, quantity }: { cardNum: string, quantity: number }) {
+    console.log(this.userService.user)
     try {
       const [rt] = await this.towelsService.drawTowels(cardNum, quantity);
       const drawable = rt.get('towelLimit') - rt.get('currCount');
