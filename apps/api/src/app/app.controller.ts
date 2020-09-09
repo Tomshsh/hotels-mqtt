@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 import { TowelsService, BillingService } from '@my-tray/data-services/api'
-import Parse from 'parse'
 import { UserService } from '@my-tray/shared/backend/user';
 
 @Controller()
