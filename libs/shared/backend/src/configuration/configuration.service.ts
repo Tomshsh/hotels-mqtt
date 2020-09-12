@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import twilio, {Twilio} from 'twilio'
-import Parse from 'parse/node'
-import {UserService} from '../user/user.service'
+import Parse, { User } from 'parse/node'
 
 @Injectable()
 export class ConfigurationService {
 
   twilio: Twilio;
+  user: User
 
-  constructor(private userService: UserService) {}
+  constructor() {}
 
   async initializeConfiguration(environment) {
     Parse.initialize(environment.parse.appId);
     (Parse as any).serverURL = environment.parse.serverURL;
 
-    this.userService.login()
+    this.user = await User.logIn('a2@tt.com', '123456')
 
     this.twilio = twilio(environment.twilio.accountSid, environment.twilio.authToken)
   }

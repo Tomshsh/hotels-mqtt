@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+
 export const environment = {
   production: false,
   parse: {
@@ -14,6 +16,13 @@ export const environment = {
   billing: {
     chargeRoute: "http://localhost:1337/charge",
     refundRoute: "http://localhost:1337/refund"
+  },
+  mqtt: {
+    host: "mqtt://mqtts.3pi-solutions.com:19001",
+    username: "tomer",
+    password: "tomer",
+    ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
+    main: 'towels'
   }
 
 }

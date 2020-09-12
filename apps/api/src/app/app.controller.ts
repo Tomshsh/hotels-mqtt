@@ -1,44 +1,49 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { AppService } from './app.service';
-import { TowelsService, BillingService } from '@my-tray/data-services/api'
-import { UserService } from '@my-tray/shared/backend/user';
+import { Controller } from '@nestjs/common';
+import { TowelsService, BillingService, MaintanenceService } from '@my-tray/data-services/api';
+import { Chore } from '@my-tray/api-interfaces';
+import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
+import { environment } from '../environments';
 
 @Controller()
 export class AppController {
+
   constructor(
-    private readonly appService: AppService,
     private towelsService: TowelsService,
     private billingService: BillingService,
-    private userService: UserService
-  ) { }
+    private maintService: MaintanenceService,
+  ) {}
 
-  @Get('hello')
-  getData() {
-    return this.appService.getData();
+  @MessagePattern(`${environment.mqtt.main}/+/item/put`)
+  async drawTowels(@Payload() {itemQty, cardId}, @Ctx() context: MqttContext) {
+    const [hotelId, deviceId] = context.getTopic().split('/')
+    try {
+      const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
+      this.billingService.refund(itemQty, rt.attributes)
+    }
+    catch (err) {
+      console.error(err.message)
+    }
   }
 
-  @Post('draw-towels')
-  async drawTowels(@Body() { cardNum, quantity }: { cardNum: string, quantity: number }) {
-    console.log(this.userService.user)
+  @MessagePattern(`${environment.mqtt.main}/+/item/get`)
+  async returnTowels(@Payload() {cardId, itemQty }, @Ctx() context: MqttContext) {
+    const [hotelId, deviceId] = context.getTopic().split('/')
     try {
-      const [rt] = await this.towelsService.drawTowels(cardNum, quantity);
+      const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
       const drawable = rt.get('towelLimit') - rt.get('currCount');
-      this.billingService.charge(500, rt.attributes)
-      return {drawable};
+      this.billingService.charge(itemQty, rt.attributes)
+      return { drawable };
     }
     catch (err) {
       console.error(err.message);
     }
   }
 
-  @Post('return-towels')
-  async returnTowels(@Body() {cardNum, quantity}: { cardNum: string, quantity: number }){
-    try{
-      const [rt] = await this.towelsService.returnTowels(cardNum, quantity)
-      this.billingService.refund(500, rt.attributes)
-    }
-    catch (err) {
-      console.error(err.message)
-    }
+  @MessagePattern(`${environment.mqtt.main}/+/lwt`)
+  handleProblem(@Payload() msg: Chore, @Ctx() context: MqttContext) {
+    const [hotelId, deviceId] = context.getTopic().split('/')
+      this.maintService.doChore(Chore[msg])
   }
+
+
 }

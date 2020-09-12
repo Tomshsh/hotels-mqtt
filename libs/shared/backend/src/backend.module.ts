@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { BackendService } from './backend.service';
 import { ConfigurationService } from './configuration';
-import { UserService } from './user';
+import { MqttService } from './mqtt';
 
 @Module({
-  providers: [BackendService, ConfigurationService, UserService],
-  exports: [BackendService, ConfigurationService, UserService],
+  providers: [BackendService, ConfigurationService, MqttService],
+  exports: [BackendService, ConfigurationService, MqttService],
 })
 export class BackendModule {}
