@@ -18,8 +18,22 @@ export class TowelsService {
     return q.first({ sessionToken: this.configService.user.getSessionToken() });
   }
 
+  async unknownCard(cardId){
+    const q = new Parse.Query('Room')
+    q.equalTo('name', 'unknown')
+    const room = await q.first({sessionToken: this.configService.user.getSessionToken()})
+    const obj = new Parse.Object('RoomTowels')
+    obj.add('cards', cardId)
+    obj.set('room', room)
+    return obj.save(null, {sessionToken: this.configService.user.getSessionToken()})
+  }
+
   async drawTowels(cardNum: string, quantity: number, deviceId: string) {
-    const rt = await this.getRt(cardNum);
+    let rt = await this.getRt(cardNum);
+    if(!rt){
+      rt = await this.unknownCard(cardNum)
+    }
+    console.log(rt)
     const drawable = rt.get('towelLimit') - rt.get('currCount');
     if (!(drawable - quantity < 0)) {
       rt.increment('currCount', quantity);

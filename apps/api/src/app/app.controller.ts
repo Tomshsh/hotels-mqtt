@@ -26,8 +26,9 @@ export class AppController {
   }
 
   @MessagePattern(`${environment.mqtt.main}/+/item/get`)
-  async returnTowels(@Payload() {cardId, itemQty }, @Ctx() context: MqttContext) {
+  async returnTowels(@Payload() {cardId, itemQty}, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
+    console.log(deviceId, cardId, itemQty)
     try {
       const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
       const drawable = rt.get('towelLimit') - rt.get('currCount');

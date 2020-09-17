@@ -18,7 +18,7 @@ export const environment = {
     refundRoute: "http://localhost:1337/refund"
   },
   mqtt: {
-    host: "mqtt://mqtts.3pi-solutions.com:19001",
+    host: "mqtts://mqtts.3pi-solutions.com:39001",
     username: "tomer",
     password: "tomer",
     ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
