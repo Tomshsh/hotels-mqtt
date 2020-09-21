@@ -16,6 +16,7 @@ export class AppController {
   @MessagePattern(`${environment.mqtt.main}/+/item/put`)
   async drawTowels(@Payload() {itemQty, cardId}, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
+    console.log(itemQty, cardId, deviceId)
     try {
       const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
       this.billingService.refund(itemQty, rt.attributes)
@@ -36,7 +37,7 @@ export class AppController {
       return { drawable };
     }
     catch (err) {
-      console.error(err.message);
+      console.error('controller error',err.message);
     }
   }
 

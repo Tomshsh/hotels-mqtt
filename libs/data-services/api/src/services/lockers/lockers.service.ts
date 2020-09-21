@@ -16,9 +16,9 @@ export class LockersService {
   refundTariff: number;
   chargeTariff: number;
   readonly minPercent = 0.2;
-  readonly maxBinCap = 30;
 
   private checkForMaint(condition: boolean, chore: Chore) {
+    console.log(condition)
     condition && this.maintService.doChore(chore)
   }
 
@@ -36,17 +36,17 @@ export class LockersService {
     locker.increment('quantity', -quantity);
     locker = await locker.save(null, { sessionToken: this.configService.user.getSessionToken() });
     this.checkForMaint(
-      locker.get('quantity') / locker.get('capacity') < this.minPercent,
+      locker.get('quantity') < locker.get('capacity') * this.minPercent,
       Chore.REFILL_LOCKER
     )
   }
 
   async returnTowels(quantity: number, deviceId: string) {
     let locker = await this.findLocker(deviceId);
-    locker.increment('bin', quantity);
+    locker.increment('binQty', quantity);
     locker = await locker.save(null, { sessionToken: this.configService.user.getSessionToken() });
     this.checkForMaint(
-      locker.get('bin') > this.maxBinCap,
+      locker.get('binQty') > locker.get('binCapacity') * 0.75,
       Chore.REPLACE_BIN
     )
   }

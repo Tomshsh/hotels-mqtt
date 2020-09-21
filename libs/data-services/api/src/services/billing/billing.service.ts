@@ -1,4 +1,5 @@
 import { Injectable, HttpService } from '@nestjs/common';
+import { throwError } from 'rxjs';
 import { LockersService } from '../lockers';
 
 @Injectable()
@@ -19,20 +20,43 @@ export class BillingService {
 
   charge(qty, guest) {
     const amount = qty * this.lockersService.chargeTariff;
-    this.httpService.post(this.chargeRoute, { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
-      .subscribe(
-        res => { console.log(res.data) },
-        err => { throw ({message: 'billing error ' + err}) }
-      );
+    const amountObserver = {
+      next(res) {
+        console.log('next: ' + res);
+      },
+      error(err) {
+        console.log('charge err', err.message)
+        throwError(new Error('oops!'))
+      },
+      complete() {
+        console.log('complete')
+      }
+    };
+    try{
+      this.httpService.post(this.chargeRoute, { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
+        .subscribe(amountObserver);
+    }catch (err){
+      console.log('err form catch')
+      throwError(new Error('oops!'))
+    }
   }
 
   refund(qty, guest) {
     const amount = qty * this.lockersService.refundTariff;
+    const amountObserver = {
+      next(res) {
+        console.log('next: ' + res);
+      },
+      error(err) {
+        console.log('charge err', err.message)
+        throwError(new Error('oops!'))
+      },
+      complete() {
+        console.log('complete')
+      }
+    };
     this.httpService.post(this.refundRoute, { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
-      .subscribe(
-        res => { console.log(res.data) },
-        err => { throw ({message: 'billing error ' + err}) }
-      );
+      .subscribe(amountObserver);
   }
 
 

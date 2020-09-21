@@ -47,7 +47,10 @@ export class TowelsService {
   }
 
   async returnTowels(cardNum: string, quantity: number, deviceId: string) {
-    const rt = await this.getRt(cardNum);
+    let rt = await this.getRt(cardNum);
+    if(!rt){
+      rt = await this.unknownCard(cardNum)
+    }
     rt.increment('currCount', -quantity);
     return Promise.all([
       rt.save(null, { sessionToken: this.configService.user.getSessionToken() }),
