@@ -11,18 +11,15 @@ export const environment = {
     accountSid: 'ACb7d59a6b06158abf273516d392549ac2',
     authToken: 'd61621e101b9b267279e73ee28631670'
   },
-
-
-  billing: {
-    chargeRoute: "http://localhost:1337/charge",
-    refundRoute: "http://localhost:1337/refund"
-  },
   mqtt: {
     host: "mqtts://mqtts.3pi-solutions.com:39001",
     username: "tomer",
     password: "tomer",
     ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
     main: 'towels'
+  },
+  rmq:{
+    url: 'amqp://localhost'
   }
 
 }

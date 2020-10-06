@@ -1,62 +1,23 @@
-import { Injectable, HttpService } from '@nestjs/common';
-import { throwError } from 'rxjs';
+import { RmqService } from '@my-tray/shared/backend/rmq';
+import { Injectable } from '@nestjs/common';
 import { LockersService } from '../lockers';
 
 @Injectable()
 export class BillingService {
 
   constructor(
-    private httpService: HttpService,
-    private lockersService: LockersService
+    private lockersService: LockersService,
+    private rmqService: RmqService
   ) { };
-
-  private chargeRoute: string;
-  private refundRoute: string;
-
-  defineRoutes(env) {
-    this.chargeRoute = env.billing.chargeRoute;
-    this.refundRoute = env.billing.refundRoute;
-  }
 
   charge(qty, guest) {
     const amount = qty * this.lockersService.chargeTariff;
-    const amountObserver = {
-      next(res) {
-        console.log('next: ' + res);
-      },
-      error(err) {
-        console.log('charge err', err.message)
-        throwError(new Error('oops!'))
-      },
-      complete() {
-        console.log('complete')
-      }
-    };
-    try{
-      this.httpService.post(this.chargeRoute, { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
-        .subscribe(amountObserver);
-    }catch (err){
-      console.log('err form catch')
-      throwError(new Error('oops!'))
-    }
+    this.rmqService.publishToDefaultQueue('charge', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' }, 'direct_billing')
   }
 
   refund(qty, guest) {
     const amount = qty * this.lockersService.refundTariff;
-    const amountObserver = {
-      next(res) {
-        console.log('next: ' + res);
-      },
-      error(err) {
-        console.log('charge err', err.message)
-        throwError(new Error('oops!'))
-      },
-      complete() {
-        console.log('complete')
-      }
-    };
-    this.httpService.post(this.refundRoute, { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
-      .subscribe(amountObserver);
+    this.rmqService.publishToDefaultQueue('refund', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' }, 'direct_billing')
   }
 
 

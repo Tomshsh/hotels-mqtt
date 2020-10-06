@@ -18,7 +18,9 @@ export class MaintanenceService {
     q.find({ sessionToken: this.configService.user.getSessionToken() })
       .then(workers => {
         workers.map(w => {
-          this.staffAlert.alertStaff(w.get('phone'), chore);
+          this.staffAlert.alertStaff(w.get('phone'), chore, (err, twilioMsg) => {
+            if (err) console.error("Error: couldn't send message to worker", w.get('name'))
+          })
         })
       });
   }

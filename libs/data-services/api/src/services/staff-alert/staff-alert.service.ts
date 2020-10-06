@@ -7,19 +7,17 @@ export class StaffAlertService {
 
   private fromNumber: string = '+13157374243';
 
-  constructor(private configService: ConfigurationService){
+  constructor(private configService: ConfigurationService) {
 
   }
 
-  alertStaff(number: string, body){
+  alertStaff(number: string, body, callback: (err, ok) => void) {
     this.configService.twilio.messages
-    .create({
-      body: body,
-      from: this.fromNumber,
-      to: number
-    })
-    .then(msg => console.log(msg))
-    .catch(err => console.log(err))
+      .create({
+        body: body,
+        from: this.fromNumber,
+        to: ''
+      }, callback)
   }
 
 }

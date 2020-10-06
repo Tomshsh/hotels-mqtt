@@ -22,7 +22,7 @@ export class AppController {
       this.billingService.refund(itemQty, rt.attributes)
     }
     catch (err) {
-      console.error(err.message)
+      console.error('controller error',err.message)
     }
   }
 
