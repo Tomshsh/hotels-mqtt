@@ -7,13 +7,14 @@ import { environment } from '../environments'
 import { ApiModule } from '@my-tray/data-services/api'
 import { ScheduleModule } from '@nestjs/schedule'
 import { RmqService } from '@my-tray/shared/backend/rmq';
+import {ConfigModule} from '@nestjs/config'
 
 export function initConfig(configurationService: ConfigurationService) {
   return configurationService.initializeConfiguration(environment);
 }
 
 function initRmq(rmqService: RmqService) {
-  return rmqService.createConnection(environment)
+  return rmqService.start()
 }
 
 const AppInitializer: Provider = {
@@ -29,7 +30,11 @@ const RmqInitializer: Provider = {
 }
 
 @Module({
-  imports: [BackendModule, ApiModule, ScheduleModule.forRoot()],
+  imports: [BackendModule, ApiModule, ScheduleModule.forRoot(), ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: 'apps/api/src/app/.env',
+    load:[() => environment],
+  })],
   controllers: [AppController],
   providers: [AppInitializer, RmqInitializer, AppService]
 })

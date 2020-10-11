@@ -1,39 +1,89 @@
 import { Injectable } from '@nestjs/common';
-import { Channel, connect } from 'amqplib/callback_api'
+import { ConfigService } from '@nestjs/config';
+import { ConfirmChannel, connect, Connection } from 'amqplib/callback_api'
 
 @Injectable()
 export class RmqService {
 
-  constructor() { }
+  constructor(private configService: ConfigService) { }
 
-  channel: Channel;
+  private pubChannel: ConfirmChannel;
+  private amqpConn: Connection;
+  private offlinePubQueue = [];
 
-  createConnection(env) {
-    connect(env.rmq.url, (err, connection) => {
-      if (err) throw err
-
-      connection.createChannel((err, channel) => {
-        if (err) throw err
-        this.channel = channel
-      })
-    })
+  start() {
+    connect(this.configService.get('rmq').url, (err, conn) => {
+      if (err) {
+        console.error("[AMQP]", err.message);
+        return setTimeout(this.start.bind(this), 1000);
+      }
+      conn.on("error", (err) => {
+        if (err.message !== "Connection closing") {
+          console.error("[AMQP] conn error", err.message);
+        }
+      });
+      conn.once("close", () => {
+        console.error("[AMQP] reconnecting");
+        return setTimeout(this.start.bind(this), 1000);
+      });
+      console.log("[AMQP] connected");
+      this.amqpConn = conn;
+      this.startPublisher()
+    });
   }
 
-  publishToDefaultQueue(action, msg, exchange) {
-    // this.channel.assertExchange(exchange, 'direct', { durable: true })
-    // this.channel.publish(exchange, action, Buffer.from([msg]), {
-    //   contentType:'application/JSON',
-    //   persistent: true
-    // })
+  startPublisher() {
+    this.amqpConn.createConfirmChannel((err, ch) => {
+      if (this.closeOnErr(err)) return;
+      ch.on("error", (err) => {
+        console.error("[AMQP] channel error", err.message);
+      });
+      ch.on("close", () => {
+        console.log("[AMQP] channel closed");
+      });
 
-    this.channel.assertQueue(action, { durable: true })
-    this.channel.sendToQueue(
-      action,
-      Buffer.from(JSON.stringify(msg)),
-      {
-        persistent: true,
-        contentType: 'application/JSON'
-      })
+      this.pubChannel = ch;
+      while (true) {
+        var m = this.offlinePubQueue.shift();
+        if (!m) break;
+        this.publish(m[0], m[1], m[2]);
+      }
+    });
   }
+
+  // publishToDefaultQueue(action, msg, exchange) {
+  //   this.pubChannel.assertQueue(action, { durable: true })
+  //   this.pubChannel.sendToQueue(
+  //     action,
+  //     Buffer.from(JSON.stringify(msg)),
+  //     {
+  //       persistent: true,
+  //       contentType: 'application/JSON'
+  //     })
+  // }
+
+  publish(exchange, routingKey, content) {
+    try {
+      this.pubChannel.publish(exchange, routingKey, content, { persistent: true },
+        (err, ok) => {
+          if (err) {
+            console.error("[AMQP] publish", err);
+            this.offlinePubQueue.push([exchange, routingKey, content]);
+            this.amqpConn.close();
+          }
+        });
+    } catch (e) {
+      console.error("[AMQP] publish", e.message);
+      this.offlinePubQueue.push([exchange, routingKey, content]);
+    }
+  }
+
+  closeOnErr(err) {
+    if (!err) return false;
+    console.error("[AMQP] error", err);
+    this.amqpConn.close();
+    return true;
+  }
+
 
 }

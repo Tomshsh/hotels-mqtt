@@ -37,7 +37,7 @@ export class AppController {
       return { drawable };
     }
     catch (err) {
-      console.error('controller error',err.message);
+      // console.error('controller error',err.message);
     }
   }
 

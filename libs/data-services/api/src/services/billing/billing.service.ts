@@ -12,12 +12,12 @@ export class BillingService {
 
   charge(qty, guest) {
     const amount = qty * this.lockersService.chargeTariff;
-    this.rmqService.publishToDefaultQueue('charge', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' }, 'direct_billing')
+    this.rmqService.publish('direct_billing', 'charge', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
   }
 
   refund(qty, guest) {
     const amount = qty * this.lockersService.refundTariff;
-    this.rmqService.publishToDefaultQueue('refund', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' }, 'direct_billing')
+    this.rmqService.publish('direct_billing', 'refund', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
   }
 
 
