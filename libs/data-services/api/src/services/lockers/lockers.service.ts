@@ -51,4 +51,16 @@ export class LockersService {
     )
   }
 
+  async refillTowels(quantity: number, deviceId: string) {
+    let locker = await this.findLocker(deviceId)
+    locker.set('quantity', quantity)
+    locker.save(null, {sessionToken: this.configService.user.getSessionToken()})
+  }
+
+  async clearBin(deviceId){
+    let locker = await this.findLocker(deviceId)
+    locker.set('binQty', 0)
+    locker.save(null, {sessionToken: this.configService.user.getSessionToken()})
+  }
+
 }

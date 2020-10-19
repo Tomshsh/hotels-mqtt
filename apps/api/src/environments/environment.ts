@@ -15,8 +15,7 @@ export const environment = {
     host: "mqtts://mqtts.3pi-solutions.com:39001",
     username: "tomer",
     password: "tomer",
-    ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
-    main: 'towels' //todo: change to base topic depending on hotel
+    ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt')
   },
   rmq:{
     url: 'amqp://localhost'

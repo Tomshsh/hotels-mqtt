@@ -1,8 +1,7 @@
 import { Controller } from '@nestjs/common';
-import { TowelsService, BillingService, MaintanenceService } from '@my-tray/data-services/api';
+import { TowelsService, BillingService, MaintanenceService, LockersService } from '@my-tray/data-services/api';
 import { Chore } from '@my-tray/api-interfaces';
 import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
-import { environment } from '../environments';
 
 @Controller()
 export class AppController {
@@ -11,10 +10,11 @@ export class AppController {
     private towelsService: TowelsService,
     private billingService: BillingService,
     private maintService: MaintanenceService,
-  ) {}
+    private lockersService: LockersService
+  ) { }
 
-  @MessagePattern(`${environment.mqtt.main}/+/item/put`)
-  async drawTowels(@Payload() {itemQty, cardId}, @Ctx() context: MqttContext) {
+  @MessagePattern(`+/+/item/put`)
+  async drawTowels(@Payload() { itemQty, cardId }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
     console.log(itemQty, cardId, deviceId)
     try {
@@ -22,12 +22,12 @@ export class AppController {
       this.billingService.refund(itemQty, rt.get('room').get('name'))
     }
     catch (err) {
-      console.error('controller error',err.message)
+      console.error('controller error', err.message)
     }
   }
 
-  @MessagePattern(`${environment.mqtt.main}/+/item/get`)  //todo: change "main" to base topic depending on hotel
-  async returnTowels(@Payload() {cardId, itemQty}, @Ctx() context: MqttContext) {
+  @MessagePattern(`+/+/item/get`)  //todo: change "main" to base topic depending on hotel
+  async returnTowels(@Payload() { cardId, itemQty }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
     console.log(deviceId, cardId, itemQty)
     try {
@@ -37,14 +37,34 @@ export class AppController {
       return { drawable };
     }
     catch (err) {
-      console.error('controller error',err);
+      console.error('controller error', err);
     }
   }
 
-  @MessagePattern(`${environment.mqtt.main}/+/lwt`)
+  @MessagePattern(`+/+/refill`)
+  async refillTowels(@Payload() { currentQty, itemType }, @Ctx() context: MqttContext) {
+    const [hotelId, deviceId] = context.getTopic().split('/')
+    try {
+      await this.lockersService.refillTowels(currentQty, deviceId)
+    } catch (err) {
+      console.error('controller error', err)
+    }
+  }
+
+  @MessagePattern(`+/+/bin_clear`)
+  async clearBin(@Payload() { currentQty, itemType }, @Ctx() context: MqttContext) {
+    const [hotelId, deviceId] = context.getTopic().split('/')
+    try {
+      await this.lockersService.clearBin(deviceId)
+    } catch (err) {
+      console.error('controller error', err)
+    }
+  }
+
+  @MessagePattern(`+/+/lwt`)
   handleProblem(@Payload() msg: Chore, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-      this.maintService.doChore(Chore[msg])
+    this.maintService.doChore(Chore[msg])
   }
 
 
