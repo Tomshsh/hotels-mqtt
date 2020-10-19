@@ -16,7 +16,7 @@ export const environment = {
     username: "tomer",
     password: "tomer",
     ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
-    main: 'towels'
+    main: 'towels' //todo: change to base topic depending on hotel
   },
   rmq:{
     url: 'amqp://localhost'

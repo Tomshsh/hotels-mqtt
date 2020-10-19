@@ -51,20 +51,9 @@ export class RmqService {
     });
   }
 
-  // publishToDefaultQueue(action, msg, exchange) {
-  //   this.pubChannel.assertQueue(action, { durable: true })
-  //   this.pubChannel.sendToQueue(
-  //     action,
-  //     Buffer.from(JSON.stringify(msg)),
-  //     {
-  //       persistent: true,
-  //       contentType: 'application/JSON'
-  //     })
-  // }
-
   publish(exchange, routingKey, content) {
     try {
-      this.pubChannel.publish(exchange, routingKey, content, { persistent: true },
+      this.pubChannel.publish(exchange, routingKey, Buffer.from(JSON.stringify(content)), { persistent: true },
         (err, ok) => {
           if (err) {
             console.error("[AMQP] publish", err);

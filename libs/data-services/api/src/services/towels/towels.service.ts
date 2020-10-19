@@ -15,6 +15,7 @@ export class TowelsService {
   private getRt(cardNum: string) {
     const q = new Parse.Query('RoomTowels');
     q.equalTo('cards', cardNum);
+    q.include('room')
     return q.first({ sessionToken: this.configService.user.getSessionToken() });
   }
 
@@ -33,7 +34,6 @@ export class TowelsService {
     if(!rt){
       rt = await this.unknownCard(cardNum)
     }
-    console.log(rt)
     const drawable = rt.get('towelLimit') - rt.get('currCount');
     if (!(drawable - quantity < 0)) {
       rt.increment('currCount', quantity);

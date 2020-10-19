@@ -10,14 +10,14 @@ export class BillingService {
     private rmqService: RmqService
   ) { };
 
-  charge(qty, guest) {
+  charge(qty, roomNo) {
     const amount = qty * this.lockersService.chargeTariff;
-    this.rmqService.publish('direct_billing', 'charge', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
+    this.rmqService.publish('direct_billing', 'charge', { amount, roomNo, desc: 'TOWELSx' + qty })
   }
 
-  refund(qty, guest) {
+  refund(qty, roomNo) {
     const amount = qty * this.lockersService.refundTariff;
-    this.rmqService.publish('direct_billing', 'refund', { amount, roomNo: guest.room.name, desc: qty + 'xTOWELS' })
+    this.rmqService.publish('direct_billing', 'refund', { amount, roomNo, desc: 'TOWELSx' + qty })
   }
 
 

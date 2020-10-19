@@ -19,25 +19,25 @@ export class AppController {
     console.log(itemQty, cardId, deviceId)
     try {
       const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
-      this.billingService.refund(itemQty, rt.attributes)
+      this.billingService.refund(itemQty, rt.get('room').get('name'))
     }
     catch (err) {
       console.error('controller error',err.message)
     }
   }
 
-  @MessagePattern(`${environment.mqtt.main}/+/item/get`)
+  @MessagePattern(`${environment.mqtt.main}/+/item/get`)  //todo: change "main" to base topic depending on hotel
   async returnTowels(@Payload() {cardId, itemQty}, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
     console.log(deviceId, cardId, itemQty)
     try {
       const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
       const drawable = rt.get('towelLimit') - rt.get('currCount');
-      this.billingService.charge(itemQty, rt.attributes)
+      this.billingService.charge(itemQty, rt.get('room').get('num'))
       return { drawable };
     }
     catch (err) {
-      // console.error('controller error',err.message);
+      console.error('controller error',err);
     }
   }
 
