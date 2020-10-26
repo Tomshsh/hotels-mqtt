@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { TowelsService, BillingService, MaintanenceService, LockersService } from '@my-tray/data-services/api';
 import { Chore } from '@my-tray/api-interfaces';
 import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
+import { MinibarsService } from 'libs/data-services/api/src/services/minibars';
 
 @Controller()
 export class AppController {
@@ -10,35 +11,24 @@ export class AppController {
     private towelsService: TowelsService,
     private billingService: BillingService,
     private maintService: MaintanenceService,
-    private lockersService: LockersService
+    private lockersService: LockersService,
+    private minibarService: MinibarsService
   ) { }
 
   @MessagePattern(`+/+/item/put`)
-  async drawTowels(@Payload() { itemQty, cardId }, @Ctx() context: MqttContext) {
+  async returnProducts(@Payload() { itemQty, cardId, itemType, roomId }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    console.log(itemQty, cardId, deviceId)
-    try {
-      const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
-      this.billingService.refund(itemQty, rt.get('room').get('name'))
-    }
-    catch (err) {
-      console.error('controller error', err.message)
-    }
+    itemType == "towels"
+      ? this.returnTowels(cardId, itemQty, deviceId)
+      : this.returnToMinibar(deviceId, itemType)
   }
 
   @MessagePattern(`+/+/item/get`)  //todo: change "main" to base topic depending on hotel
-  async returnTowels(@Payload() { cardId, itemQty }, @Ctx() context: MqttContext) {
+  async takeProducts(@Payload() { cardId, itemQty, itemType, roomId }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    console.log(deviceId, cardId, itemQty)
-    try {
-      const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
-      const drawable = rt.get('towelLimit') - rt.get('currCount');
-      this.billingService.charge(itemQty, rt.get('room').get('num'))
-      return { drawable };
-    }
-    catch (err) {
-      console.error('controller error', err);
-    }
+    itemType == "towels"
+      ? this.takeTowels(cardId, deviceId, itemQty)
+      : this.takeFromMinibar(deviceId, itemType)
   }
 
   @MessagePattern(`+/+/refill`)
@@ -67,5 +57,47 @@ export class AppController {
     this.maintService.doChore(Chore[msg])
   }
 
+  private async takeTowels(cardId, deviceId, itemQty) {
+    try {
+      const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
+      this.billingService.charge('towels', itemQty, rt.get('room').get('num'));
+      // what's that for?
+      // const drawable = rt.get('towelLimit') - rt.get('currCount');
+      // return { drawable };
+    }
+    catch (err) {
+      console.error('[towels procedure]', err);
+    }
+  }
+
+  private async takeFromMinibar(deviceId, itemType) {
+    try {
+      const minibar = await this.minibarService.get(deviceId, itemType);
+      this.billingService.charge(itemType, 1, minibar.get('room').get('num'));
+    }
+    catch (err) {
+      console.error('[minibar procedure]', err)
+    }
+  }
+
+  private async returnTowels(cardId, itemQty, deviceId) {
+    try {
+      const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
+      this.billingService.refund('towels', itemQty, rt.get('room').get('name'))
+    }
+    catch (err) {
+      console.error('[towel error]', err.message)
+    }
+  }
+
+  private async returnToMinibar(deviceId, itemType) {
+    try {
+      const minibar = await this.minibarService.put(deviceId, itemType)
+      this.billingService.refund(itemType, 1, minibar.get('room').get('num'))
+    }
+    catch (err) {
+      console.error('[minibar procedure]', err.message)
+    }
+  }
 
 }
