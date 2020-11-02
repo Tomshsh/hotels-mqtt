@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Parse from 'parse/node'
-import { MaintanenceService } from '../maintanence';
+import { HousekeepingService } from '../housekeeping';
 import { Chore } from '@my-tray/api-interfaces';
 import { ConfigurationService } from '@my-tray/shared/backend';
 
@@ -9,7 +9,7 @@ import { ConfigurationService } from '@my-tray/shared/backend';
 export class LockersService {
 
   constructor(
-    private maintService: MaintanenceService,
+    private hkService: HousekeepingService,
     private configService: ConfigurationService
   ) { }
 
@@ -19,7 +19,7 @@ export class LockersService {
 
   private checkForMaint(condition: boolean, chore: Chore) {
     console.log(condition)
-    condition && this.maintService.doChore(chore)
+    condition && this.hkService.doChore(chore)
   }
 
   private async findLocker(deviceId: string) {

@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { TowelsService, BillingService, MaintanenceService, LockersService } from '@my-tray/data-services/api';
+import { TowelsService, BillingService, HousekeepingService, LockersService } from '@my-tray/data-services/api';
 import { Chore } from '@my-tray/api-interfaces';
 import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
 import { MinibarsService } from 'libs/data-services/api/src/services/minibars';
@@ -10,7 +10,7 @@ export class AppController {
   constructor(
     private towelsService: TowelsService,
     private billingService: BillingService,
-    private maintService: MaintanenceService,
+    private hkService: HousekeepingService,
     private lockersService: LockersService,
     private minibarService: MinibarsService
   ) { }
@@ -54,7 +54,7 @@ export class AppController {
   @MessagePattern(`+/+/lwt`)
   handleProblem(@Payload() msg: Chore, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    this.maintService.doChore(Chore[msg])
+    this.hkService.doChore(Chore[msg])
   }
 
   private async takeTowels(cardId, deviceId, itemQty) {

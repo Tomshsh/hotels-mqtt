@@ -5,7 +5,7 @@ import { Chore } from '@my-tray/api-interfaces';
 import { ConfigurationService } from '@my-tray/shared/backend';
 
 @Injectable()
-export class MaintanenceService {
+export class HousekeepingService {
 
   constructor(
     private staffAlert: StaffAlertService,
@@ -13,7 +13,7 @@ export class MaintanenceService {
   ) { }
 
   doChore(chore: Chore) {
-    const q = new Parse.Query('Maintenance');
+    const q = new Parse.Query('Housekeeping');
     q.equalTo('chores', chore);
     q.find({ sessionToken: this.configService.user.getSessionToken() })
       .then(workers => {
