@@ -34,16 +34,21 @@ export class TowelsService {
     if(!rt){
       rt = await this.unknownCard(cardNum)
     }
+    /*
     const drawable = rt.get('towelLimit') - rt.get('currCount');
     if (!(drawable - quantity < 0)) {
-      rt.increment('currCount', quantity);
-      return Promise.all([
+     */
+    rt.increment('currCount', quantity);
+    return Promise.all([
         rt.save(null, { sessionToken: this.configService.user.getSessionToken() }),
         this.lokcerService.drawTowels(quantity, deviceId)
       ]);
+      /*
     }
     else
-      throw ({ message: 'maximum reached, you can only take ' + drawable + ' more' });
+    todo: in the future message needs to be sent to locker, instead of thrown
+         throw ({ message: 'maximum reached, you can only take ' + drawable + ' more' });
+       */
   }
 
   async returnTowels(cardNum: string, quantity: number, deviceId: string) {

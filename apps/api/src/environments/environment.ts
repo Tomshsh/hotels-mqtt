@@ -5,7 +5,8 @@ export const environment = {
   parse: {
     serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
     appId: 'hotel2AppId',
-    appName: 'MyApp'
+    appName: 'MyApp',
+    role: 'hotel2'
   },
   twilio: {
     accountSid: 'ACb7d59a6b06158abf273516d392549ac2',

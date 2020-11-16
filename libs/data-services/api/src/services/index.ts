@@ -4,3 +4,5 @@ export * from './housekeeping';
 export * from './lockers';
 export * from './task';
 export * from './billing';
+export * from './logging';
+export * from './minibars';

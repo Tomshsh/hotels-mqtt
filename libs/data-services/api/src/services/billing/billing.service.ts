@@ -27,13 +27,12 @@ export class BillingService {
     return (
       this.pad(today.getHours()) + "" +
       this.pad(today.getMinutes()) + "" +
-      this.pad(today.getSeconds()) + "" +
-      this.pad(today.getMilliseconds())
+      this.pad(today.getSeconds())
     )
   }
 
   async initVars(itemType: string, qty: number): Promise<publishVars> {
-    return itemType == 'towels'
+    return itemType == 'towel'
       ? { exchange: 'towel_billing', amount: qty * this.lockersService.chargeTariff, desc: 'TOWELSx' + qty }
       : { exchange: 'minibar_billing', amount: (await this.minibarsService.findProductPrice(itemType)), desc: itemType }
   }
@@ -47,7 +46,7 @@ export class BillingService {
   async refund(itemType: string, qty, roomNo) {
     const time = this.getTime()
     const { exchange, amount, desc } = await this.initVars(itemType, qty)
-    this.rmqService.publish(exchange, 'refund', { amount, roomNo, time, desc })
+    this.rmqService.publish(exchange, 'refund', { amount: -1 * amount, roomNo, time, desc })
   }
 
 }
