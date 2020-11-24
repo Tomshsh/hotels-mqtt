@@ -11,7 +11,8 @@ export class MinibarsService {
     return new Parse.Query("Minibar")
       .include('room')
       .include('state.tag.product')
-      .get(deviceId, { sessionToken: this.configService.user.getSessionToken() });
+      .equalTo('deviceId', deviceId)
+      .first({ sessionToken: this.configService.user.getSessionToken() });
   }
 
   async findProductPrice(itemType) {

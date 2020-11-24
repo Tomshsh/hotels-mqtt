@@ -51,7 +51,7 @@ export class RmqService {
     });
   }
 
-  publish(exchange: 'towel_billing' | 'minibar_billing', routingKey, content) {
+  publish(exchange: 'towel_billing' | 'minibar_billing', routingKey: 'charge' | 'refund', content: any) {
     try {
       this.pubChannel.publish(exchange, routingKey, Buffer.from(JSON.stringify(content)), { persistent: true },
         (err, ok) => {

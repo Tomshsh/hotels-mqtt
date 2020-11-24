@@ -66,7 +66,7 @@ export class AppController {
     this.logService.log(`${itemQty.length > 1 ? "1 towel was" : itemQty + " towels were"} removed from locker ${deviceId} using card ${cardId}`)
     try {
       const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
-      this.billingService.charge('towel', itemQty, rt.get('room').get('num'));
+      this.billingService.charge('towel', itemQty, rt.get('room').get('num'), deviceId);
       // what's that for?
       // const drawable = rt.get('towelLimit') - rt.get('currCount');
       // return { drawable };
@@ -80,7 +80,7 @@ export class AppController {
     this.logService.log(`${itemType} was removed from device ${deviceId}`)
     try {
       const minibar = await this.minibarService.get(deviceId, itemType);
-      this.billingService.charge(itemType, 1, minibar.get('room').get('num'));
+      this.billingService.charge(itemType, 1, minibar.get('room').get('num'), deviceId);
     }
     catch (err) {
       console.error('[minibar procedure]', err)
@@ -91,7 +91,7 @@ export class AppController {
     this.logService.log(`${itemQty} towels were returned to locker ${deviceId} using card ${cardId}`)
     try {
       const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
-      this.billingService.refund('towel', itemQty, rt.get('room').get('num'))
+      this.billingService.refund('towel', itemQty, rt.get('room').get('num'), deviceId)
     }
     catch (err) {
       console.error('[towel error]', err.message)
@@ -102,7 +102,7 @@ export class AppController {
     this.logService.log(`${itemType} was put in minibar ${deviceId}`)
     try {
       const minibar = await this.minibarService.put(deviceId, itemType)
-      this.billingService.refund(itemType, 1, minibar.get('room').get('num'))
+      // this.billingService.refund(itemType, 1, minibar.get('room').get('num'), deviceId)
     }
     catch (err) {
       console.error('[minibar procedure]', err.message)

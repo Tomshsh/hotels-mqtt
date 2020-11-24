@@ -8,7 +8,7 @@ export class TowelsService {
   //todo: change return types after merge
 
   constructor(
-    private lokcerService: LockersService,
+    private lockerService: LockersService,
     private configService: ConfigurationService
   ) { }
 
@@ -26,6 +26,7 @@ export class TowelsService {
     const obj = new Parse.Object('RoomTowels')
     obj.add('cards', cardId)
     obj.set('room', room)
+    obj.setACL(room.getACL())
     return obj.save(null, {sessionToken: this.configService.user.getSessionToken()})
   }
 
@@ -41,7 +42,7 @@ export class TowelsService {
     rt.increment('currCount', quantity);
     return Promise.all([
         rt.save(null, { sessionToken: this.configService.user.getSessionToken() }),
-        this.lokcerService.drawTowels(quantity, deviceId)
+        this.lockerService.drawTowels(quantity, deviceId)
       ]);
       /*
     }
@@ -59,7 +60,7 @@ export class TowelsService {
     rt.increment('currCount', -quantity);
     return Promise.all([
       rt.save(null, { sessionToken: this.configService.user.getSessionToken() }),
-      this.lokcerService.returnTowels(quantity, deviceId)
+      this.lockerService.returnTowels(quantity, deviceId)
     ]);
   }
 

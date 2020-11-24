@@ -3,8 +3,8 @@ import { readFileSync } from 'fs';
 export const environment = {
   production: false,
   parse: {
-    serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
-    appId: 'hotel2AppId',
+    serverURL: 'http://localhost:1338/parse/', // Self-hosted Parse Server
+    appId: 'hotelDevId',
     appName: 'MyApp',
     role: 'hotel2'
   },

@@ -37,16 +37,16 @@ export class BillingService {
       : { exchange: 'minibar_billing', amount: (await this.minibarsService.findProductPrice(itemType)), desc: itemType }
   }
 
-  async charge(itemType: string, qty, roomNo) {
+  async charge(itemType: string, qty: number, roomNo, deviceId: string) {
     const time = this.getTime()
     const { exchange, amount, desc } = await this.initVars(itemType, qty)
-    this.rmqService.publish(exchange, 'charge', { amount, roomNo, time, desc })
+    this.rmqService.publish(exchange, 'charge', { amount, roomNo, time, desc, deviceId })
   }
 
-  async refund(itemType: string, qty, roomNo) {
+  async refund(itemType: string, qty: number, roomNo, deviceId: string) {
     const time = this.getTime()
     const { exchange, amount, desc } = await this.initVars(itemType, qty)
-    this.rmqService.publish(exchange, 'refund', { amount: -1 * amount, roomNo, time, desc })
+    this.rmqService.publish(exchange, 'refund', { amount: -1 * amount, roomNo, time, desc, deviceId })
   }
 
 }
