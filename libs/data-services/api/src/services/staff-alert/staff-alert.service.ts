@@ -16,7 +16,7 @@ export class StaffAlertService {
       .create({
         body: body,
         from: this.fromNumber,
-        to: '' //number
+        to: number
       }, callback)
   }
 

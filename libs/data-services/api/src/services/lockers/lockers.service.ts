@@ -15,6 +15,7 @@ export class LockersService {
 
   refundTariff: number;
   chargeTariff: number;
+  //todo: minPercent(of bin and of locker) should be acquired from parse
   readonly minPercent = 0.2;
 
   private checkForMaint(condition: boolean, chore: Chore) {
@@ -46,6 +47,7 @@ export class LockersService {
     locker.increment('binQty', quantity);
     locker = await locker.save(null, { sessionToken: this.configService.user.getSessionToken() });
     this.checkForMaint(
+      //todo: the percentage should be acquired from db + ui column
       locker.get('binQty') > locker.get('binCapacity') * 0.75,
       Chore.REPLACE_BIN
     )

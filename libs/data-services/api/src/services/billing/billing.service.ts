@@ -1,12 +1,11 @@
-import { RmqService } from '@my-tray/shared/backend/rmq';
 import { Injectable } from '@nestjs/common';
 import { LockersService } from '../lockers';
 import { MinibarsService } from '../minibars';
+import { TransactionsService } from '../transactions/transactions.service';
 
 interface publishVars {
-  exchange: 'towel_billing' | 'minibar_billing'
   amount: number
-  desc: string
+  description: string
 }
 
 @Injectable()
@@ -15,7 +14,7 @@ export class BillingService {
   constructor(
     private lockersService: LockersService,
     private minibarsService: MinibarsService,
-    private rmqService: RmqService
+    private transactionsService: TransactionsService
   ) { };
 
   private pad(n) {
@@ -33,20 +32,19 @@ export class BillingService {
 
   async initVars(itemType: string, qty: number): Promise<publishVars> {
     return itemType == 'towel'
-      ? { exchange: 'towel_billing', amount: qty * this.lockersService.chargeTariff, desc: 'TOWELSx' + qty }
-      : { exchange: 'minibar_billing', amount: (await this.minibarsService.findProductPrice(itemType)), desc: itemType }
+      ? { amount: qty * this.lockersService.chargeTariff, description: 'TOWELSx' + qty }
+      : { amount: (await this.minibarsService.findProductPrice(itemType)), description: itemType }
   }
 
-  async charge(itemType: string, qty: number, roomNo, deviceId: string) {
+  async charge(action: 'charge' | 'refund', itemType: string, qty: number, roomNo, deviceId: string, acl: Parse.ACL) {
     const time = this.getTime()
-    const { exchange, amount, desc } = await this.initVars(itemType, qty)
-    this.rmqService.publish(exchange, 'charge', { amount, roomNo, time, desc, deviceId })
-  }
-
-  async refund(itemType: string, qty: number, roomNo, deviceId: string) {
-    const time = this.getTime()
-    const { exchange, amount, desc } = await this.initVars(itemType, qty)
-    this.rmqService.publish(exchange, 'refund', { amount: -1 * amount, roomNo, time, desc, deviceId })
+    const { amount, description } = await this.initVars(itemType, qty)
+    this.transactionsService.create({
+      status: 'pending',
+      serial: (Number(time) + 100000).toString(),
+      amount: action == 'refund' ? -1 * amount : amount,
+      action, description, deviceId, roomNo
+    }, acl)
   }
 
 }

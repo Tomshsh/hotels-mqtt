@@ -5,7 +5,6 @@ import { ConfigurationService } from '@my-tray/shared/backend';
 
 @Injectable()
 export class TowelsService {
-  //todo: change return types after merge
 
   constructor(
     private lockerService: LockersService,

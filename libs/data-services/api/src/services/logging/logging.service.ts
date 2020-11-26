@@ -8,16 +8,12 @@ export class LoggingService {
   constructor(
     private configService: ConfigService,
     private configurationService: ConfigurationService
-    ) { }
+  ) { }
 
-  log(message: string) {
-    const role = this.configService.get('parse').role
-    const acl = new Parse.ACL()
-    acl.setRoleReadAccess(role, true)
-    acl.setRoleWriteAccess(role, true)
+  log(message: string, acl) {
     const log = new Parse.Object("Log")
     log.setACL(acl)
     return log.save({ message, user: this.configurationService.user.toPointer() })
-      .catch((err) => {console.error(err) })
+      .catch((err) => { console.error(err) })
   }
 }

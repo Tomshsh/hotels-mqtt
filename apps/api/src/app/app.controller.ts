@@ -2,6 +2,8 @@ import { Controller } from '@nestjs/common';
 import { TowelsService, BillingService, HousekeepingService, LockersService, LoggingService, MinibarsService } from '@my-tray/data-services/api';
 import { Chore } from '@my-tray/api-interfaces';
 import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
+import { ConfigurationService } from '@my-tray/shared/backend';
+import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
@@ -12,31 +14,53 @@ export class AppController {
     private hkService: HousekeepingService,
     private lockersService: LockersService,
     private minibarService: MinibarsService,
-    private logService: LoggingService
+    private logService: LoggingService,
+    private appService: AppService
   ) { }
 
   @MessagePattern(`+/+/item/put`)
   async returnProducts(@Payload() { itemQty, cardId, itemType, roomId }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    itemType == "towel"
-      ? this.returnTowels(cardId, itemQty, deviceId)
-      : this.returnToMinibar(deviceId, itemType)
+    try {
+      const device = await this.appService.findDevice(deviceId)
+      switch (device.className) {
+        case 'Minibar':
+          this.returnToMinibar(deviceId, itemType, hotelId)
+          break;
+        case 'Locker':
+          this.returnTowels(cardId, itemQty, deviceId, hotelId)
+          break;
+        case 'Tray':
+          break;
+      }
+    } catch (err) { }
   }
 
-  @MessagePattern(`+/+/item/get`)  //todo: change "main" to base topic depending on hotel
+  @MessagePattern(`+/+/item/get`)
   async takeProducts(@Payload() msg, @Ctx() context: MqttContext) {
     const { cardId, itemQty, itemType, roomId } = msg
-    console.log(msg)
-    const [hotelId, deviceId] = context.getTopic().split('/')
-    itemType == "towel"
-      ? this.takeTowels(cardId, deviceId, itemQty)
-      : this.takeFromMinibar(deviceId, itemType)
+    const [hotelBaseTopic, deviceId] = context.getTopic().split('/')
+    try {
+      const device = await this.appService.findDevice(deviceId)
+      console.log(device)
+      switch (device.className) {
+        case 'Minibar':
+          this.takeFromMinibar(deviceId, itemType, hotelBaseTopic)
+          break;
+        case 'Locker':
+          this.takeTowels(cardId, deviceId, itemQty, hotelBaseTopic)
+          break;
+        case 'Tray':
+          break;
+      }
+    } catch (err) { }
   }
 
   @MessagePattern(`+/+/refill`)
   async refillTowels(@Payload() { currentQty, itemType }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    this.logService.log(`locker ${deviceId} was refilled`)
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`locker ${deviceId} was refilled`, acl)
     try {
       await this.lockersService.refillTowels(currentQty, deviceId)
     } catch (err) {
@@ -47,7 +71,8 @@ export class AppController {
   @MessagePattern(`+/+/bin_clear`)
   async clearBin(@Payload() { currentQty, itemType }, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    this.logService.log(`bin ${deviceId} was cleared`)
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`bin ${deviceId} was cleared`, acl)
     try {
       await this.lockersService.clearBin(deviceId)
     } catch (err) {
@@ -56,17 +81,19 @@ export class AppController {
   }
 
   @MessagePattern(`+/+/lwt`)
-  handleProblem(@Payload() msg: Chore, @Ctx() context: MqttContext) {
+  async handleProblem(@Payload() msg: Chore, @Ctx() context: MqttContext) {
     const [hotelId, deviceId] = context.getTopic().split('/')
-    this.logService.log(`lost communication with device ${deviceId}`)
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`lost communication with device ${deviceId}`, acl)
     this.hkService.doChore(Chore[msg])
   }
 
-  private async takeTowels(cardId, deviceId, itemQty) {
-    this.logService.log(`${itemQty.length > 1 ? "1 towel was" : itemQty + " towels were"} removed from locker ${deviceId} using card ${cardId}`)
+  private async takeTowels(cardId, deviceId, itemQty, hotelId) {
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`${itemQty.length > 1 ? "1 towel was" : itemQty + " towels were"} removed from locker ${deviceId} using card ${cardId}`, acl)
     try {
       const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
-      this.billingService.charge('towel', itemQty, rt.get('room').get('num'), deviceId);
+      this.billingService.charge('charge', 'towel', itemQty, rt.get('room').get('num'), deviceId, rt.getACL());
       // what's that for?
       // const drawable = rt.get('towelLimit') - rt.get('currCount');
       // return { drawable };
@@ -76,30 +103,33 @@ export class AppController {
     }
   }
 
-  private async takeFromMinibar(deviceId, itemType) {
-    this.logService.log(`${itemType} was removed from device ${deviceId}`)
+  private async takeFromMinibar(deviceId, itemType, hotelId) {
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`${itemType} was removed from device ${deviceId}`, acl)
     try {
       const minibar = await this.minibarService.get(deviceId, itemType);
-      this.billingService.charge(itemType, 1, minibar.get('room').get('num'), deviceId);
+      this.billingService.charge('charge', itemType, 1, minibar.get('room').get('num'), deviceId, minibar.getACL());
     }
     catch (err) {
       console.error('[minibar procedure]', err)
     }
   }
 
-  private async returnTowels(cardId, itemQty, deviceId) {
-    this.logService.log(`${itemQty} towels were returned to locker ${deviceId} using card ${cardId}`)
+  private async returnTowels(cardId, itemQty, deviceId, hotelId) {
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`${itemQty} towels were returned to locker ${deviceId} using card ${cardId}`, acl)
     try {
       const [rt] = await this.towelsService.returnTowels(cardId, itemQty, deviceId)
-      this.billingService.refund('towel', itemQty, rt.get('room').get('num'), deviceId)
+      this.billingService.charge('refund', 'towel', itemQty, rt.get('room').get('num'), deviceId, rt.getACL())
     }
     catch (err) {
       console.error('[towel error]', err.message)
     }
   }
 
-  private async returnToMinibar(deviceId, itemType) {
-    this.logService.log(`${itemType} was put in minibar ${deviceId}`)
+  private async returnToMinibar(deviceId, itemType, hotelId) {
+    const acl = await this.appService.getHotelAcl(hotelId)
+    this.logService.log(`${itemType} was put in minibar ${deviceId}`, acl)
     try {
       const minibar = await this.minibarService.put(deviceId, itemType)
       // this.billingService.refund(itemType, 1, minibar.get('room').get('num'), deviceId)

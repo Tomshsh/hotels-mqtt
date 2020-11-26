@@ -14,7 +14,7 @@ export class ConfigurationService {
     Parse.initialize(environment.parse.appId);
     (Parse as any).serverURL = environment.parse.serverURL;
 
-    this.user = await User.logIn('a2@tt.com', '123456')
+    this.user = await User.logIn('nest_api_app', '123456')
 
     this.twilio = twilio(environment.twilio.accountSid, environment.twilio.authToken)
   }

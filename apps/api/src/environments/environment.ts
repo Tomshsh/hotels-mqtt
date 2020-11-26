@@ -3,10 +3,9 @@ import { readFileSync } from 'fs';
 export const environment = {
   production: false,
   parse: {
-    serverURL: 'http://localhost:1338/parse/', // Self-hosted Parse Server
-    appId: 'hotelDevId',
-    appName: 'MyApp',
-    role: 'hotel2'
+    serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
+    appId: 'hotel2AppId',
+    appName: 'MyApp'
   },
   twilio: {
     accountSid: 'ACb7d59a6b06158abf273516d392549ac2',
