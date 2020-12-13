@@ -3,9 +3,9 @@ import { readFileSync } from 'fs';
 export const environment = {
   production: false,
   parse: {
-    serverURL: 'https://hotelapi.3pi-solutions.com/api/', // Self-hosted Parse Server
-    appId: 'hotel2AppId',
-    appName: 'MyApp'
+    serverURL: 'http://localhost:1338/parse', //'https://hotelapi.3pi-solutions.com/api/',
+    appId: 'hotelDevId', //'hotel2AppId',
+    appName: 'hotelDev'
   },
   twilio: {
     accountSid: 'ACb7d59a6b06158abf273516d392549ac2',
@@ -17,7 +17,7 @@ export const environment = {
     password: "tomer",
     ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt')
   },
-  rmq:{
+  rmq: {
     url: 'amqp://localhost'
   }
 
