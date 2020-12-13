@@ -4,7 +4,6 @@ import { Chore } from '@my-tray/api-interfaces';
 import { MessagePattern, Payload, Ctx, MqttContext } from '@nestjs/microservices'
 import { ConfigurationService } from '@my-tray/shared/backend';
 import { AppService } from './app.service';
-import Parse from 'parse/node'
 
 @Controller()
 export class AppController {
