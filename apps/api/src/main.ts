@@ -11,8 +11,6 @@ import { readFileSync } from 'fs';
 
 
 
-
-
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {
     transport: Transport.MQTT,
@@ -23,6 +21,7 @@ async function bootstrap() {
       ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
     },
   });
+  app.listen(() => {})
 
 }
 
