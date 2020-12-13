@@ -2,12 +2,14 @@ import { Module, Provider } from '@nestjs/common';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { environment } from '@my-tray/env/client/environment'
 import { BackendModule, ConfigurationService } from '@my-tray/shared/backend'
-
+import { environment } from '../environments'
+import { ApiModule } from '@my-tray/data-services/api'
+import { ScheduleModule } from '@nestjs/schedule'
+import {ConfigModule} from '@nestjs/config'
 
 export function initConfig(configurationService: ConfigurationService) {
-  configurationService.initializeConfiguration(environment);
+  return configurationService.initializeConfiguration(environment);
 }
 
 const AppInitializer: Provider = {
@@ -17,8 +19,12 @@ const AppInitializer: Provider = {
 }
 
 @Module({
-  imports: [BackendModule],
+  imports: [BackendModule, ApiModule, ScheduleModule.forRoot(), ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: 'apps/api/src/app/.env',
+    load:[() => environment],
+  })],
   controllers: [AppController],
-  providers: [AppService, AppInitializer]
+  providers: [AppInitializer, AppService]
 })
 export class AppModule { }

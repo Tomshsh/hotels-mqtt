@@ -6,18 +6,24 @@
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
+import { Transport } from '@nestjs/microservices';
+import { readFileSync } from 'fs';
+
+
 
 
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.port || 3333;
-  await app.listen(port, () => {
-    console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+  const app = await NestFactory.createMicroservice(AppModule, {
+    transport: Transport.MQTT,
+    options: {
+      url: "mqtts://mqtts.3pi-solutions.com:39001",
+      username: "tomer",
+      password: "tomer",
+      ca: readFileSync('apps/api/src/environments/3pi-solutions-CA.crt'),
+    },
   });
-  
+
 }
 
 bootstrap();
