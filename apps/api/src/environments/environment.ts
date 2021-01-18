@@ -3,9 +3,11 @@ import { readFileSync } from 'fs';
 export const environment = {
   production: false,
   parse: {
-    serverURL:  'https://hotelapi.3pi-solutions.com/api/',
-    appId: 'hotel2AppId',
-    appName: 'hotelDev'
+    // serverURL:  'https://hotelapi.3pi-solutions.com/api/',
+    // appId: 'hotel2AppId',
+    // appName: 'hotelDev'
+    serverURL: 'http://localhost:1338/parse',
+    appId: 'hotelDevId'
   },
   twilio: {
     accountSid: 'ACb7d59a6b06158abf273516d392549ac2',

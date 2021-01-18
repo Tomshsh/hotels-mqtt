@@ -38,11 +38,24 @@ export class AppController {
 
   @MessagePattern(`+/+/item/get`)
   async takeProducts(@Payload() msg, @Ctx() context: MqttContext) {
-    const { cardId, itemQty, itemType, roomId } = msg
+
+    let newMsg;
+    if(typeof msg == "string"){
+      newMsg = {}
+      const extracted = msg.match(/\w+/g)
+      extracted.map((w, i)=> {
+        if(i%2 == 0) newMsg[w] =  extracted[i+1]
+      })
+    }
+    else newMsg = msg
+
+    console.log(newMsg)
+
+    const { cardId, itemQty, itemType, roomId } = newMsg
+
     const [hotelBaseTopic, deviceId] = context.getTopic().split('/')
     try {
       const device = await this.appService.findDevice(deviceId)
-      console.log(device)
       switch (device.className) {
         case 'Minibar':
           this.takeFromMinibar(deviceId, itemType, hotelBaseTopic)

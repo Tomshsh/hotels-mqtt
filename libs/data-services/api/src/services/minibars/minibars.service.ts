@@ -28,7 +28,7 @@ export class MinibarsService {
     const state: any[] = minibar.get("state")
     const index = state.findIndex(s => s.tag.get('product').get('title') == itemType)
     if (index > -1) {
-      state.splice(index, 1)
+      state[index].lastAction = "empty"
       minibar.set('state', state)
       return minibar.save(null, { sessionToken: this.configService.user.getSessionToken() })
     } else { throw new Error('product with title: ' + itemType + ' was not found') }
