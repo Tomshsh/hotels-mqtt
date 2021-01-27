@@ -28,7 +28,6 @@ export class AppService {
     return new Promise(async (resolve, reject) => {
       while (!device && devices.length) {
         device = await query(devices.shift())
-        console.log("while")
       }
       if (device) resolve(device)
       else reject('not found')
@@ -40,6 +39,19 @@ export class AppService {
       .equalTo('baseTopic', hotelName)
       .first({ sessionToken: this.configService.user.getSessionToken() })
       .then(hotel => hotel.getACL())
+  }
+
+  handleNonJsonMsg(msg:{} | string): any{
+    let newMsg;
+    if(typeof msg == "string"){
+      newMsg = {}
+      const extracted = msg.match(/\w+/g)
+      extracted.map((w, i)=> {
+        if(i%2 == 0) newMsg[w] =  extracted[i+1]
+      })
+    }
+    else newMsg = msg
+    return newMsg
   }
 
 }

@@ -38,21 +38,8 @@ export class AppController {
 
   @MessagePattern(`+/+/item/get`)
   async takeProducts(@Payload() msg, @Ctx() context: MqttContext) {
-
-    let newMsg;
-    if(typeof msg == "string"){
-      newMsg = {}
-      const extracted = msg.match(/\w+/g)
-      extracted.map((w, i)=> {
-        if(i%2 == 0) newMsg[w] =  extracted[i+1]
-      })
-    }
-    else newMsg = msg
-
-    console.log(newMsg)
-
+    const newMsg = this.appService.handleNonJsonMsg(msg)
     const { cardId, itemQty, itemType, roomId } = newMsg
-
     const [hotelBaseTopic, deviceId] = context.getTopic().split('/')
     try {
       const device = await this.appService.findDevice(deviceId)
@@ -107,9 +94,6 @@ export class AppController {
     try {
       const [rt] = await this.towelsService.drawTowels(cardId, itemQty, deviceId);
       this.billingService.charge('charge', 'towel', itemQty, rt.get('room').get('num'), deviceId, rt.getACL());
-      // what's that for?
-      // const drawable = rt.get('towelLimit') - rt.get('currCount');
-      // return { drawable };
     }
     catch (err) {
       console.error('[towels procedure]', err);
