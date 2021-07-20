@@ -12,12 +12,12 @@ export class StaffAlertService {
   }
 
   alertStaff(number: string, body, callback: (err, ok) => void) {
-    this.configService.twilio.messages
-      .create({
-        body: body,
-        from: this.fromNumber,
-        to: number
-      }, callback)
+    // this.configService.twilio.messages
+    //   .create({
+    //     body: body,
+    //     from: this.fromNumber,
+    //     to: number
+    //   }, callback)
   }
 
 }
