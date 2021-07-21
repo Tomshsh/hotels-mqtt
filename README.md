@@ -1,84 +1,42 @@
-# MyTray
+# MQTT NestJs Microservice
 
-This project was generated using [Nx](https://nx.dev).
+a microservice for tracking hotel guest transactions, used for integration in an environment of mqtt clients/devices.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
+[this flow chart](https://drive.google.com/file/d/1L-hOiWROy5YEKuuM7u_TAsaSyjVqQcrI/view?usp=sharing) describes the design for the whole project
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+in app.controller.js you will see: 
+````
+@MessagePattern(`+/+/item/get`)
+  async returnProducts(@Payload() { itemQty, cardId, itemType, roomId }, @Ctx() context: MqttContext) {
+     const [hotelId, deviceId] = context.getTopic().split('/')
+  .
+  .
+  }
+````
 
-## Quick Start & Documentation
+- `@MessagePattern` is a decorator which subscribes to a topic passed as a string parameter.
+- `@Payload` catches and parses the JSON message sent from the topic.
+- `@Ctx` contains the string topic. "+" in the topic is a single level wildcard, 
+which means that the first two levels are dynamic and vary for every request.
 
-[Nx Documentation](https://nx.dev/angular)
+the above snippet of code will handle a message such as this:
+````
+{
+   "cardId":"12345677"      // guests keycard
+   "itemQty": 2             // quantity of items taken
+   "itemType": "SNICKERS"   // which item
+}
+````
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+### Flow
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+![Screenshot from 2021-07-21 17-39-50](https://user-images.githubusercontent.com/53683817/126508007-2c5b7ec7-1345-41ed-ab08-82a0a57821a4.png)
 
-## Adding capabilities to your workspace
+### Sequence Diagram
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+![Screenshot from 2021-07-21 17-40-08](https://user-images.githubusercontent.com/53683817/126508469-89133759-202a-4bb8-9c47-c46717fbc3ed.png)
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
 
-Below are some plugins which you can add to your workspace:
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
 
-## Generate an application
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@my-tray/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
